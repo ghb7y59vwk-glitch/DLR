@@ -420,18 +420,34 @@ function drawImageCover(ctx, image, x, y, width, height, filterIndex, intensity)
   const sy = (image.height - sh) / 2;
 
   ctx.save();
-  ctx.filter = blendFilter(filterIndex, intensity);
-  ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
-  ctx.filter = "none";
 
+  // Original photograph
+  ctx.filter = "none";
+  ctx.globalAlpha = 1;
+  ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
+
+  // Filter overlay
+  if (filterIndex !== 0 && intensity > 0) {
+    ctx.globalAlpha = intensity / 100;
+    ctx.filter = filters[filterIndex].css;
+    ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
+    ctx.filter = "none";
+  }
+
+  // Color tint
   const tint = filters[filterIndex].tint;
   if (tint && intensity > 0) {
     ctx.globalAlpha = intensity / 100;
     ctx.fillStyle = tint;
     ctx.fillRect(x, y, width, height);
   }
+
   ctx.restore();
 }
+
+
+
+  
 
 function renderPhoto() {
   if (!selectedPhoto) return;
