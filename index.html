@@ -1,1122 +1,417 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#493629">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#30251f">
 <title>DLR — Every Frame Tells a Story</title>
-
 <style>
-:root {
-  --olive:#687653;
-  --brown:#493629;
-  --deep:#30251f;
-  --wine:#713d45;
-  --cream:#f6eedc;
-  --gold:#d8bd8c;
-  --yellow:#f3d66b;
-  --muted:#b8a991;
+:root{
+--olive:#687653;--brown:#493629;--deep:#30251f;
+--wine:#713d45;--cream:#f6eedc;--gold:#d8bd8c;--yellow:#f3d66b;
 }
-
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  background:var(--deep);
-  color:var(--cream);
-  font-family:Georgia,serif;
-  min-height:100vh;
-}
-
-button, input { font:inherit; }
-
-button {
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.screen {
-  display:none;
-  min-height:100vh;
-}
-
-.screen.active { display:block; }
-
-/* HOME */
-
-#homeView {
-  background:var(--deep);
-  padding:18px 16px 32px;
-}
-
-.home-top {
-  text-align:center;
-  padding:8px 0 17px;
-}
-
-.home-top p {
-  color:var(--gold);
-  font-size:10px;
-  letter-spacing:4px;
-  margin:0;
-  text-transform:uppercase;
-}
-
-.cover-wrap {
-  max-width:480px;
-  margin:0 auto;
-  overflow:hidden;
-  border:1px solid rgba(216,189,140,.45);
-  box-shadow:0 15px 45px rgba(0,0,0,.35);
-  background:#211a16;
-}
-
-.cover-wrap img {
-  display:block;
-  width:100%;
-  height:min(70vh,680px);
-  object-fit:cover;
-  object-position:center;
-}
-
-.home-bottom {
-  text-align:center;
-  padding:22px 8px 0;
-}
-
-.tagline {
-  color:var(--gold);
-  font-size:13px;
-  font-style:italic;
-  letter-spacing:1px;
-  margin:0 0 20px;
-}
-
-.main-button {
-  display:block;
-  width:min(100%,330px);
-  margin:0 auto;
-  padding:16px;
-  color:var(--deep);
-  background:var(--yellow);
-  border:1px solid var(--gold);
-  letter-spacing:3px;
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  font-weight:bold;
-  box-shadow:0 5px 20px rgba(216,189,140,.16);
-}
-
-.secondary-button {
-  display:block;
-  width:min(100%,330px);
-  margin:11px auto 0;
-  padding:13px;
-  color:var(--gold);
-  background:transparent;
-  border:1px solid rgba(216,189,140,.5);
-  letter-spacing:2px;
-  font-family:Arial,sans-serif;
-  font-size:10px;
-}
-
-/* GENERAL */
-
-.page-head {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:17px 16px;
-  border-bottom:1px solid rgba(216,189,140,.18);
-}
-
-.back-button {
-  color:var(--gold);
-  background:none;
-  border:0;
-  font-size:12px;
-  letter-spacing:1px;
-  padding:8px 0;
-}
-
-.page-title {
-  color:var(--yellow);
-  font-size:20px;
-  font-weight:normal;
-  letter-spacing:1px;
-  margin:0;
-}
-
-.eyebrow {
-  color:var(--gold);
-  font-family:Arial,sans-serif;
-  font-size:9px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-}
-
-/* PHOTO SELECT */
-
-.select-content {
-  max-width:500px;
-  margin:0 auto;
-  padding:48px 22px;
-  text-align:center;
-}
-
-.select-content h2 {
-  color:var(--yellow);
-  font-size:29px;
-  font-weight:normal;
-  margin:13px 0;
-}
-
-.select-content p {
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.7;
-}
-
-.upload-box {
-  display:block;
-  margin:30px auto 0;
-  padding:28px 18px;
-  border:1px dashed var(--gold);
-  background:rgba(104,118,83,.16);
-  color:var(--cream);
-}
-
-.upload-box strong {
-  display:block;
-  color:var(--yellow);
-  font-size:15px;
-  font-weight:normal;
-  letter-spacing:1px;
-  margin-bottom:9px;
-}
-
-.upload-box span {
-  color:var(--muted);
-  font-family:Arial,sans-serif;
-  font-size:10px;
-}
-
-input[type=file] { display:none; }
-
-/* EDITOR */
-
-#editorView {
-  height:100vh;
-  min-height:600px;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  padding-bottom:25px;
-}
-
-.editor-head {
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:var(--deep);
-}
-
-.editor-brand {
-  color:var(--yellow);
-  font-size:19px;
-  letter-spacing:2px;
-  font-weight:normal;
-  margin:0;
-}
-
-.preview-area {
-  position:sticky;
-  top:57px;
-  z-index:10;
-  padding:10px 16px 12px;
-  background:linear-gradient(180deg,var(--deep),#30251f);
-  border-bottom:1px solid rgba(216,189,140,.15);
-}
-
-.preview-frame {
-  width:100%;
-  max-width:520px;
-  height: min(39vh,390px);
-  min-height:210px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#211a16;
-  overflow:hidden;
-  border:1px solid rgba(216,189,140,.25);
-}
-
-#previewCanvas {
-  display:block;
-  max-width:100%;
-  max-height:100%;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-}
-
-.preview-hint {
-  color:var(--muted);
-  font-family:Arial,sans-serif;
-  font-size:9px;
-  letter-spacing:1px;
-  text-align:center;
-  margin:8px 0 0;
-}
-
-.section-label {
-  color:var(--gold);
-  font-family:Arial,sans-serif;
-  font-size:10px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin:18px 16px 10px;
-}
-
-.filter-strip {
-  display:flex;
-  gap:9px;
-  overflow-x:auto;
-  padding:2px 16px 13px;
-  scrollbar-width:none;
-  -webkit-overflow-scrolling:touch;
-}
-
-.filter-strip::-webkit-scrollbar { display:none; }
-
-.filter-card {
-  flex:0 0 105px;
-  min-height:65px;
-  padding:11px 8px;
-  color:var(--cream);
-  background:#493629;
-  border:1px solid rgba(216,189,140,.22);
-  text-align:center;
-  transition:.18s ease;
-}
-
-.filter-card .filter-name {
-  display:block;
-  font-size:12px;
-  line-height:1.3;
-}
-
-.filter-card small {
-  display:block;
-  color:var(--muted);
-  font-family:Arial,sans-serif;
-  font-size:8px;
-  margin-top:6px;
-  letter-spacing:1px;
-}
-
-.filter-card.selected {
-  border:1px solid var(--yellow);
-  background:#62513a;
-  box-shadow:0 0 13px rgba(243,214,107,.23);
-  transform:translateY(-2px);
-}
-
-.adjustments {
-  margin:0 16px;
-  padding:14px 14px 17px;
-  background:rgba(104,118,83,.13);
-  border:1px solid rgba(216,189,140,.18);
-}
-
-.adjust-row {
-  display:grid;
-  grid-template-columns:100px 1fr 32px;
-  gap:9px;
-  align-items:center;
-  margin:13px 0;
-}
-
-.adjust-row label {
-  color:var(--cream);
-  font-family:Arial,sans-serif;
-  font-size:10px;
-  letter-spacing:.5px;
-}
-
-.adjust-row output {
-  color:var(--gold);
-  font-family:Arial,sans-serif;
-  font-size:10px;
-  text-align:right;
-}
-
-input[type=range] {
-  width:100%;
-  accent-color:var(--yellow);
-}
-
-.toggle-line {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 0 3px;
-  color:var(--cream);
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  border-top:1px solid rgba(216,189,140,.14);
-  margin-top:12px;
-}
-
-.toggle-line input {
-  accent-color:var(--yellow);
-  width:17px;
-  height:17px;
-}
-
-.editor-actions {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:18px 16px 0;
-}
-
-.action-button {
-  padding:15px 8px;
-  border:1px solid var(--gold);
-  background:var(--yellow);
-  color:var(--deep);
-  font-family:Arial,sans-serif;
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:1.5px;
-}
-
-.action-button.outline {
-  background:transparent;
-  color:var(--gold);
-}
-
-.action-button.full {
-  grid-column:1/-1;
-  background:var(--wine);
-  color:var(--cream);
-  border-color:var(--wine);
-}
-
-/* COLLAGE */
-
-#collageView { padding-bottom:30px; }
-
-.collage-content {
-  max-width:600px;
-  margin:auto;
-  padding:20px 16px;
-}
-
-.collage-content h2 {
-  color:var(--yellow);
-  font-size:25px;
-  font-weight:normal;
-  margin:5px 0 8px;
-}
-
-.collage-content p {
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-
-.layout-options {
-  display:flex;
-  gap:8px;
-  margin:20px 0;
-}
-
-.layout-button {
-  flex:1;
-  padding:13px 4px;
-  color:var(--cream);
-  background:#493629;
-  border:1px solid rgba(216,189,140,.3);
-  font-family:Arial,sans-serif;
-  font-size:11px;
-}
-
-.layout-button.selected {
-  color:var(--yellow);
-  border-color:var(--yellow);
-  background:#62513a;
-}
-
-.collage-upload {
-  display:block;
-  padding:17px;
-  border:1px dashed var(--gold);
-  text-align:center;
-  color:var(--gold);
-  font-size:13px;
-  margin:15px 0;
-}
-
-#collageCanvas {
-  display:block;
-  width:100%;
-  height:auto;
-  margin:18px auto;
-  background:#211a16;
-  border:1px solid rgba(216,189,140,.3);
-}
-
-.collage-filter-label {
-  color:var(--gold);
-  font-size:10px;
-  letter-spacing:2px;
-  font-family:Arial,sans-serif;
-  margin-top:22px;
-}
-
-.collage-filter-strip {
-  display:flex;
-  overflow-x:auto;
-  gap:8px;
-  padding:10px 0;
-}
-
-.collage-filter-strip button {
-  flex:0 0 auto;
-  padding:10px 13px;
-  background:#493629;
-  color:var(--cream);
-  border:1px solid rgba(216,189,140,.3);
-  font-size:11px;
-}
-
-.collage-filter-strip button.selected {
-  border-color:var(--yellow);
-  color:var(--yellow);
-}
-
-.footer-note {
-  color:var(--muted);
-  text-align:center;
-  font-family:Arial,sans-serif;
-  font-size:9px;
-  letter-spacing:1px;
-  padding:20px 10px;
-}
-
-@media (min-width:700px) {
-  #homeView { max-width:560px; margin:auto; }
-  .preview-frame { height:390px; }
-}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deep);color:var(--cream);font-family:Georgia,serif}
+button{font:inherit;cursor:pointer}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+button:active{transform:scale(.98)}
+#homeView{padding:18px 16px 30px}
+.home-top{text-align:center;color:var(--gold);font:10px Arial;letter-spacing:4px;padding:8px 0 17px}
+.cover{max-width:480px;margin:auto;border:1px solid #d8bd8c88;box-shadow:0 15px 45px #0007}
+.cover img{display:block;width:100%;height:min(70vh,680px);object-fit:cover}
+.home-bottom{text-align:center;padding:22px 8px}
+.tagline{color:var(--gold);font-style:italic;font-size:13px}
+.main-btn,.secondary-btn{display:block;width:min(100%,330px);margin:14px auto 0;padding:16px;border:1px solid var(--gold);letter-spacing:3px;font: bold 11px Arial}
+.main-btn{background:var(--yellow);color:var(--deep)}
+.secondary-btn{background:transparent;color:var(--gold)}
+.head{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;border-bottom:1px solid #d8bd8c33}
+.back{border:0;background:none;color:var(--gold);font:11px Arial;letter-spacing:1px}
+.head-title{color:var(--yellow);font-size:19px;font-weight:normal;margin:0}
+.eyebrow,.section-label{color:var(--gold);font:10px Arial;letter-spacing:2px;text-transform:uppercase}
+.select-content{max-width:500px;margin:auto;padding:48px 22px;text-align:center}
+.select-content h2,.collage-content h2{color:var(--yellow);font-size:28px;font-weight:normal}
+.select-content p,.collage-content p{color:#b8a991;font-size:13px;line-height:1.7}
+.upload{display:block;margin:28px auto;padding:26px;border:1px dashed var(--gold);color:var(--gold)}
+.upload strong{display:block;color:var(--yellow);margin-bottom:8px}
+input[type=file]{display:none}
+#editorView{height:100vh;overflow-y:auto;padding-bottom:25px}
+.editor-head{position:sticky;top:0;z-index:20;background:var(--deep)}
+.preview-area{position:sticky;top:52px;z-index:10;padding:10px 16px;background:var(--deep);border-bottom:1px solid #d8bd8c22}
+.preview-frame{height:min(38vh,380px);min-height:200px;display:flex;align-items:center;justify-content:center;background:#211a16;border:1px solid #d8bd8c44}
+#previewCanvas{max-width:100%;max-height:100%;width:auto;height:auto}
+.preview-hint{text-align:center;color:#b8a991;font:9px Arial;letter-spacing:1px;margin:7px}
+.section-label{margin:18px 16px 10px}
+.strip{display:flex;gap:9px;overflow-x:auto;padding:2px 16px 13px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.filter{flex:0 0 112px;min-height:65px;padding:10px 7px;background:var(--brown);color:var(--cream);border:1px solid #d8bd8c44;text-align:center}
+.filter span{display:block;font-size:12px}
+.filter small{display:block;color:#b8a991;font:8px Arial;margin-top:6px}
+.filter.selected{border:1px solid var(--yellow);background:#62513a;box-shadow:0 0 13px #f3d66b44}
+.adjustments{margin:0 16px;padding:14px;background:#68765322;border:1px solid #d8bd8c33}
+.adjust-row{display:grid;grid-template-columns:95px 1fr 28px;gap:8px;align-items:center;margin:13px 0}
+.adjust-row label{font:10px Arial}
+.adjust-row output{color:var(--gold);font:10px Arial;text-align:right}
+input[type=range]{width:100%;accent-color:var(--yellow)}
+.toggle{display:flex;justify-content:space-between;align-items:center;padding:13px 0;font:11px Arial;border-top:1px solid #d8bd8c33}
+.toggle input{accent-color:var(--yellow)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px 16px}
+.action{padding:15px 8px;background:var(--yellow);color:var(--deep);border:1px solid var(--gold);font:bold 10px Arial;letter-spacing:1px}
+.action.outline{background:transparent;color:var(--gold)}
+.action.full{grid-column:1/-1;background:var(--wine);color:var(--cream);border-color:var(--wine)}
+.collage-content{max-width:650px;margin:auto;padding:22px 16px}
+.collage-content h2{margin:10px 0}
+.option-row{display:flex;gap:8px;margin:18px 0}
+.option{flex:1;padding:12px 5px;background:var(--brown);color:var(--cream);border:1px solid #d8bd8c55;font:11px Arial}
+.option.selected{border-color:var(--yellow);color:var(--yellow);background:#62513a}
+.collage-upload{display:block;padding:16px;border:1px dashed var(--gold);color:var(--gold);text-align:center;margin:14px 0}
+#collageCanvas{display:block;width:100%;height:auto;margin:18px auto;background:#f6eedc}
+#polaroidCanvas{display:block;width:100%;height:auto;margin:18px auto;background:#f6eedc}
+.patterns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.pattern{min-height:65px;border:1px solid #d8bd8c66;color:#fff;font:10px Arial;text-shadow:0 1px 3px #000;padding:8px}
+.pattern.selected{outline:2px solid var(--yellow);outline-offset:2px}
+.bg-cream{background:#e9dfcc}
+.bg-wine{background:linear-gradient(135deg,#44242b,#814b50,#3b2525)}
+.bg-olive{background:linear-gradient(135deg,#46543b,#83916a,#303b2d)}
+.bg-marble{background:repeating-linear-gradient(130deg,#eee8dd 0 22px,#c7bfb5 23px,#fff 26px,#e6ded3 34px)}
+.bg-leopard{background-color:#bd9a6c;background-image:radial-gradient(ellipse at 20% 30%,#39251b 0 5px,transparent 6px),radial-gradient(ellipse at 70% 60%,#39251b 0 7px,transparent 8px),radial-gradient(ellipse at 40% 85%,#39251b 0 5px,transparent 6px),radial-gradient(ellipse at 85% 15%,#39251b 0 4px,transparent 5px);background-size:55px 55px}
+.bg-bambi{background-color:#e8d7bb;background-image:radial-gradient(circle at 15% 25%,#fff8e7 0 3px,transparent 4px),radial-gradient(circle at 75% 60%,#b99b78 0 4px,transparent 5px),radial-gradient(circle at 45% 85%,#fff8e7 0 3px,transparent 4px);background-size:38px 38px}
+.bg-glitter{background-color:#a68b67;background-image:radial-gradient(#fff4d6 1px,transparent 1.5px),radial-gradient(#e8d4a9 1px,transparent 1.5px),linear-gradient(135deg,#594438,#c3a77a,#594438);background-size:13px 13px,19px 19px,100% 100%}
+.bg-paper{background:repeating-linear-gradient(0deg,#e7d9c0,#e7d9c0 3px,#ddcdb2 4px,#e7d9c0 8px)}
+.bg-choco{background:linear-gradient(135deg,#2d201a,#634632,#33231b)}
+.footer{text-align:center;color:#b8a991;font:9px Arial;letter-spacing:1px;padding:20px}
 </style>
 </head>
-
 <body>
 
-<!-- HOME -->
 <section id="homeView" class="screen active">
-  <div class="home-top">
-    <p>AN EDITORIAL PHOTO EXPERIENCE</p>
-  </div>
-
-  <div class="cover-wrap">
-    <img src="cover.jpg" alt="DLR vintage editorial cover">
-  </div>
-
-  <div class="home-bottom">
-    <p class="tagline">Every Frame Tells a Story.</p>
-    <button class="main-button" onclick="showView('selectView')">EFFECT</button>
-    <button class="secondary-button" onclick="showView('collageView')">THE COLLAGE ATELIER</button>
-  </div>
+ <div class="home-top">AN EDITORIAL PHOTO EXPERIENCE</div>
+ <div class="cover"><img src="cover.jpg" alt="DLR vintage cover"></div>
+ <div class="home-bottom">
+  <p class="tagline">Every Frame Tells a Story.</p>
+  <button class="main-btn" onclick="show('selectView')">EFFECT</button>
+  <button class="secondary-btn" onclick="openCollage(false)">THE COLLAGE ATELIER</button>
+ </div>
 </section>
 
-<!-- PHOTO SELECT -->
 <section id="selectView" class="screen">
-  <div class="page-head">
-    <button class="back-button" onclick="showView('homeView')">← BACK</button>
-    <p class="page-title">The Edit Room</p>
-    <span style="width:40px"></span>
-  </div>
-
-  <div class="select-content">
-    <div class="eyebrow">YOUR MOMENT, YOUR FRAME</div>
-    <h2>Choose Your Photograph</h2>
-    <p>Pick a photograph from your library and give it a little nostalgia.</p>
-
-    <label class="upload-box">
-      <strong>SELECT A PHOTO</strong>
-      <span>Choose an image from your iPhone</span>
-      <input id="photoInput" type="file" accept="image/*">
-    </label>
-
-    <p style="font-size:10px;margin-top:25px">A TOUCH OF NOSTALGIA</p>
-  </div>
+ <div class="head"><button class="back" onclick="show('homeView')">← BACK</button><h1 class="head-title">The Edit Room</h1><span></span></div>
+ <div class="select-content">
+  <div class="eyebrow">YOUR MOMENT, YOUR FRAME</div>
+  <h2>Choose Your Photograph</h2>
+  <p>Pick a photograph from your library and give it a little nostalgia.</p>
+  <label class="upload"><strong>SELECT A PHOTO</strong><span>Choose an image from your iPhone<input id="photoInput" type="file" accept="image/*"></span></label>
+ </div>
 </section>
 
-<!-- EDITOR -->
 <section id="editorView" class="screen">
-  <div class="page-head editor-head">
-    <button class="back-button" onclick="showView('homeView')">← HOME</button>
-    <h1 class="editor-brand">The Edit Room</h1>
-    <button class="back-button" onclick="showView('collageView')">COLLAGE →</button>
-  </div>
-
-  <div class="preview-area">
-    <div class="preview-frame">
-      <canvas id="previewCanvas"></canvas>
-    </div>
-    <p class="preview-hint">YOUR FRAME · YOUR STORY</p>
-  </div>
-
-  <div class="section-label">A Touch of Nostalgia · Filters</div>
-  <div class="filter-strip" id="filterStrip"></div>
-
-  <div class="section-label">Fine Tune Your Frame</div>
-  <div class="adjustments" id="adjustments"></div>
-
-  <div class="editor-actions">
-    <button class="action-button outline" onclick="resetAdjustments()">RESET</button>
-    <button class="action-button" onclick="savePhoto()">SAVE YOUR MASTERPIECE</button>
-    <button class="action-button full" onclick="showView('collageView')">THE COLLAGE ATELIER</button>
-  </div>
-
-  <div class="footer-note">DLR · EVERY FRAME TELLS A STORY</div>
+ <div class="head editor-head">
+  <button class="back" onclick="show('homeView')">← HOME</button>
+  <h1 class="head-title">The Edit Room</h1>
+  <button class="back" onclick="openCollage(true)">COLLAGE →</button>
+ </div>
+ <div class="preview-area"><div class="preview-frame"><canvas id="previewCanvas"></canvas></div><p class="preview-hint">YOUR FRAME · YOUR STORY</p></div>
+ <div class="section-label">A Touch of Nostalgia · Filters</div>
+ <div class="strip" id="filterStrip"></div>
+ <div class="section-label">Fine Tune Your Frame</div>
+ <div class="adjustments" id="adjustments"></div>
+ <div class="actions">
+  <button class="action outline" onclick="resetAdjustments()">RESET</button>
+  <button class="action" onclick="savePhoto()">SAVE YOUR MASTERPIECE</button>
+  <button class="action full" onclick="openCollage(true)">THE COLLAGE ATELIER</button>
+ </div>
+ <div class="footer">DLR · EVERY FRAME TELLS A STORY</div>
 </section>
 
-<!-- COLLAGE -->
 <section id="collageView" class="screen">
-  <div class="page-head">
-    <button class="back-button" onclick="goBackFromCollage()">← BACK</button>
-    <p class="page-title">The Collage Atelier</p>
-    <span style="width:40px"></span>
+ <div class="head"><button class="back" onclick="backCollage()">← BACK</button><h1 class="head-title">The Collage Atelier</h1><span></span></div>
+ <div class="collage-content">
+  <div class="eyebrow">COLLECT YOUR MOMENTS</div>
+  <h2>Make a Little Memory</h2>
+  <p>Choose your collage style.</p>
+  <div class="option-row">
+   <button class="option selected" id="normalTab" onclick="setMode('normal')">CLASSIC COLLAGE</button>
+   <button class="option" id="polaroidTab" onclick="setMode('polaroid')">POLAROID ATELIER</button>
   </div>
 
-  <div class="collage-content">
-    <div class="eyebrow">COLLECT YOUR MOMENTS</div>
-    <h2>Make a Little Memory</h2>
-    <p>Choose a layout and add your photographs to create a collage.</p>
-
-    <div class="layout-options">
-      <button class="layout-button selected" data-layout="2" onclick="chooseLayout(2)">02</button>
-      <button class="layout-button" data-layout="3" onclick="chooseLayout(3)">03</button>
-      <button class="layout-button" data-layout="4" onclick="chooseLayout(4)">04</button>
-      <button class="layout-button" data-layout="6" onclick="chooseLayout(6)">06</button>
-    </div>
-
-    <label class="collage-upload">
-      SELECT PHOTOGRAPHS
-      <input id="collageInput" type="file" accept="image/*" multiple>
-    </label>
-
-    <p id="collageStatus">Choose up to 2 photographs for your collage.</p>
-
-    <canvas id="collageCanvas" width="1000" height="1000"></canvas>
-
-    <div class="collage-filter-label">CHOOSE A COLLAGE MOOD</div>
-    <div class="collage-filter-strip" id="collageFilters"></div>
-
-    <button class="action-button" style="width:100%;margin-top:14px" onclick="saveCollage()">SAVE YOUR COLLAGE</button>
+  <div id="normalPanel">
+   <p>Classic collage · 2, 3, 4 or 6 photographs</p>
+   <div class="option-row" id="normalLayouts">
+    <button class="option selected" onclick="chooseNormal(2,this)">02</button>
+    <button class="option" onclick="chooseNormal(3,this)">03</button>
+    <button class="option" onclick="chooseNormal(4,this)">04</button>
+    <button class="option" onclick="chooseNormal(6,this)">06</button>
+   </div>
+   <label class="collage-upload">SELECT PHOTOGRAPHS<input id="normalInput" type="file" accept="image/*" multiple></label>
+   <p id="normalStatus">Choose up to 2 photographs.</p>
+   <canvas id="collageCanvas" width="1000" height="1000"></canvas>
+   <div class="section-label">COLLAGE FILTER</div>
+   <div class="strip" id="normalFilters"></div>
+   <button class="action" style="width:100%" onclick="saveCanvas('collageCanvas','DLR-Collage.jpg')">SAVE CLASSIC COLLAGE</button>
   </div>
+
+  <div id="polaroidPanel" style="display:none">
+   <p>Instant-film frames · choose 1, 2 or 3 photos, portrait or landscape.</p>
+   <div class="option-row">
+    <button class="option selected" onclick="choosePolaroidCount(1,this)">01 PHOTO</button>
+    <button class="option" onclick="choosePolaroidCount(2,this)">02 PHOTOS</button>
+    <button class="option" onclick="choosePolaroidCount(3,this)">03 PHOTOS</button>
+   </div>
+   <div class="option-row">
+    <button class="option selected" onclick="chooseOrientation('vertical',this)">VERTICAL</button>
+    <button class="option" onclick="chooseOrientation('horizontal',this)">HORIZONTAL</button>
+   </div>
+   <label class="collage-upload">SELECT POLAROID PHOTOS<input id="polaroidInput" type="file" accept="image/*" multiple></label>
+   <p id="polaroidStatus">Choose up to 1 photograph.</p>
+   <div class="section-label">CHOOSE YOUR BACKGROUND</div>
+   <div class="patterns" id="patterns">
+    <button class="pattern bg-cream selected" data-bg="cream" onclick="chooseBackground(this)">CREAM</button>
+    <button class="pattern bg-bambi" data-bg="bambi" onclick="chooseBackground(this)">BAMBI</button>
+    <button class="pattern bg-leopard" data-bg="leopard" onclick="chooseBackground(this)">LEOPARD</button>
+    <button class="pattern bg-marble" data-bg="marble" onclick="chooseBackground(this)">MARBLE</button>
+    <button class="pattern bg-glitter" data-bg="glitter" onclick="chooseBackground(this)">CHAMPAGNE</button>
+    <button class="pattern bg-paper" data-bg="paper" onclick="chooseBackground(this)">VINTAGE PAPER</button>
+    <button class="pattern bg-wine" data-bg="wine" onclick="chooseBackground(this)">BURGUNDY</button>
+    <button class="pattern bg-olive" data-bg="olive" onclick="chooseBackground(this)">OLIVE</button>
+    <button class="pattern bg-choco" data-bg="choco" onclick="chooseBackground(this)">CHOCOLATE</button>
+   </div>
+   <div class="section-label">POLAROID FILM MOOD</div>
+   <div class="strip" id="polaroidFilters"></div>
+   <canvas id="polaroidCanvas" width="1000" height="1200"></canvas>
+   <button class="action" style="width:100%" onclick="saveCanvas('polaroidCanvas','DLR-Polaroid.jpg')">SAVE POLAROID COLLAGE</button>
+  </div>
+ </div>
 </section>
 
 <script>
-/* DLR FILTER COLLECTION */
-
-const filters = [
-  {id:"original",name:"Original",sub:"NATURAL",brightness:0,contrast:0,saturation:0,warm:0,fade:0,grain:0,vignette:0,leak:0},
-  {id:"gold",name:"Kodak Gold 200",sub:"GOLDEN LIGHT",brightness:5,contrast:8,saturation:12,warm:18,fade:5,grain:13,vignette:12,leak:8},
-  {id:"portra",name:"Portra 400",sub:"SOFT PORTRAIT",brightness:5,contrast:-8,saturation:-9,warm:7,fade:12,grain:8,vignette:5,leak:0},
-  {id:"portra800",name:"Portra 800",sub:"LOW LIGHT",brightness:-3,contrast:12,saturation:5,warm:13,fade:4,grain:24,vignette:20,leak:4},
-  {id:"fuji",name:"Fuji 400",sub:"SOFT GREEN",brightness:3,contrast:-5,saturation:-5,warm:-9,fade:10,grain:12,vignette:8,leak:0},
-  {id:"disposable",name:"Disposable 90s",sub:"FLASH MEMORY",brightness:9,contrast:17,saturation:10,warm:14,fade:0,grain:25,vignette:15,leak:6},
-  {id:"flash",name:"Flash Film",sub:"DIRECT FLASH",brightness:12,contrast:23,saturation:5,warm:3,fade:0,grain:8,vignette:5,leak:0},
-  {id:"faded",name:"Faded Film",sub:"OLD PAPER",brightness:8,contrast:-17,saturation:-20,warm:8,fade:30,grain:12,vignette:5,leak:0},
-  {id:"burgundy",name:"Burgundy Film",sub:"WINE TONES",brightness:-2,contrast:12,saturation:-4,warm:10,fade:7,grain:14,vignette:22,leak:5},
-  {id:"dreamy",name:"Dreamy Glow",sub:"SOFT GLOW",brightness:8,contrast:-12,saturation:4,warm:8,fade:13,grain:4,vignette:0,leak:18},
-  {id:"noir",name:"Noir",sub:"DEEP MONO",brightness:-2,contrast:28,saturation:-100,warm:0,fade:0,grain:10,vignette:25,leak:0},
-  {id:"softmono",name:"Soft Mono",sub:"GENTLE B&W",brightness:7,contrast:-12,saturation:-100,warm:0,fade:20,grain:5,vignette:5,leak:0},
-  {id:"grainmono",name:"Grainy B&W",sub:"ANALOG MONO",brightness:-3,contrast:22,saturation:-100,warm:0,fade:3,grain:30,vignette:20,leak:0},
-  {id:"flashmono",name:"Flash Mono",sub:"FLASH B&W",brightness:10,contrast:30,saturation:-100,warm:0,fade:0,grain:12,vignette:8,leak:0},
-  {id:"cinema",name:"Cinema Nights",sub:"DARK CINEMA",brightness:-10,contrast:20,saturation:-15,warm:-8,fade:8,grain:15,vignette:30,leak:0},
-  {id:"olive",name:"Olive Vintage",sub:"EARTH TONES",brightness:0,contrast:-4,saturation:-12,warm:-8,fade:15,grain:16,vignette:14,leak:3},
-  {id:"sepia",name:"Sepia Archive",sub:"OLD MEMORIES",brightness:3,contrast:-8,saturation:-45,warm:28,fade:20,grain:20,vignette:24,leak:0},
-  {id:"a6",name:"Soft Aesthetic",sub:"CLEAN FILM",brightness:5,contrast:-7,saturation:-7,warm:2,fade:8,grain:5,vignette:4,leak:0},
-  {id:"matte",name:"Warm Matte",sub:"MATTE LIGHT",brightness:5,contrast:-18,saturation:-8,warm:12,fade:23,grain:8,vignette:8,leak:0},
-  {id:"cool",name:"Cool Breeze",sub:"COOL TONES",brightness:3,contrast:3,saturation:-9,warm:-20,fade:8,grain:7,vignette:8,leak:0}
+const filters=[
+{id:"original",name:"Original",sub:"NATURAL",v:[0,0,0,0,0,0,0,0,0]},
+{id:"dlr",name:"DLR 09·26",sub:"DATE & SIGNATURE",v:[5,12,8,12,0,20,5,10,15]},
+{id:"light",name:"Golden Light Leak",sub:"GOLDEN RAYS",v:[7,5,9,20,0,12,7,28,9]},
+{id:"gold",name:"Kodak Gold 200",sub:"WARM FILM",v:[5,8,12,18,0,13,5,8,12]},
+{id:"portra",name:"Portra 400",sub:"SOFT PORTRAIT",v:[5,-8,-9,7,0,8,12,0,5]},
+{id:"portra800",name:"Portra 800",sub:"LOW LIGHT",v:[-3,12,5,13,0,24,4,4,20]},
+{id:"fuji",name:"Fuji 400",sub:"SOFT GREEN",v:[3,-5,-5,-9,0,12,10,0,8]},
+{id:"flash",name:"Flash Film",sub:"DIRECT FLASH",v:[12,23,5,3,0,8,0,0,5]},
+{id:"faded",name:"Faded Film",sub:"OLD PAPER",v:[8,-17,-20,8,0,12,30,0,5]},
+{id:"burgundy",name:"Burgundy Film",sub:"WINE TONES",v:[-2,12,-4,10,0,14,7,5,22]},
+{id:"dreamy",name:"Dreamy Glow",sub:"SOFT GLOW",v:[8,-12,4,8,2,4,13,18,0]},
+{id:"noir",name:"Noir",sub:"DEEP MONO",v:[-2,28,-100,0,0,10,0,0,25]},
+{id:"softmono",name:"Soft Mono",sub:"GENTLE B&W",v:[7,-12,-100,0,0,5,20,0,5]},
+{id:"grainmono",name:"Grainy B&W",sub:"ANALOG MONO",v:[-3,22,-100,0,0,30,3,0,20]},
+{id:"flashmono",name:"Flash Mono",sub:"FLASH B&W",v:[10,30,-100,0,0,12,0,0,8]},
+{id:"cinema",name:"Cinema Nights",sub:"DARK CINEMA",v:[-10,20,-15,-8,0,15,8,0,30]},
+{id:"olive",name:"Olive Vintage",sub:"EARTH TONES",v:[0,-4,-12,-8,0,16,15,3,14]},
+{id:"sepia",name:"Sepia Archive",sub:"OLD MEMORIES",v:[3,-8,-45,28,0,20,20,0,24]},
+{id:"matte",name:"Warm Matte",sub:"MATTE LIGHT",v:[5,-18,-8,12,0,8,23,0,8]},
+{id:"cool",name:"Cool Breeze",sub:"COOL TONES",v:[3,3,-9,-20,0,7,8,0,8]}
 ];
+const defs=[["brightness","Brightness",-50,50],["contrast","Contrast",-50,50],["saturation","Saturation",-100,100],["warm","Warmth",-50,50],["blur","Soft Focus",0,8],["grain","Film Grain",0,50],["fade","Fade",0,50],["leak","Light Leak",0,50],["vignette","Vignette",0,50]];
+let originalImage=null,currentFilter=filters[0],adjustments={};
+let dateStamp=false,editorWasOpen=false;
+let collageMode="normal",normalCount=2,normalImages=[],normalFilter=filters[0];
+let polaroidCount=1,polaroidImages=[],polaroidFilter=filters[0],polaroidOrientation="vertical",polaroidBg="cream";
 
-const controlDefs = [
-  ["brightness","Brightness",-50,50],
-  ["contrast","Contrast",-50,50],
-  ["saturation","Saturation",-100,100],
-  ["warm","Warmth",-50,50],
-  ["blur","Soft Focus",0,8],
-  ["grain","Film Grain",0,50],
-  ["fade","Fade",0,50],
-  ["leak","Light Leak",0,50],
-  ["vignette","Vignette",0,50]
-];
-
-let originalImage = null;
-let currentFilter = filters[0];
-let adjustments = {};
-let dateStamp = false;
-let collageLayout = 2;
-let collageImages = [];
-let collageFilter = filters[0];
-let editorWasOpen = false;
-
-function defaultAdjustments(filter) {
-  return {
-    brightness:filter.brightness || 0,
-    contrast:filter.contrast || 0,
-    saturation:filter.saturation || 0,
-    warm:filter.warm || 0,
-    blur:0,
-    grain:filter.grain || 0,
-    fade:filter.fade || 0,
-    leak:filter.leak || 0,
-    vignette:filter.vignette || 0
-  };
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0)}
+function openCollage(fromEditor){editorWasOpen=fromEditor;show("collageView")}
+function backCollage(){show(editorWasOpen&&originalImage?"editorView":"homeView")}
+function valuesFor(f){return Object.fromEntries(defs.map((d,i)=>[d[0],f.v[i]]))}
+function loadPhoto(file,callback){
+ if(!file)return;
+ const url=URL.createObjectURL(file),img=new Image();
+ img.onload=()=>{callback(img);URL.revokeObjectURL(url)};
+ img.onerror=()=>{URL.revokeObjectURL(url);alert("Fotoğraf açılamadı. Başka bir fotoğraf seç.")};
+ img.src=url;
 }
-
-function showView(id) {
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo(0,0);
-}
-
-function goBackFromCollage() {
-  if(editorWasOpen && originalImage) showView("editorView");
-  else showView("homeView");
-}
-
-/* PHOTO LOADING */
-
-document.getElementById("photoInput").addEventListener("change",function(e) {
-  const file=e.target.files[0];
-  if(!file) return;
-  const url=URL.createObjectURL(file);
-  const img=new Image();
-  img.onload=()=>{
-    originalImage=img;
-    currentFilter=filters[0];
-    adjustments=defaultAdjustments(currentFilter);
-    dateStamp=false;
-    editorWasOpen=true;
-    buildFilterStrip();
-    buildAdjustments();
-    renderEditor();
-    showView("editorView");
-    URL.revokeObjectURL(url);
-  };
-  img.onerror=()=>alert("This photo could not be opened. Please choose another image.");
-  img.src=url;
-  e.target.value="";
+document.getElementById("photoInput").addEventListener("change",e=>{
+ const file=e.target.files[0];if(!file)return;
+ loadPhoto(file,img=>{
+  originalImage=img;currentFilter=filters[0];adjustments=valuesFor(currentFilter);dateStamp=false;
+  buildFilters("filterStrip",currentFilter,selectFilter);buildAdjustments();renderEditor();show("editorView");
+ });e.target.value="";
 });
-
-/* FILTER STRIP */
-
-function buildFilterStrip() {
-  const strip=document.getElementById("filterStrip");
-  strip.innerHTML="";
-  filters.forEach(filter=>{
-    const button=document.createElement("button");
-    button.className="filter-card"+(filter.id===currentFilter.id?" selected":"");
-    button.innerHTML='<span class="filter-name">'+filter.name+'</span><small>'+filter.sub+'</small>';
-    button.onclick=()=>{
-      currentFilter=filter;
-      adjustments=defaultAdjustments(filter);
-      dateStamp=false;
-      buildFilterStrip();
-      buildAdjustments();
-      renderEditor();
-    };
-    strip.appendChild(button);
-  });
+function selectFilter(f){
+ currentFilter=f;adjustments=valuesFor(f);dateStamp=f.id==="dlr"||f.id==="light";
+ buildFilters("filterStrip",currentFilter,selectFilter);buildAdjustments();renderEditor();
 }
-
-/* SLIDERS */
-
-function buildAdjustments() {
-  const panel=document.getElementById("adjustments");
-  panel.innerHTML="";
-
-  controlDefs.forEach(([key,label,min,max])=>{
-    const row=document.createElement("div");
-    row.className="adjust-row";
-    row.innerHTML=`
-      <label for="control-${key}">${label}</label>
-      <input id="control-${key}" type="range" min="${min}" max="${max}" value="${adjustments[key] || 0}" step="1">
-      <output id="value-${key}">${adjustments[key] || 0}</output>
-    `;
-    const input=row.querySelector("input");
-    input.addEventListener("input",()=>{
-      adjustments[key]=Number(input.value);
-      document.getElementById("value-"+key).textContent=input.value;
-      renderEditor();
-    });
-    panel.appendChild(row);
-  });
-
-  const toggle=document.createElement("label");
-  toggle.className="toggle-line";
-  toggle.innerHTML='<span>Old Camera Date · 09 26</span><input id="dateToggle" type="checkbox">';
-  toggle.querySelector("input").checked=dateStamp;
-  toggle.querySelector("input").addEventListener("change",e=>{
-    dateStamp=e.target.checked;
-    renderEditor();
-  });
-  panel.appendChild(toggle);
-
-  const note=document.createElement("div");
-  note.style.cssText="color:#b8a991;font:9px Arial,sans-serif;line-height:1.6;margin-top:12px";
-  note.textContent="The little DLR signature and date are added only with Disposable 90s.";
-  panel.appendChild(note);
+function buildFilters(id,selected,callback){
+ const el=document.getElementById(id);el.innerHTML="";
+ filters.forEach(f=>{
+  const b=document.createElement("button");b.className="filter"+(f.id===selected.id?" selected":"");
+  b.innerHTML="<span>"+f.name+"</span><small>"+f.sub+"</small>";
+  b.onclick=()=>callback(f);el.appendChild(b);
+ });
 }
-
-function resetAdjustments() {
-  adjustments=defaultAdjustments(currentFilter);
-  dateStamp=false;
-  buildAdjustments();
-  renderEditor();
+function buildAdjustments(){
+ const panel=document.getElementById("adjustments");panel.innerHTML="";
+ defs.forEach(([key,label,min,max])=>{
+  const row=document.createElement("div");row.className="adjust-row";
+  row.innerHTML=`<label>${label}</label><input type="range" min="${min}" max="${max}" value="${adjustments[key]||0}"><output>${adjustments[key]||0}</output>`;
+  const input=row.querySelector("input"),out=row.querySelector("output");
+  input.oninput=()=>{adjustments[key]=+input.value;out.textContent=input.value;renderEditor()};
+  panel.appendChild(row);
+ });
+ const t=document.createElement("label");t.className="toggle";
+ t.innerHTML='<span>Old Camera Date · 09 26</span><input type="checkbox">';
+ t.querySelector("input").checked=dateStamp;
+ t.querySelector("input").onchange=e=>{dateStamp=e.target.checked;renderEditor()};
+ panel.appendChild(t);
+ const note=document.createElement("p");note.style="font:9px Arial;color:#b8a991";
+ note.textContent="DLR imzası yalnızca DLR 09·26 filtresinde görünür. Tarih ilk iki özel efektte otomatik eklenir.";
+ panel.appendChild(note);
 }
-
-/* IMAGE PROCESSING */
-
-function makeCanvasImage(img,maxSize=1500) {
-  const ratio=Math.min(1,maxSize/Math.max(img.naturalWidth || img.width,img.naturalHeight || img.height));
-  const canvas=document.createElement("canvas");
-  canvas.width=Math.max(1,Math.round((img.naturalWidth || img.width)*ratio));
-  canvas.height=Math.max(1,Math.round((img.naturalHeight || img.height)*ratio));
-  return canvas;
+function resetAdjustments(){adjustments=valuesFor(currentFilter);buildAdjustments();renderEditor()}
+function clamp(v){return Math.max(0,Math.min(255,v))}
+function makeCanvas(img,max=1400){
+ const ratio=Math.min(1,max/Math.max(img.naturalWidth||img.width,img.naturalHeight||img.height));
+ const c=document.createElement("canvas");c.width=Math.round((img.naturalWidth||img.width)*ratio);c.height=Math.round((img.naturalHeight||img.height)*ratio);return c;
 }
-
-function clamp(v) { return Math.max(0,Math.min(255,v)); }
-
-function processImage(img,settings,filterId,includeStamp=false) {
-  const canvas=makeCanvasImage(img,1500);
-  const ctx=canvas.getContext("2d",{willReadFrequently:true});
-  const w=canvas.width,h=canvas.height;
-
-  ctx.save();
-  if(settings.blur>0) ctx.filter="blur("+Math.min(4,settings.blur*.45)+"px)";
-  ctx.drawImage(img,0,0,w,h);
-  ctx.restore();
-
-  let imageData;
-  try {
-    imageData=ctx.getImageData(0,0,w,h);
-  } catch(err) {
-    return canvas;
+function processImage(img,s,filterId,stamp=true){
+ const c=makeCanvas(img),ctx=c.getContext("2d",{willReadFrequently:true}),w=c.width,h=c.height;
+ ctx.save();if(s.blur)ctx.filter="blur("+Math.min(4,s.blur*.45)+"px)";ctx.drawImage(img,0,0,w,h);ctx.restore();
+ const im=ctx.getImageData(0,0,w,h),d=im.data;
+ const cf=259*(s.contrast+255)/(255*(259-s.contrast));
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+  const i=(y*w+x)*4;let r=d[i],g=d[i+1],b=d[i+2];
+  r=(r-128)*cf+128+s.brightness*2.1;g=(g-128)*cf+128+s.brightness*2.1;b=(b-128)*cf+128+s.brightness*2.1;
+  const gray=.299*r+.587*g+.114*b,sat=1+s.saturation/100;
+  r=gray+(r-gray)*sat;g=gray+(g-gray)*sat;b=gray+(b-gray)*sat;
+  r+=s.warm*.72;g+=s.warm*.12;b-=s.warm*.65;
+  if(filterId==="fuji"||filterId==="olive"){g+=Math.max(0,Math.min(12,(r-b)*.035));r-=2}
+  if(filterId==="burgundy"){r+=5;b+=Math.max(0,(100-gray)*.08);g-=3}
+  if(filterId==="sepia"){const rr=.393*r+.769*g+.189*b,gg=.349*r+.686*g+.168*b,bb=.272*r+.534*g+.131*b;r=rr;g=gg;b=bb}
+  const f=s.fade/100;r=r*(1-f)+(r*.82+36)*f;g=g*(1-f)+(g*.82+34)*f;b=b*(1-f)+(b*.82+30)*f;
+  if(s.grain){const n=(Math.random()-.5)*s.grain*1.35;r+=n;g+=n;b+=n}
+  if(s.vignette){const dx=(x-w/2)/(w/2),dy=(y-h/2)/(h/2),shade=1-Math.max(0,Math.sqrt(dx*dx+dy*dy)-.25)*s.vignette/105;r*=shade;g*=shade;b*=shade}
+  if(s.leak){
+   const pos=x/w;
+   const glow=Math.max(0,1-Math.abs(pos-.12)*2.2)*Math.max(0,1-Math.abs(y/h-.25)*2.1);
+   const amount=glow*s.leak*1.1;r+=amount*2.4;g+=amount*1.25;b+=amount*.5;
+   const streak=Math.max(0,1-Math.abs(pos-.28)*16)*Math.max(0,1-Math.abs(y/h-.17)*3)*s.leak*.55;
+   r+=streak*2.2;g+=streak*1.5;b+=streak*.8;
   }
-
-  const data=imageData.data;
-  const brightness=settings.brightness || 0;
-  const contrast=settings.contrast || 0;
-  const saturation=settings.saturation || 0;
-  const warmth=settings.warm || 0;
-  const fade=settings.fade || 0;
-  const grain=settings.grain || 0;
-  const vignette=settings.vignette || 0;
-  const leak=settings.leak || 0;
-
-  const contrastFactor=(259*(contrast+255))/(255*(259-contrast));
-  const seed=filterId.length*193+Math.round(w*h/17);
-
-  for(let y=0;y<h;y++) {
-    for(let x=0;x<w;x++) {
-      const i=(y*w+x)*4;
-      let r=data[i],g=data[i+1],b=data[i+2];
-
-      r=(r-128)*contrastFactor+128+brightness*2.1;
-      g=(g-128)*contrastFactor+128+brightness*2.1;
-      b=(b-128)*contrastFactor+128+brightness*2.1;
-
-      const gray=.299*r+.587*g+.114*b;
-      const sat=1+saturation/100;
-      r=gray+(r-gray)*sat;
-      g=gray+(g-gray)*sat;
-      b=gray+(b-gray)*sat;
-
-      r+=warmth*0.72;
-      g+=warmth*0.12;
-      b-=warmth*0.65;
-
-      if(filterId==="fuji" || filterId==="olive") {
-        g+=Math.max(0,Math.min(12,(r-b)*.035));
-        r-=2;
-      }
-      if(filterId==="burgundy") {
-        r+=5; b+=Math.max(0,(100-gray)*.08);
-        g-=3;
-      }
-      if(filterId==="portra" || filterId==="portra800") {
-        r+=2; g+=1; b-=2;
-      }
-      if(filterId==="sepia") {
-        const sr=.393*r+.769*g+.189*b;
-        const sg=.349*r+.686*g+.168*b;
-        const sb=.272*r+.534*g+.131*b;
-        r=sr;g=sg;b=sb;
-      }
-      if(filterId==="cinema") {
-        b+=5; r-=2;
-      }
-
-      const faded=fade/100;
-      r=r*(1-faded)+((r*.82+36)*faded);
-      g=g*(1-faded)+((g*.82+34)*faded);
-      b=b*(1-faded)+((b*.82+30)*faded);
-
-      if(grain>0) {
-        const noise=(Math.random()-.5)*grain*1.35;
-        r+=noise;g+=noise;b+=noise;
-      }
-
-      if(vignette>0) {
-        const dx=(x-w/2)/(w/2);
-        const dy=(y-h/2)/(h/2);
-        const distance=Math.sqrt(dx*dx+dy*dy);
-        const shade=1-Math.max(0,distance-.25)*vignette/105;
-        r*=shade;g*=shade;b*=shade;
-      }
-
-      if(leak>0) {
-        const position=x/w;
-        const glow=Math.max(0,1-position*1.7)*Math.max(0,1-Math.abs(y/h-.18)*2.2);
-        const amount=glow*leak*.85;
-        r+=amount*2.4;
-        g+=amount*.85;
-        b+=amount*.25;
-      }
-
-      data[i]=clamp(r);
-      data[i+1]=clamp(g);
-      data[i+2]=clamp(b);
-    }
-  }
-
-  ctx.putImageData(imageData,0,0);
-
-  if(includeStamp && (filterId==="disposable" || dateStamp)) {
-    drawDateStamp(ctx,w,h,filterId==="disposable");
-  }
-
-  return canvas;
+  d[i]=clamp(r);d[i+1]=clamp(g);d[i+2]=clamp(b);
+ }
+ ctx.putImageData(im,0,0);
+ if(stamp&&(filterId==="dlr"||filterId==="light"||dateStamp))drawStamp(ctx,w,h,filterId==="dlr");
+ return c;
 }
-
-function drawDateStamp(ctx,w,h,signature) {
-  const size=Math.max(14,Math.round(w*.035));
-  ctx.save();
-  ctx.font="bold "+size+"px Arial, sans-serif";
-  ctx.textAlign="right";
-  ctx.textBaseline="bottom";
-  ctx.shadowColor="rgba(0,0,0,.5)";
-  ctx.shadowBlur=3;
-  ctx.fillStyle="#f4b94f";
-  ctx.fillText("09 26",w- Math.max(16,w*.035),h-Math.max(16,h*.035));
-  if(signature) {
-    ctx.font="bold "+Math.max(10,Math.round(size*.42))+"px Arial,sans-serif";
-    ctx.fillStyle="#f3d66b";
-    ctx.fillText("DLR",w-Math.max(16,w*.035),h-Math.max(16,h*.035)-size*1.3);
-  }
-  ctx.restore();
+function drawStamp(ctx,w,h,signature){
+ const size=Math.max(14,w*.033);ctx.save();ctx.font="bold "+size+"px Arial";ctx.textAlign="right";ctx.textBaseline="bottom";ctx.shadowColor="#0009";ctx.shadowBlur=3;ctx.fillStyle="#f4a84b";
+ ctx.fillText("09 26",w-w*.035,h-h*.035);
+ if(signature){ctx.font="bold "+Math.max(10,size*.42)+"px Arial";ctx.fillStyle="#f3d66b";ctx.fillText("DLR",w-w*.035,h-h*.035-size*1.3)}
+ ctx.restore();
 }
-
-function renderEditor() {
-  if(!originalImage) return;
-  const result=processImage(originalImage,adjustments,currentFilter.id,true);
-  const canvas=document.getElementById("previewCanvas");
-  canvas.width=result.width;
-  canvas.height=result.height;
-  const ctx=canvas.getContext("2d");
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.drawImage(result,0,0);
+function renderEditor(){if(!originalImage)return;const r=processImage(originalImage,adjustments,currentFilter.id,true),c=document.getElementById("previewCanvas");c.width=r.width;c.height=r.height;c.getContext("2d").drawImage(r,0,0)}
+async function saveCanvas(id,name){
+ const canvas=document.getElementById(id);
+ const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.94));
+ if(!blob){alert("Görsel hazırlanamadı.");return}
+ const file=new File([blob],name,{type:"image/jpeg"});
+ try{
+  if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]})))await navigator.share({files:[file],title:"DLR"});
+  else{const url=URL.createObjectURL(file),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+ }catch(e){if(e.name!=="AbortError")alert("Kaydetme sırasında sorun oluştu. Tekrar deneyebilirsin.")}
 }
+function savePhoto(){if(!originalImage)return;const c=processImage(originalImage,adjustments,currentFilter.id,true);const old=document.getElementById("previewCanvas");old.width=c.width;old.height=c.height;old.getContext("2d").drawImage(c,0,0);saveCanvas("previewCanvas","DLR-"+currentFilter.id+".jpg")}
 
-/* SAVE */
-
-async function canvasToFile(canvas,name) {
-  return new Promise(resolve=>{
-    canvas.toBlob(blob=>{
-      if(!blob) { resolve(null); return; }
-      resolve(new File([blob],name,{type:"image/jpeg",lastModified:Date.now()}));
-    },"image/jpeg",.94);
-  });
+/* CLASSIC COLLAGE */
+function setMode(mode){
+ collageMode=mode;
+ document.getElementById("normalPanel").style.display=mode==="normal"?"block":"none";
+ document.getElementById("polaroidPanel").style.display=mode==="polaroid"?"block":"none";
+ document.getElementById("normalTab").classList.toggle("selected",mode==="normal");
+ document.getElementById("polaroidTab").classList.toggle("selected",mode==="polaroid");
 }
-
-async function shareOrDownload(file) {
-  if(!file) {
-    alert("The image could not be prepared. Please try again.");
-    return;
-  }
-  try {
-    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))) {
-      await navigator.share({files:[file],title:"My DLR Masterpiece"});
-    } else {
-      const url=URL.createObjectURL(file);
-      const a=document.createElement("a");
-      a.href=url;
-      a.download=file.name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),1500);
-      alert("Your image is ready. If it did not save automatically, open the downloaded image and save it to Photos.");
-    }
-  } catch(err) {
-    if(err.name!=="AbortError") {
-      alert("Please try saving again.");
-    }
-  }
-}
-
-async function savePhoto() {
-  if(!originalImage) return;
-  const result=processImage(originalImage,adjustments,currentFilter.id,true);
-  const file=await canvasToFile(result,"DLR-"+currentFilter.id+".jpg");
-  await shareOrDownload(file);
-}
-
-/* COLLAGE */
-
-function chooseLayout(number) {
-  collageLayout=number;
-  document.querySelectorAll(".layout-button").forEach(button=>{
-    button.classList.toggle("selected",Number(button.dataset.layout)===number);
-  });
-  document.getElementById("collageStatus").textContent="Choose up to "+number+" photographs for your collage.";
-  drawCollage();
-}
-
-document.getElementById("collageInput").addEventListener("change",function(e) {
-  const files=Array.from(e.target.files || []).slice(0,collageLayout);
-  collageImages=[];
-  if(!files.length) return;
-
-  let loaded=0;
-  files.forEach(file=>{
-    const url=URL.createObjectURL(file);
-    const img=new Image();
-    img.onload=()=>{
-      collageImages.push(img);
-      URL.revokeObjectURL(url);
-      loaded++;
-      if(loaded===files.length) {
-        document.getElementById("collageStatus").textContent=collageImages.length+" photograph(s) added.";
-        drawCollage();
-      }
-    };
-    img.onerror=()=>{
-      URL.revokeObjectURL(url);
-      loaded++;
-      if(loaded===files.length) drawCollage();
-    };
-    img.src=url;
-  });
-  e.target.value="";
+function chooseNormal(n,b){normalCount=n;document.querySelectorAll("#normalLayouts .option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");document.getElementById("normalStatus").textContent="Choose up to "+n+" photographs.";drawNormal()}
+document.getElementById("normalInput").addEventListener("change",e=>{
+ normalImages=[];const files=Array.from(e.target.files).slice(0,normalCount);
+ Promise.all(files.map(file=>new Promise(resolve=>loadPhoto(file,resolve)))).then(imgs=>{normalImages=imgs;document.getElementById("normalStatus").textContent=imgs.length+" photo(s) added.";drawNormal()});e.target.value="";
 });
-
-function buildCollageFilters() {
-  const strip=document.getElementById("collageFilters");
-  strip.innerHTML="";
-  filters.forEach(filter=>{
-    const button=document.createElement("button");
-    button.textContent=filter.name;
-    button.className=filter.id===collageFilter.id?"selected":"";
-    button.onclick=()=>{
-      collageFilter=filter;
-      buildCollageFilters();
-      drawCollage();
-    };
-    strip.appendChild(button);
-  });
+function drawCrop(ctx,img,x,y,w,h){
+ const iw=img.width,ih=img.height,scale=Math.max(w/iw,h/ih),sw=w/scale,sh=h/scale;
+ ctx.drawImage(img,(iw-sw)/2,(ih-sh)/2,sw,sh,x,y,w,h);
 }
-
-function drawCrop(ctx,img,x,y,w,h) {
-  const iw=img.naturalWidth || img.width;
-  const ih=img.naturalHeight || img.height;
-  const scale=Math.max(w/iw,h/ih);
-  const sw=w/scale,sh=h/scale;
-  const sx=(iw-sw)/2,sy=(ih-sh)/2;
-  ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
+function drawNormal(){
+ const c=document.getElementById("collageCanvas"),ctx=c.getContext("2d"),gap=12;c.width=1000;c.height=1000;ctx.fillStyle="#f6eedc";ctx.fillRect(0,0,1000,1000);
+ const cells=normalCount===2?[[gap,gap,488,976],[512,gap,488,976]]:normalCount===3?[[gap,gap,976,480],[gap,508,480,480],[508,508,480,480]]:normalCount===4?[[gap,gap,480,480],[508,gap,480,480],[gap,508,480,480],[508,508,480,480]]:Array.from({length:6},(_,i)=>[gap+(i%3)*329,gap+Math.floor(i/3)*329,317,317]);
+ normalImages.slice(0,normalCount).forEach((img,i)=>{const [x,y,w,h]=cells[i],p=processImage(img,valuesFor(normalFilter),normalFilter.id,false);ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();drawCrop(ctx,p,x,y,w,h);ctx.restore()});
+ ctx.fillStyle="#493629";ctx.font="bold 17px Georgia";ctx.textAlign="right";ctx.fillText("DLR",978,990);
 }
+function chooseNormalFilter(f){normalFilter=f;buildFilters("normalFilters",normalFilter,chooseNormalFilter);drawNormal()}
+buildFilters("normalFilters",normalFilter,chooseNormalFilter);
+drawNormal();
 
-function drawCollage() {
-  const canvas=document.getElementById("collageCanvas");
-  const ctx=canvas.getContext("2d");
-  const gap=12;
-  const bg="#f6eedc";
-  canvas.width=1000;
-  canvas.height=1000;
-  ctx.fillStyle=bg;
-  ctx.fillRect(0,0,1000,1000);
-
-  if(!collageImages.length) {
-    ctx.fillStyle="#493629";
-    ctx.textAlign="center";
-    ctx.font="italic 38px Georgia";
-    ctx.fillText("Your memories belong here",500,480);
-    ctx.font="18px Arial";
-    ctx.fillText("DLR · THE COLLAGE ATELIER",500,525);
-    return;
-  }
-
-  const count=Math.min(collageImages.length,collageLayout);
-  const cells=[];
-
-  if(collageLayout===2) {
-    cells.push([gap,gap,488,976],[512,gap,488,976]);
-  } else if(collageLayout===3) {
-    cells.push([gap,gap,976,480],[gap,508,480,480],[508,508,480,480]);
-  } else if(collageLayout===4) {
-    cells.push([gap,gap,480,480],[508,gap,480,480],[gap,508,480,480],[508,508,480,480]);
-  } else {
-    const cw=317, ch=317;
-    for(let row=0;row<2;row++) {
-      for(let col=0;col<3;col++) {
-        cells.push([gap+col*329,gap+row*329,cw,ch]);
-      }
-    }
-  }
-
-  for(let i=0;i<count;i++) {
-    const [x,y,w,h]=cells[i];
-    const processed=processImage(collageImages[i],defaultAdjustments(collageFilter),collageFilter.id,false);
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(x,y,w,h);
-    ctx.clip();
-    drawCrop(ctx,processed,x,y,w,h);
-    ctx.restore();
-  }
-
-  ctx.fillStyle="#493629";
-  ctx.font="bold 17px Georgia";
-  ctx.textAlign="right";
-  ctx.fillText("DLR",978,990);
+/* POLAROID ATELIER */
+function choosePolaroidCount(n,b){
+ polaroidCount=n;b.parentElement.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");
+ document.getElementById("polaroidStatus").textContent="Choose up to "+n+" photograph(s).";drawPolaroid();
 }
-
-function saveCollage() {
-  if(!collageImages.length) {
-    alert("Please select your photographs first.");
-    return;
-  }
-  const canvas=document.getElementById("collageCanvas");
-  canvas.toBlob(async blob=>{
-    if(!blob) return;
-    const file=new File([blob],"DLR-Collage.jpg",{type:"image/jpeg"});
-    await shareOrDownload(file);
-  },"image/jpeg",.94);
+function chooseOrientation(mode,b){
+ polaroidOrientation=mode;b.parentElement.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");drawPolaroid();
 }
+function chooseBackground(b){
+ polaroidBg=b.dataset.bg;document.querySelectorAll(".pattern").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");drawPolaroid();
+}
+document.getElementById("polaroidInput").addEventListener("change",e=>{
+ polaroidImages=[];const files=Array.from(e.target.files).slice(0,polaroidCount);
+ Promise.all(files.map(file=>new Promise(resolve=>loadPhoto(file,resolve)))).then(imgs=>{
+  polaroidImages=imgs;document.getElementById("polaroidStatus").textContent=imgs.length+" photo(s) added.";drawPolaroid();
+ });e.target.value="";
+});
+function choosePolaroidFilter(f){polaroidFilter=f;buildFilters("polaroidFilters",polaroidFilter,choosePolaroidFilter);drawPolaroid()}
+buildFilters("polaroidFilters",polaroidFilter,choosePolaroidFilter);
 
-buildCollageFilters();
-drawCollage();
+function drawPattern(ctx,w,h){
+ const patterns={
+ cream:"#e9dfcc",wine:"#61343b",olive:"#687653",marble:"#e5ded3",
+ leopard:"#b99a70",bambi:"#e9d9bf",glitter:"#9b8060",paper:"#e4d5bb",choco:"#493629"
+ };
+ ctx.fillStyle=patterns[polaroidBg]||"#e9dfcc";ctx.fillRect(0,0,w,h);
+ if(polaroidBg==="marble"){
+  for(let i=0;i<12;i++){ctx.strokeStyle=i%2?"#b9afa3":"#fff9";ctx.lineWidth=2+i%3;ctx.beginPath();ctx.moveTo(i*100-100,0);ctx.bezierCurveTo(i*100+130,250,i*100-120,500,i*100+80,h);ctx.stroke()}
+ }
+ if(polaroidBg==="leopard"){
+  for(let y=30;y<h;y+=105)for(let x=30;x<w;x+=105){ctx.fillStyle="#39251b";ctx.beginPath();ctx.ellipse(x,y,18,12,Math.random(),0,Math.PI*2);ctx.fill();ctx.fillStyle="#d8bd8c";ctx.beginPath();ctx.ellipse(x,y,8,5,0,0,Math.PI*2);ctx.fill()}
+ }
+ if(polaroidBg==="bambi"){
+  for(let y=25;y<h;y+=85)for(let x=25;x<w;x+=85){ctx.fillStyle="#fff8e8aa";ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x+24,y+20,2,0,Math.PI*2);ctx.fill()}
+ }
+ if(polaroidBg==="glitter"){
+  for(let i=0;i<450;i++){ctx.fillStyle=i%3?"#fff5d6aa":"#e8d4a9";ctx.fillRect(Math.random()*w,Math.random()*h,2,2)}
+ }
+ if(polaroidBg==="paper"){
+  for(let y=0;y<h;y+=8){ctx.strokeStyle="#b9a88d44";ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+ }
+}
+function drawPolaroid(){
+ const c=document.getElementById("polaroidCanvas"),ctx=c.getContext("2d");
+ const horizontal=polaroidOrientation==="horizontal";
+ c.width=horizontal?1200:900;c.height=horizontal?900:1200;
+ const w=c.width,h=c.height;drawPattern(ctx,w,h);
+ const count=Math.max(1,polaroidCount),margin=45,gap=22;
+ let cardW,cardH;
+ if(horizontal){cardW=(w-2*margin-(count-1)*gap)/count;cardH=h*.72}
+ else{cardW=w*.72;cardH=(h-2*margin-(count-1)*gap)/count}
+ const total=count*cardH+(count-1)*gap;
+ const startY=(h-total)/2;
+ for(let i=0;i<count;i++){
+  const x=horizontal?(w-(count*cardW+(count-1)*gap))/2+i*(cardW+gap):(w-cardW)/2;
+  const y=horizontal?(h-cardH)/2:startY+i*(cardH+gap);
+  ctx.fillStyle="#fffdf6";ctx.shadowColor="#24180f66";ctx.shadowBlur=18;ctx.shadowOffsetY=8;ctx.fillRect(x,y,cardW,cardH);ctx.shadowColor="transparent";
+  const image=polaroidImages[i];
+  if(image){
+   const photo=processImage(image,valuesFor(polaroidFilter),polaroidFilter.id,false);
+   const bottom=cardH*.19;drawCrop(ctx,photo,x+cardW*.065,y+cardH*.055,cardW*.87,cardH-bottom-cardH*.08);
+  }else{
+   ctx.fillStyle="#e8dfd1";ctx.fillRect(x+cardW*.065,y+cardH*.055,cardW*.87,cardH*.70);
+   ctx.fillStyle="#8b7c68";ctx.font="italic 22px Georgia";ctx.textAlign="center";ctx.fillText("Your photo",x+cardW/2,y+cardH*.43);
+  }
+  ctx.fillStyle="#493629";ctx.font="italic "+Math.max(13,cardW*.045)+"px Georgia";ctx.textAlign="center";ctx.fillText("a little memory",x+cardW/2,y+cardH-cardH*.055);
+ }
+}
+drawPolaroid();
 </script>
-
 </body>
 </html>
