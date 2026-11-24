@@ -418,6 +418,32 @@ function blendFilter(index, intensity) {
   return filter.css;
 }
 
+
+let filmGrainCanvas = null;
+
+function getFilmGrainPattern(ctx) {
+  if (!filmGrainCanvas) {
+    filmGrainCanvas = document.createElement("canvas");
+    filmGrainCanvas.width = 256;
+    filmGrainCanvas.height = 256;
+
+    const grainCtx = filmGrainCanvas.getContext("2d");
+    const imageData = grainCtx.createImageData(256, 256);
+
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      const value = Math.random() * 255;
+      imageData.data[i] = value;
+      imageData.data[i + 1] = value;
+      imageData.data[i + 2] = value;
+      imageData.data[i + 3] = 255;
+    }
+
+    grainCtx.putImageData(imageData, 0, 0);
+  }
+
+  return ctx.createPattern(filmGrainCanvas, "repeat");
+}
+
 function drawImageCover(ctx, image, x, y, width, height, filterIndex, intensity) {
   const scale = Math.max(width / image.width, height / image.height);
   const sw = width / scale;
@@ -426,30 +452,37 @@ function drawImageCover(ctx, image, x, y, width, height, filterIndex, intensity)
   const sy = (image.height - sh) / 2;
 
   ctx.save();
-
-  // Original photograph
-  ctx.filter = "none";
   ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.filter = "none";
+
   ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
 
-  // Filter overlay
   if (filterIndex !== 0 && intensity > 0) {
     ctx.globalAlpha = intensity / 100;
     ctx.filter = filters[filterIndex].css;
     ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
     ctx.filter = "none";
-  }
+    ctx.globalAlpha = 1;
 
-  // Color tint
-  const tint = filters[filterIndex].tint;
-  if (tint && intensity > 0) {
-    ctx.globalAlpha = intensity / 100;
-    ctx.fillStyle = tint;
-    ctx.fillRect(x, y, width, height);
+    const tint = filters[filterIndex].tint;
+    if (tint) {
+      ctx.fillStyle = tint;
+      ctx.fillRect(x, y, width, height);
+    }
+
+    const grain = filters[filterIndex].grain || 0;
+    if (grain > 0) {
+      ctx.globalCompositeOperation = "soft-light";
+      ctx.globalAlpha = grain * intensity / 100;
+      ctx.fillStyle = getFilmGrainPattern(ctx);
+      ctx.fillRect(x, y, width, height);
+    }
   }
 
   ctx.restore();
 }
+
 
 
 
