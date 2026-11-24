@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DLR Photo Editor</title>
+
+<style>
+
+*{box-sizing:border-box}
+
+body{margin:0;background:#f8f5f2;color:#292522;font-family:Arial,sans-serif;text-align:center;padding:28px 18px}
+
+.logo{font-size:38px;letter-spacing:9px;font-weight:300;margin-top:25px}
+
+.sub{font-size:11px;letter-spacing:4px;color:#9b8b80;margin:8px}
+
+h2{font-weight:400;margin-top:42px}
+
+.upload{display:block;background:#292522;color:white;padding:16px;border-radius:30px;margin:25px auto;max-width:280px}
+
+input[type=file]{display:none}
+
+.preview{width:100%;max-width:340px;border-radius:16px;margin:15px auto}
+
+.filters{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:360px;margin:25px auto}
+
+button{border:1px solid #d9cec5;background:white;border-radius:25px;padding:14px;color:#292522}
+
+button.active{background:#292522;color:white}
+
+input[type=range]{width:85%;accent-color:#292522}
+
+.save{background:#292522;color:white;width:85%;margin:25px auto}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="logo">DLR</div>
+
+<div class="sub">PHOTO EDITOR</div>
+
+<h2>Your photos, your mood.</h2>
+
+<label class="upload">Fotoğrafını seç
