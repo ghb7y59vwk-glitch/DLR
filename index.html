@@ -4,52 +4,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#fff5f6">
+<meta name="theme-color" content="#fff6f7">
 <title>DLR Photo Editor</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   padding:24px 16px 40px;
   background:#fff7f7;
-  color:#59464b;
+  color:#634d53;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
+
 .app{max-width:520px;margin:auto}
-header{text-align:center;margin:10px 0 24px}
+
+header{text-align:center;margin:10px 0 25px}
+
 .logo{
   color:#d58c9d;
   font-family:Georgia,serif;
-  font-size:48px;
-  letter-spacing:7px;
+  font-size:50px;
+  letter-spacing:8px;
   margin:0;
 }
+
 .subtitle{
   color:#b78b95;
   font-size:10px;
   letter-spacing:4px;
   margin-top:5px;
 }
+
 .intro{
   text-align:center;
   font-size:13px;
-  color:#9d858b;
+  color:#a78b92;
   margin-bottom:20px;
 }
+
 .upload{
   display:block;
   position:relative;
   overflow:hidden;
   width:100%;
-  padding:15px;
+  padding:16px;
   text-align:center;
-  background:#e9b9c4;
+  background:#e8b6c2;
   color:white;
   border-radius:15px;
   font-size:14px;
   font-weight:600;
   cursor:pointer;
 }
+
 .upload input{
   position:absolute;
   inset:0;
@@ -58,18 +67,20 @@ header{text-align:center;margin:10px 0 24px}
   opacity:0;
   cursor:pointer;
 }
+
 .stage{
   position:relative;
   width:100%;
-  height:340px;
+  height:350px;
   margin:18px 0;
   overflow:hidden;
   border-radius:18px;
-  background:#f4e9eb;
+  background:#f3e7e9;
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
 .stage img{
   position:absolute;
   inset:0;
@@ -78,64 +89,75 @@ header{text-align:center;margin:10px 0 24px}
   object-fit:contain;
   display:none;
 }
+
 #filtered{opacity:0}
+
 #grain{
-  display:none;
   position:absolute;
   inset:0;
   pointer-events:none;
   opacity:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  display:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   mix-blend-mode:soft-light;
 }
+
 .placeholder{
   color:#b99ba2;
   font-size:13px;
   text-align:center;
   padding:20px;
 }
+
 .section-title{
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
-  color:#99727d;
+  color:#a17a85;
+  letter-spacing:1.5px;
   margin:22px 0 12px;
 }
+
 .filters{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:9px;
 }
+
 .filter{
   border:1px solid #efd9de;
   background:#fffdfd;
   color:#99727d;
   border-radius:12px;
-  padding:13px 5px;
+  padding:14px 7px;
   font-size:12px;
   min-height:48px;
   cursor:pointer;
 }
+
 .filter.active{
-  background:#e9b9c4;
+  background:#d991a3;
   color:white;
-  border-color:#e9b9c4;
+  border-color:#d991a3;
 }
+
 .range-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
   font-size:12px;
   color:#99727d;
-  margin:18px 0 8px;
+  margin:20px 0 8px;
 }
+
 input[type=range]{
   width:100%;
   accent-color:#d58c9d;
 }
+
 .save{
   display:block;
   width:100%;
-  margin-top:24px;
+  margin-top:25px;
   padding:16px;
   border:0;
   border-radius:15px;
@@ -145,7 +167,9 @@ input[type=range]{
   font-weight:700;
   cursor:pointer;
 }
-.save:disabled{opacity:.45;cursor:not-allowed}
+
+.save:disabled{opacity:.45}
+
 .note{
   text-align:center;
   color:#b49da3;
@@ -155,52 +179,63 @@ input[type=range]{
 }
 </style>
 </head>
+
 <body>
 <div class="app">
-  <header>
-    <h1 class="logo">DLR</h1>
-    <div class="subtitle">PHOTO EDITOR</div>
-  </header>
 
-  <div class="intro">Fotoğraflarına kendi tarzını kat. ♡</div>
+<header>
+  <h1 class="logo">DLR</h1>
+  <div class="subtitle">PHOTO EDITOR</div>
+</header>
 
-  <label class="upload">
-    Fotoğrafını seç
-    <input type="file" id="photoInput" accept="image/*">
-  </label>
+<div class="intro">Fotoğraflarına kendi tarzını kat. ♡</div>
 
-  <div class="stage" id="stage">
-    <div class="placeholder" id="placeholder">Fotoğrafın burada görünecek ♡</div>
-    <img id="original" alt="Seçilen fotoğraf">
-    <img id="filtered" alt="Filtreli fotoğraf">
-    <div id="grain"></div>
+<label class="upload">
+  Fotoğrafını seç
+  <input type="file" id="photoInput" accept="image/*">
+</label>
+
+<div class="stage">
+  <div class="placeholder" id="placeholder">
+    Fotoğrafın burada görünecek ♡
   </div>
+  <img id="original" alt="Fotoğrafın">
+  <img id="filtered" alt="Filtreli fotoğraf">
+  <div id="grain"></div>
+</div>
 
-  <div class="section-title">FİLTRELER</div>
-  <div class="filters" id="filters"></div>
+<div class="section-title">DLR FİLTRELERİ ♡</div>
+<div class="filters" id="filters"></div>
 
-  <div class="range-row">
-    <span>Filtre yoğunluğu</span>
-    <strong id="intensityValue">100%</strong>
-  </div>
-  <input type="range" id="intensity" min="0" max="100" value="100">
+<div class="range-row">
+  <span>Filtre yoğunluğu</span>
+  <strong id="intensityValue">100%</strong>
+</div>
 
-  <button class="save" id="saveButton" disabled>Fotoğrafı kaydet ♡</button>
-  <div class="note">DLR ile düzenle, kendi anılarını güzelleştir.</div>
+<input type="range" id="intensity" min="0" max="100" value="100">
+
+<button class="save" id="saveButton" disabled>
+  Fotoğrafı kaydet ♡
+</button>
+
+<div class="note">
+  DLR ile anılarını kendi tarzında düzenle.
+</div>
+
 </div>
 
 <script>
 const filterList = [
   {name:"Original", css:"none", grain:0},
-  {name:"Digital Cam", css:"brightness(1.08) contrast(1.13) saturate(1.22) sepia(0.08)", grain:0.28},
-  {name:"Vintage", css:"sepia(0.28) saturate(0.82) contrast(0.92) brightness(1.04)", grain:0.24},
-  {name:"Retro Flash", css:"brightness(1.17) contrast(1.22) saturate(1.12)", grain:0.16},
-  {name:"Classic B&W", css:"grayscale(1) contrast(1.28)", grain:0.22},
-  {name:"Soft Mono", css:"grayscale(1) contrast(0.88) brightness(1.08)", grain:0.12},
-  {name:"Cool CCD", css:"saturate(0.88) contrast(1.12) hue-rotate(9deg) brightness(1.04)", grain:0.12},
-  {name:"Warm 2000s", css:"sepia(0.16) saturate(1.28) contrast(1.06) brightness(1.05)", grain:0.18},
-  {name:"Fade Film", css:"contrast(0.82) brightness(1.12) saturate(0.78) sepia(0.12)", grain:0.2},
-  {name:"Night Flash", css:"brightness(1.12) contrast(1.3) saturate(0.92)", grain:0.2}
+  {name:"Digital Camera", css:"brightness(1.12) contrast(1.32) saturate(1.38) sepia(0.08)", grain:0.30},
+  {name:"Vintage", css:"sepia(0.38) saturate(0.92) contrast(1.14) brightness(1.04)", grain:0.28},
+  {name:"Retro Flash", css:"brightness(1.20) contrast(1.38) saturate(1.22)", grain:0.20},
+  {name:"Classic B&W", css:"grayscale(1) contrast(1.48) brightness(1.03)", grain:0.25},
+  {name:"Soft Mono", css:"grayscale(1) contrast(1.10) brightness(1.10)", grain:0.14},
+  {name:"Cool CCD", css:"saturate(1.25) contrast(1.24) hue-rotate(12deg) brightness(1.04)", grain:0.16},
+  {name:"Warm 2000s", css:"sepia(0.22) saturate(1.48) contrast(1.18) brightness(1.05)", grain:0.23},
+  {name:"Fade Film", css:"contrast(0.84) brightness(1.13) saturate(0.82) sepia(0.17)", grain:0.24},
+  {name:"Night Flash", css:"brightness(1.15) contrast(1.48) saturate(1.18)", grain:0.22}
 ];
 
 const photoInput = document.getElementById("photoInput");
@@ -218,20 +253,27 @@ let photoReady = false;
 
 filterList.forEach((filter,index)=>{
   const button = document.createElement("button");
-  button.className = "filter" + (index===0 ? " active" : "");
+  button.className = "filter" + (index === 0 ? " active" : "");
   button.textContent = filter.name;
   button.type = "button";
+
   button.addEventListener("click",()=>{
     selectedFilter = index;
-    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+
+    document.querySelectorAll(".filter").forEach(item=>{
+      item.classList.remove("active");
+    });
+
     button.classList.add("active");
     updatePreview();
   });
+
   filters.appendChild(button);
 });
 
 photoInput.addEventListener("change",event=>{
   const file = event.target.files && event.target.files[0];
+
   if(!file) return;
 
   if(!file.type.startsWith("image/")){
@@ -240,17 +282,23 @@ photoInput.addEventListener("change",event=>{
   }
 
   const reader = new FileReader();
-  reader.onload = e=>{
+
+  reader.onload = event=>{
     original.onload = ()=>{
+      filtered.src = original.src;
+
       photoReady = true;
       original.style.display = "block";
       filtered.style.display = "block";
       placeholder.style.display = "none";
+
       saveButton.disabled = false;
       updatePreview();
     };
-    original.src = e.target.result;
+
+    original.src = event.target.result;
   };
+
   reader.readAsDataURL(file);
 });
 
@@ -258,13 +306,14 @@ function updatePreview(){
   if(!photoReady) return;
 
   const filter = filterList[selectedFilter];
-  const amount = Number(intensity.value)/100;
+  const amount = Number(intensity.value) / 100;
 
   filtered.style.filter = filter.css;
   filtered.style.opacity = amount;
 
   grainLayer.style.display = filter.grain > 0 ? "block" : "none";
   grainLayer.style.opacity = String(filter.grain * amount);
+
   intensityValue.textContent = intensity.value + "%";
 }
 
@@ -272,16 +321,32 @@ intensity.addEventListener("input",updatePreview);
 
 function addGrain(ctx,width,height,amount){
   if(amount <= 0) return;
-  const count = Math.floor(width * height * amount * 0.018);
-  for(let i=0;i<count;i++){
-    const x = Math.random()*width;
-    const y = Math.random()*height;
-    const light = Math.random() > 0.5;
-    ctx.fillStyle = light
-      ? "rgba(255,255,255,0.22)"
-      : "rgba(0,0,0,0.20)";
-    ctx.fillRect(x,y,1.2,1.2);
+
+  const tile = document.createElement("canvas");
+  tile.width = 160;
+  tile.height = 160;
+
+  const tileCtx = tile.getContext("2d");
+  const pixels = tileCtx.createImageData(160,160);
+
+  for(let i=0;i<pixels.data.length;i+=4){
+    const value = Math.floor(Math.random()*255);
+    pixels.data[i] = value;
+    pixels.data[i+1] = value;
+    pixels.data[i+2] = value;
+    pixels.data[i+3] = 65;
   }
+
+  tileCtx.putImageData(pixels,0,0);
+
+  const pattern = ctx.createPattern(tile,"repeat");
+
+  ctx.save();
+  ctx.globalAlpha = amount;
+  ctx.globalCompositeOperation = "soft-light";
+  ctx.fillStyle = pattern;
+  ctx.fillRect(0,0,width,height);
+  ctx.restore();
 }
 
 saveButton.addEventListener("click",()=>{
@@ -292,7 +357,11 @@ saveButton.addEventListener("click",()=>{
 
   try{
     const maxSide = 2400;
-    const scale = Math.min(1,maxSide/Math.max(original.naturalWidth,original.naturalHeight));
+    const scale = Math.min(
+      1,
+      maxSide / Math.max(original.naturalWidth,original.naturalHeight)
+    );
+
     const width = Math.round(original.naturalWidth*scale);
     const height = Math.round(original.naturalHeight*scale);
 
@@ -301,6 +370,7 @@ saveButton.addEventListener("click",()=>{
     canvas.height = height;
 
     const ctx = canvas.getContext("2d");
+
     ctx.drawImage(original,0,0,width,height);
 
     const amount = Number(intensity.value)/100;
@@ -318,19 +388,20 @@ saveButton.addEventListener("click",()=>{
 
     const imageUrl = canvas.toDataURL("image/jpeg",0.94);
     const link = document.createElement("a");
+
     link.href = imageUrl;
     link.download = "DLR-photo.jpg";
+
     document.body.appendChild(link);
     link.click();
     link.remove();
 
-    saveButton.textContent = "Fotoğrafı kaydet ♡";
-    saveButton.disabled = false;
   }catch(error){
     alert("Fotoğraf kaydedilemedi. Lütfen tekrar dene.");
-    saveButton.textContent = "Fotoğrafı kaydet ♡";
-    saveButton.disabled = false;
   }
+
+  saveButton.textContent = "Fotoğrafı kaydet ♡";
+  saveButton.disabled = false;
 });
 </script>
 </body>
