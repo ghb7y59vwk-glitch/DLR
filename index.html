@@ -5,738 +5,713 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#687653">
-<title>DLR — The Edit Room</title>
+<title>DLR — Every Frame Tells a Story</title>
 
 <style>
 :root {
-  --butter: #F3D66B;
-  --olive: #687653;
-  --brown: #493629;
-  --cream: #F6EEDC;
-  --light-olive: #87916F;
+  --olive:#687653;
+  --olive-dark:#4d5b3e;
+  --yellow:#f3d66b;
+  --brown:#493629;
+  --cream:#f6eedc;
+  --paper:#eee5d2;
+  --white:#fffdf7;
 }
-
-* { box-sizing: border-box; }
-
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  background: var(--olive);
-  color: var(--cream);
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
+  margin:0;
+  background:var(--olive);
+  color:var(--cream);
+  font-family:Georgia,"Times New Roman",serif;
 }
-
+button,select,input { font:inherit; }
+.page {
+  width:min(100%,760px);
+  margin:auto;
+  padding:24px 18px 50px;
+}
 header {
-  text-align: center;
-  padding: 32px 16px 20px;
+  text-align:center;
+  padding:24px 0 28px;
+  position:relative;
 }
-
+.logo-wrap {
+  display:inline-block;
+  position:relative;
+}
 .logo {
-  color: var(--butter);
-  font-family: "Bodoni 72", Didot, "Times New Roman", serif;
-  font-size: 64px;
-  font-weight: normal;
-  letter-spacing: 9px;
-  line-height: 1;
-  margin: 0;
-  text-shadow: 1px 2px 0 rgba(73,54,41,.2);
+  color:var(--yellow);
+  font-family:"Bodoni 72",Didot,"Times New Roman",serif;
+  font-size:clamp(65px,17vw,104px);
+  letter-spacing:7px;
+  line-height:1;
+  font-weight:normal;
+  margin:0;
 }
-
-.slogan {
-  color: var(--butter);
-  font-family: Georgia, serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  margin-top: 13px;
-  text-transform: uppercase;
+.logo-wrap:after {
+  content:"✦";
+  position:absolute;
+  color:#fffdf7;
+  font-size:13px;
+  top:1px;
+  right:-9px;
+  text-shadow:0 0 7px #fff,0 0 14px #f3d66b;
 }
-
-.sparkle {
-  color: var(--butter);
-  font-size: 13px;
-  letter-spacing: 9px;
-  margin-top: 13px;
+.tagline {
+  font-size:10px;
+  letter-spacing:3px;
+  margin-top:13px;
+  color:var(--cream);
+  text-transform:uppercase;
 }
-
-main {
-  max-width: 650px;
-  margin: auto;
-  padding: 0 17px 40px;
+.intro {
+  font-size:14px;
+  color:#e6dec9;
+  font-style:italic;
+  margin-top:8px;
 }
-
 .tabs {
-  display: flex;
-  gap: 9px;
-  margin: 10px 0 24px;
+  display:flex;
+  gap:10px;
+  margin:12px 0 24px;
 }
-
 .tab {
-  flex: 1;
-  border: 1px solid rgba(243,214,107,.5);
-  background: transparent;
-  color: var(--butter);
-  border-radius: 3px;
-  padding: 13px 6px;
-  font-family: Georgia, serif;
-  font-size: 14px;
-  letter-spacing: 1px;
+  flex:1;
+  border:1px solid rgba(246,238,220,.45);
+  background:transparent;
+  color:var(--cream);
+  padding:13px 8px;
+  border-radius:3px;
+  letter-spacing:1px;
+  font-size:12px;
+  text-transform:uppercase;
 }
-
 .tab.active {
-  background: var(--brown);
-  border-color: var(--brown);
+  background:var(--yellow);
+  border-color:var(--yellow);
+  color:var(--brown);
 }
-
-h2 {
-  font-family: "Bodoni 72", Didot, Georgia, serif;
-  font-size: 29px;
-  font-weight: normal;
-  color: var(--butter);
-  text-align: center;
-  margin: 10px 0 7px;
-}
-
-.subtitle {
-  text-align: center;
-  color: var(--cream);
-  font-family: Georgia, serif;
-  font-size: 13px;
-  font-style: italic;
-  margin: 0 0 20px;
-}
-
-.preview {
-  background: var(--brown);
-  border: 1px solid rgba(243,214,107,.35);
-  border-radius: 5px;
-  padding: 9px;
-  min-height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-canvas {
-  display: block;
-  max-width: 100%;
-  max-height: 540px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-}
-
-.placeholder {
-  text-align: center;
-  color: var(--butter);
-  font-family: Georgia, serif;
-  font-size: 15px;
-  line-height: 1.8;
-  padding: 35px 10px;
-}
-
 .section-title {
-  color: var(--butter);
-  font-family: Georgia, serif;
-  font-size: 17px;
-  margin: 24px 0 12px;
-  letter-spacing: .5px;
+  text-align:center;
+  color:var(--yellow);
+  font-size:25px;
+  font-weight:normal;
+  margin:8px 0 7px;
 }
-
-.action-button {
-  display: block;
-  width: 100%;
-  border: 0;
-  border-radius: 3px;
-  background: var(--brown);
-  color: var(--butter);
-  padding: 15px;
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  font-family: Georgia, serif;
-  margin-top: 13px;
+.subtext {
+  text-align:center;
+  font-size:12px;
+  color:#e4dcc9;
+  margin:0 0 20px;
+  line-height:1.6;
 }
-
-.action-button.secondary {
-  background: transparent;
-  border: 1px solid var(--butter);
-  color: var(--butter);
+.panel {
+  background:var(--paper);
+  color:var(--brown);
+  padding:16px;
+  border-radius:4px;
+  box-shadow:0 8px 24px rgba(36,30,20,.13);
 }
-
-input[type="file"] { display: none; }
-
-.file-label {
-  display: block;
-  text-align: center;
-  padding: 15px;
-  background: var(--brown);
-  color: var(--butter);
-  border-radius: 3px;
-  font-family: Georgia, serif;
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  cursor: pointer;
+.upload-label {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:9px;
+  background:var(--brown);
+  color:var(--cream);
+  padding:15px;
+  text-align:center;
+  border-radius:3px;
+  letter-spacing:1px;
+  font-size:12px;
+  text-transform:uppercase;
+  cursor:pointer;
 }
-
-.filters {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+input[type=file] { display:none; }
+.canvas-wrap {
+  margin-top:15px;
+  background:#ddd3c0;
+  min-height:180px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  border-radius:2px;
 }
-
-.filter {
-  border: 1px solid rgba(243,214,107,.45);
-  background: transparent;
-  color: var(--cream);
-  padding: 12px 5px;
-  border-radius: 3px;
-  font-family: Georgia, serif;
-  font-size: 13px;
+canvas {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:70vh;
+  object-fit:contain;
 }
-
-.filter.active {
-  background: var(--brown);
-  border-color: var(--butter);
-  color: var(--butter);
+.empty {
+  padding:50px 15px;
+  text-align:center;
+  color:#857b68;
+  font-style:italic;
+  font-size:14px;
 }
-
+.control-title {
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin:22px 0 11px;
+  color:var(--brown);
+}
+.filter-list {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+.filter-btn {
+  border:1px solid #c8bda8;
+  background:#f8f3e8;
+  color:var(--brown);
+  border-radius:3px;
+  padding:11px 5px;
+  font-size:11px;
+  min-height:42px;
+}
+.filter-btn.active {
+  background:var(--olive);
+  color:white;
+  border-color:var(--olive);
+}
 .range-row {
-  display: flex;
-  justify-content: space-between;
-  color: var(--cream);
-  font-size: 12px;
-  margin-bottom: 8px;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  margin:10px 0 5px;
 }
-
-input[type="range"] {
-  width: 100%;
-  accent-color: var(--butter);
+input[type=range] {
+  width:100%;
+  accent-color:var(--olive);
 }
-
-.layouts {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
+.action {
+  display:block;
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:3px;
+  background:var(--brown);
+  color:var(--cream);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-size:12px;
+  margin-top:17px;
 }
-
-.layout-button {
-  background: transparent;
-  border: 1px solid rgba(243,214,107,.5);
-  color: var(--butter);
-  padding: 12px 3px;
-  border-radius: 3px;
-  font-family: Georgia, serif;
+.action.secondary {
+  background:transparent;
+  border:1px solid var(--brown);
+  color:var(--brown);
 }
-
-.layout-button.active {
-  background: var(--brown);
-  border-color: var(--butter);
+select {
+  width:100%;
+  padding:12px;
+  border:1px solid #c8bda8;
+  background:#f8f3e8;
+  color:var(--brown);
+  border-radius:3px;
 }
-
-.note {
-  color: var(--cream);
-  font-size: 11px;
-  text-align: center;
-  line-height: 1.6;
-  opacity: .85;
-  margin-top: 10px;
+.collage-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:14px;
 }
-
-.hidden { display: none !important; }
-
+.photo-card {
+  background:#f8f3e8;
+  border:1px solid #d4c9b5;
+  padding:8px;
+  min-width:0;
+}
+.photo-card img {
+  display:block;
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+}
+.photo-card label {
+  display:block;
+  font-size:10px;
+  letter-spacing:1px;
+  margin:10px 0 6px;
+  text-transform:uppercase;
+}
+.photo-card select {
+  font-size:11px;
+  padding:8px 4px;
+}
+.photo-card input[type=range] {
+  margin:5px 0 0;
+}
+.hidden { display:none !important; }
 footer {
-  text-align: center;
-  color: var(--butter);
-  font-family: Georgia, serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  padding: 15px 0 30px;
+  text-align:center;
+  margin-top:35px;
+  color:#e6dec9;
+  font-size:10px;
+  letter-spacing:2px;
+}
+@media(min-width:600px) {
+  .filter-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
 }
 </style>
 </head>
 
 <body>
+<div class="page">
 
 <header>
-  <div class="logo">DLR</div>
-  <div class="slogan">Every Frame Tells a Story.</div>
-  <div class="sparkle">✦ &nbsp; ✧ &nbsp; ✦</div>
+  <div class="logo-wrap"><h1 class="logo">DLR</h1></div>
+  <div class="tagline">Every Frame Tells a Story.</div>
+  <div class="intro">A little nostalgia in every frame.</div>
 </header>
 
-<main>
-  <div class="tabs">
-    <button class="tab active" id="photoTab">The Edit Room</button>
-    <button class="tab" id="collageTab">The Collage Atelier</button>
-  </div>
+<nav class="tabs">
+  <button class="tab active" id="editorTab" type="button">The Edit Room</button>
+  <button class="tab" id="collageTab" type="button">The Collage Atelier</button>
+</nav>
 
-  <section id="photoSection">
-    <h2>A Touch of Nostalgia</h2>
-    <p class="subtitle">Give your memories a timeless feeling.</p>
+<section id="editorSection">
+  <h2 class="section-title">A Touch of Nostalgia</h2>
+  <p class="subtext">Find your look. Make it timeless.</p>
 
-    <label class="file-label" for="photoInput">Choose a Photo</label>
+  <div class="panel">
+    <label class="upload-label" for="photoInput">＋ Choose Your Photo</label>
     <input id="photoInput" type="file" accept="image/*">
 
-    <div class="preview" style="margin-top:15px">
-      <div class="placeholder" id="photoPlaceholder">
-        Your photograph will appear here.<br>
-        <span style="font-size:25px">✧</span>
-      </div>
-      <canvas id="photoCanvas" class="hidden"></canvas>
+    <div class="canvas-wrap">
+      <div class="empty" id="editorEmpty">Your next favorite photograph starts here.</div>
+      <canvas id="editorCanvas" class="hidden" width="1200" height="1200"></canvas>
     </div>
 
-    <div class="section-title">Signature Filters</div>
-    <div class="filters" id="photoFilters"></div>
+    <div class="control-title">Choose Your Look</div>
+    <div class="filter-list" id="filterButtons"></div>
 
-    <div class="section-title">Filter Intensity</div>
     <div class="range-row">
-      <span>Soft</span>
-      <span id="photoIntensityValue">100%</span>
-      <span>Strong</span>
+      <span>Filter Intensity</span>
+      <strong id="intensityValue">100%</strong>
     </div>
-    <input type="range" id="photoIntensity" min="0" max="100" value="100">
+    <input id="intensity" type="range" min="0" max="100" value="100">
 
-    <button class="action-button" id="savePhoto">Save Your Masterpiece</button>
-  </section>
+    <button class="action" id="savePhoto" type="button">Save Your Masterpiece</button>
+    <button class="action secondary" id="sharePhoto" type="button">Share Your Photo</button>
+  </div>
+</section>
 
-  <section id="collageSection" class="hidden">
-    <h2>The Collage Atelier</h2>
-    <p class="subtitle">A little nostalgia in every frame.</p>
+<section id="collageSection" class="hidden">
+  <h2 class="section-title">The Collage Atelier</h2>
+  <p class="subtext">Collect your moments in one frame.</p>
 
-    <label class="file-label" for="collageInput">Choose Multiple Photos</label>
+  <div class="panel">
+    <div class="control-title">Choose Your Layout</div>
+    <select id="collageCount">
+      <option value="2">Two Photos</option>
+      <option value="3">Three Photos</option>
+      <option value="4">Four Photos</option>
+      <option value="6">Six Photos</option>
+    </select>
+
+    <div style="height:12px"></div>
+    <label class="upload-label" for="collageInput">＋ Choose Multiple Photos</label>
     <input id="collageInput" type="file" accept="image/*" multiple>
 
-    <p class="note" id="collageCount">Choose up to 6 photographs.</p>
+    <div class="collage-grid" id="collageCards"></div>
 
-    <div class="section-title">Choose Your Layout</div>
-    <div class="layouts">
-      <button class="layout-button active" data-layout="2">2 Photos</button>
-      <button class="layout-button" data-layout="3">3 Photos</button>
-      <button class="layout-button" data-layout="4">4 Photos</button>
-      <button class="layout-button" data-layout="6">6 Photos</button>
+    <div class="canvas-wrap">
+      <div class="empty" id="collageEmpty">Your memories, beautifully arranged.</div>
+      <canvas id="collageCanvas" class="hidden" width="1200" height="1200"></canvas>
     </div>
 
-    <div class="preview" style="margin-top:15px">
-      <div class="placeholder" id="collagePlaceholder">
-        Your collage will appear here.<br>
-        <span style="font-size:25px">✧</span>
-      </div>
-      <canvas id="collageCanvas" class="hidden"></canvas>
-    </div>
+    <button class="action" id="saveCollage" type="button">Save Your Masterpiece</button>
+    <button class="action secondary" id="shareCollage" type="button">Share Your Collage</button>
+  </div>
+</section>
 
-    <div class="section-title">Collage Filters</div>
-    <div class="filters" id="collageFilters"></div>
-
-    <div class="section-title">Filter Intensity</div>
-    <div class="range-row">
-      <span>Soft</span>
-      <span id="collageIntensityValue">100%</span>
-      <span>Strong</span>
-    </div>
-    <input type="range" id="collageIntensity" min="0" max="100" value="100">
-
-    <button class="action-button" id="saveCollage">Save Your Collage</button>
-  </section>
-</main>
-
-<footer>DLR · THE ART OF REMEMBERING</footer>
+<footer>DLR ✧ MADE WITH LOVE & NOSTALGIA</footer>
+</div>
 
 <script>
+"use strict";
 
-
-const filters = [
-  {name:"Original",css:"none",tint:null,grain:0},
-  {name:"VSCO A6",css:"contrast(1.15) saturate(1.12) brightness(1.05) sepia(.08)",tint:null,grain:.07},
-  {name:"Portra 400",css:"sepia(.18) saturate(1.35) contrast(.98) brightness(1.06)",tint:"rgba(235,170,110,.10)",grain:.13},
-  {name:"Kodak Gold",css:"sepia(.28) saturate(1.65) contrast(1.12) brightness(1.07)",tint:"rgba(245,170,65,.12)",grain:.12},
-  {name:"CCD Pop",css:"contrast(1.3) saturate(1.8) brightness(1.05)",tint:null,grain:.06},
-  {name:"2000s Flash",css:"brightness(1.2) contrast(1.4) saturate(1.35)",tint:null,grain:.08},
-  {name:"Soft Bloom",css:"brightness(1.15) contrast(.88) saturate(1.2)",tint:"rgba(255,225,190,.12)",grain:.06},
-  {name:"Faded Film",css:"sepia(.22) contrast(.78) brightness(1.15) saturate(.85)",tint:"rgba(220,190,145,.15)",grain:.17},
-  {name:"Warm Matte",css:"sepia(.25) contrast(.84) brightness(1.12) saturate(.95)",tint:"rgba(205,155,105,.12)",grain:.13},
-  {name:"Cool Breeze",css:"hue-rotate(12deg) saturate(1.2) contrast(1.12)",tint:"rgba(130,180,210,.10)",grain:.07},
-  {name:"Olive Mood",css:"sepia(.14) hue-rotate(22deg) saturate(.95) contrast(1.1)",tint:"rgba(115,130,75,.12)",grain:.12},
-  {name:"Noir",css:"grayscale(1) contrast(1.75) brightness(.92)",tint:null,grain:.18},
-  {name:"Silver",css:"grayscale(1) contrast(1.2) brightness(1.08)",tint:null,grain:.12},
-  {name:"Soft Mono",css:"grayscale(1) contrast(.82) brightness(1.12)",tint:null,grain:.10},
-  {name:"Grainy B&W",css:"grayscale(1) contrast(1.35) brightness(1.02)",tint:null,grain:.24},
-  {name:"Flash Mono",css:"grayscale(1) brightness(1.25) contrast(1.5)",tint:null,grain:.15},
-  {name:"Sepia Archive",css:"sepia(.8) saturate(.85) contrast(1.12)",tint:null,grain:.18},
-  {name:"Night City",css:"contrast(1.4) saturate(1.5) brightness(.88) hue-rotate(8deg)",tint:null,grain:.10}
+const filterLooks = [
+  {name:"Original"},
+  {name:"VSCO A6",contrast:1.10,saturation:.92,brightness:1.04,warm:3,grain:3},
+  {name:"Portra 400",contrast:.98,saturation:1.12,brightness:1.04,warm:10,grain:7,fade:.025},
+  {name:"Kodak Gold",contrast:1.10,saturation:1.3,brightness:1.06,warm:19,grain:8},
+  {name:"CCD Pop",contrast:1.25,saturation:1.55,brightness:1.04,grain:3},
+  {name:"2000s Flash",contrast:1.35,saturation:1.25,brightness:1.17,grain:4},
+  {name:"Soft Bloom",contrast:.88,saturation:1.12,brightness:1.13,warm:5,grain:3,fade:.025},
+  {name:"Faded Film",contrast:.78,saturation:.76,brightness:1.12,fade:.10,warm:7,grain:12},
+  {name:"Warm Matte",contrast:.85,saturation:.95,brightness:1.10,fade:.07,warm:12,grain:9},
+  {name:"Cool Breeze",contrast:1.12,saturation:1.15,cool:13,grain:3},
+  {name:"Olive Mood",contrast:1.10,saturation:.92,olive:13,warm:2,grain:8},
+  {name:"Noir",mono:1,contrast:1.8,brightness:.94,grain:13},
+  {name:"Silver",mono:1,contrast:1.18,brightness:1.10,grain:8,cool:3},
+  {name:"Soft Mono",mono:1,contrast:.82,brightness:1.10,grain:7,fade:.035},
+  {name:"Grainy B&W",mono:1,contrast:1.35,brightness:1.02,grain:25},
+  {name:"Flash Mono",mono:1,contrast:1.5,brightness:1.20,grain:12},
+  {name:"Sepia Archive",sepia:.85,contrast:1.12,brightness:1.05,grain:15},
+  {name:"Night City",contrast:1.35,saturation:1.35,brightness:.88,cool:9,grain:7}
 ];
 
-
-
-let selectedPhoto = null;
-let collagePhotos = [];
-let collageLayout = 2;
-let photoFilter = 0;
-let collageFilter = 0;
-let photoIntensity = 100;
-let collageIntensity = 100;
-
-const photoCanvas = document.getElementById("photoCanvas");
-const collageCanvas = document.getElementById("collageCanvas");
-const photoCtx = photoCanvas.getContext("2d");
+const $ = id => document.getElementById(id);
+const editorCanvas = $("editorCanvas");
+const editorCtx = editorCanvas.getContext("2d");
+const collageCanvas = $("collageCanvas");
 const collageCtx = collageCanvas.getContext("2d");
 
-function makeFilterButtons(containerId, type) {
-  const container = document.getElementById(containerId);
-  filters.forEach((filter, index) => {
-    const button = document.createElement("button");
-    button.className = "filter" + (index === 0 ? " active" : "");
-    button.textContent = filter.name;
-    button.addEventListener("click", () => {
-      if (type === "photo") {
-        photoFilter = index;
-        container.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
-        button.classList.add("active");
-        renderPhoto();
-      } else {
-        collageFilter = index;
-        container.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
-        button.classList.add("active");
-        renderCollage();
-      }
-    });
-    container.appendChild(button);
+let editorImage = null;
+let editorFilter = 0;
+let editorIntensity = 100;
+let collagePhotos = [];
+
+function clamp(v) {
+  return Math.max(0, Math.min(255, v));
+}
+
+function loadImage(file) {
+  return new Promise((resolve,reject) => {
+    if (!file || !file.type.startsWith("image/")) {
+      reject(new Error("Please choose an image."));
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
 }
 
-makeFilterButtons("photoFilters", "photo");
-makeFilterButtons("collageFilters", "collage");
-
-function blendFilter(index, intensity) {
-  const filter = filters[index];
-  if (index === 0 || intensity === 0) return "none";
-  if (intensity === 100) return filter.css;
-
-  // Blend the selected effect gently with the original image.
-  const amount = intensity / 100;
-  if (filter.css.includes("grayscale(1)")) {
-    return `grayscale(${amount}) ${filter.css.replace("grayscale(1)", "")}`;
-  }
-  return filter.css;
-}
-
-
-
-const looks = {
-  "Original": {},
-  "VSCO A6": {contrast:1.10,saturation:.92,brightness:1.04,warm:3,grain:3},
-  "Portra 400": {contrast:.98,saturation:1.12,brightness:1.04,warm:10,grain:7},
-  "Kodak Gold": {contrast:1.10,saturation:1.3,brightness:1.06,warm:19,grain:8},
-  "CCD Pop": {contrast:1.25,saturation:1.55,brightness:1.04,grain:3},
-  "2000s Flash": {contrast:1.35,saturation:1.25,brightness:1.17,grain:4},
-  "Soft Bloom": {contrast:.88,saturation:1.12,brightness:1.13,warm:5,grain:3},
-  "Faded Film": {contrast:.78,saturation:.76,brightness:1.12,fade:.10,warm:7,grain:12},
-  "Warm Matte": {contrast:.85,saturation:.95,brightness:1.10,fade:.07,warm:12,grain:9},
-  "Cool Breeze": {contrast:1.12,saturation:1.15,cool:13,grain:3},
-  "Olive Mood": {contrast:1.10,saturation:.92,olive:13,warm:2,grain:8},
-  "Noir": {mono:1,contrast:1.8,brightness:.94,grain:13},
-  "Silver": {mono:1,contrast:1.18,brightness:1.10,grain:8},
-  "Soft Mono": {mono:1,contrast:.82,brightness:1.10,grain:7},
-  "Grainy B&W": {mono:1,contrast:1.35,brightness:1.02,grain:23},
-  "Flash Mono": {mono:1,contrast:1.5,brightness:1.20,grain:12},
-  "Sepia Archive": {sepia:.85,contrast:1.12,brightness:1.05,grain:15},
-  "Night City": {contrast:1.35,saturation:1.35,brightness:.88,cool:9,grain:7}
-};
-
-function clampColor(value) {
-  return Math.max(0, Math.min(255, value));
-}
-
-function drawImageCover(ctx, image, x, y, width, height, filterIndex, intensity) {
-  const scale = Math.max(width / image.width, height / image.height);
-  const sw = width / scale;
-  const sh = height / scale;
-  const sx = (image.width - sw) / 2;
-  const sy = (image.height - sh) / 2;
+function drawCover(ctx,img,x,y,w,h,look,intensity=100) {
+  const scale = Math.max(w/img.width,h/img.height);
+  const sw = w/scale;
+  const sh = h/scale;
+  const sx = (img.width-sw)/2;
+  const sy = (img.height-sh)/2;
 
   const temp = document.createElement("canvas");
-  temp.width = Math.max(1, Math.round(width));
-  temp.height = Math.max(1, Math.round(height));
+  temp.width = Math.max(1,Math.round(w));
+  temp.height = Math.max(1,Math.round(h));
+  const tctx = temp.getContext("2d",{willReadFrequently:true});
 
-  const tempCtx = temp.getContext("2d", {willReadFrequently:true});
-  tempCtx.drawImage(image, sx, sy, sw, sh, 0, 0, temp.width, temp.height);
+  tctx.drawImage(img,sx,sy,sw,sh,0,0,temp.width,temp.height);
 
-  if (filterIndex !== 0 && intensity > 0) {
-    const name = filters[filterIndex].name;
-    const look = looks[name] || {};
-    const amount = intensity / 100;
-    const pixels = tempCtx.getImageData(0, 0, temp.width, temp.height);
-    const data = pixels.data;
+  if (look && look.name !== "Original" && intensity > 0) {
+    const pixels = tctx.getImageData(0,0,temp.width,temp.height);
+    const d = pixels.data;
+    const amount = intensity/100;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const originalR = data[i];
-      const originalG = data[i + 1];
-      const originalB = data[i + 2];
-
-      let r = originalR;
-      let g = originalG;
-      let b = originalB;
+    for (let i=0;i<d.length;i+=4) {
+      const or=d[i], og=d[i+1], ob=d[i+2];
+      let r=or, g=og, b=ob;
 
       if (look.mono) {
-        const gray = r * .299 + g * .587 + b * .114;
-        r = r * (1 - look.mono) + gray * look.mono;
-        g = g * (1 - look.mono) + gray * look.mono;
-        b = b * (1 - look.mono) + gray * look.mono;
+        const gray=.299*r+.587*g+.114*b;
+        r=gray; g=gray; b=gray;
       }
 
       if (look.sepia) {
-        const sr = r * .393 + g * .769 + b * .189;
-        const sg = r * .349 + g * .686 + b * .168;
-        const sb = r * .272 + g * .534 + b * .131;
-        r += (sr - r) * look.sepia;
-        g += (sg - g) * look.sepia;
-        b += (sb - b) * look.sepia;
+        const sr=r*.393+g*.769+b*.189;
+        const sg=r*.349+g*.686+b*.168;
+        const sb=r*.272+g*.534+b*.131;
+        r+=(sr-r)*look.sepia;
+        g+=(sg-g)*look.sepia;
+        b+=(sb-b)*look.sepia;
       }
 
-      const sat = look.saturation || 1;
-      const lum = r * .299 + g * .587 + b * .114;
-      r = lum + (r - lum) * sat;
-      g = lum + (g - lum) * sat;
-      b = lum + (b - lum) * sat;
+      const lum=.299*r+.587*g+.114*b;
+      const sat=look.saturation ?? 1;
+      r=lum+(r-lum)*sat;
+      g=lum+(g-lum)*sat;
+      b=lum+(b-lum)*sat;
 
-      const warm = look.warm || 0;
-      const cool = look.cool || 0;
-      const olive = look.olive || 0;
+      const warm=look.warm || 0;
+      const cool=look.cool || 0;
+      const olive=look.olive || 0;
+      r+=warm-cool*.65+olive*.2;
+      g+=warm*.25+olive;
+      b-=warm*.65-cool-olive*.35;
 
-      r += warm - cool * .65 + olive * .2;
-      g += warm * .25 + olive;
-      b -= warm * .65 - cool - olive * .35;
-
-      const contrast = look.contrast || 1;
-      const brightness = look.brightness || 1;
-
-      r = (r - 128) * contrast + 128;
-      g = (g - 128) * contrast + 128;
-      b = (b - 128) * contrast + 128;
-
-      r *= brightness;
-      g *= brightness;
-      b *= brightness;
+      const contrast=look.contrast ?? 1;
+      const brightness=look.brightness ?? 1;
+      r=((r-128)*contrast+128)*brightness;
+      g=((g-128)*contrast+128)*brightness;
+      b=((b-128)*contrast+128)*brightness;
 
       if (look.fade) {
-        r = r * (1 - look.fade) + 225 * look.fade;
-        g = g * (1 - look.fade) + 220 * look.fade;
-        b = b * (1 - look.fade) + 210 * look.fade;
+        r=r*(1-look.fade)+225*look.fade;
+        g=g*(1-look.fade)+220*look.fade;
+        b=b*(1-look.fade)+210*look.fade;
       }
 
-      const grain = (look.grain || 0) * amount;
-      const noise = (Math.random() - .5) * grain;
+      const noise=(Math.random()-.5)*(look.grain || 0);
+      r+=noise; g+=noise; b+=noise;
 
-      r += noise;
-      g += noise;
-      b += noise;
-
-      data[i] = clampColor(originalR + (clampColor(r) - originalR) * amount);
-      data[i + 1] = clampColor(originalG + (clampColor(g) - originalG) * amount);
-      data[i + 2] = clampColor(originalB + (clampColor(b) - originalB) * amount);
+      d[i]=clamp(or+(clamp(r)-or)*amount);
+      d[i+1]=clamp(og+(clamp(g)-og)*amount);
+      d[i+2]=clamp(ob+(clamp(b)-ob)*amount);
     }
-
-    tempCtx.putImageData(pixels, 0, 0);
+    tctx.putImageData(pixels,0,0);
   }
-
-  ctx.drawImage(temp, x, y, width, height);
+  ctx.drawImage(temp,x,y,w,h);
 }
 
-
-
-
-
-  
-
-function renderPhoto() {
-  if (!selectedPhoto) return;
-
-  photoCanvas.width = 1080;
-  photoCanvas.height = Math.round(1080 * selectedPhoto.height / selectedPhoto.width);
-
-  drawImageCover(
-    photoCtx, selectedPhoto, 0, 0,
-    photoCanvas.width, photoCanvas.height,
-    photoFilter, photoIntensity
-  );
-
-  photoCanvas.classList.remove("hidden");
-  document.getElementById("photoPlaceholder").classList.add("hidden");
+function renderEditor() {
+  if (!editorImage) return;
+  editorCanvas.classList.remove("hidden");
+  $("editorEmpty").classList.add("hidden");
+  editorCtx.clearRect(0,0,1200,1200);
+  drawCover(editorCtx,editorImage,0,0,1200,1200,
+    filterLooks[editorFilter],editorIntensity);
 }
 
-document.getElementById("photoInput").addEventListener("change", event => {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const image = new Image();
-  image.onload = () => {
-    selectedPhoto = image;
-    photoFilter = 0;
-    document.querySelectorAll("#photoFilters .filter").forEach((b, i) => {
-      b.classList.toggle("active", i === 0);
+function buildFilterButtons() {
+  const holder=$("filterButtons");
+  holder.innerHTML="";
+  filterLooks.forEach((look,index) => {
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="filter-btn"+(index===editorFilter?" active":"");
+    btn.textContent=look.name;
+    btn.addEventListener("click",() => {
+      editorFilter=index;
+      holder.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      renderEditor();
     });
-    renderPhoto();
-  };
-  image.src = URL.createObjectURL(file);
-});
-
-document.getElementById("photoIntensity").addEventListener("input", event => {
-  photoIntensity = Number(event.target.value);
-  document.getElementById("photoIntensityValue").textContent = photoIntensity + "%";
-  renderPhoto();
-});
-
-document.getElementById("collageInput").addEventListener("change", event => {
-  const files = Array.from(event.target.files).slice(0, 6);
-  collagePhotos = [];
-
-  files.forEach(file => {
-    const image = new Image();
-    image.onload = () => {
-      collagePhotos.push(image);
-      updateCollageCount();
-      renderCollage();
-    };
-    image.src = URL.createObjectURL(file);
+    holder.appendChild(btn);
   });
-});
-
-function updateCollageCount() {
-  document.getElementById("collageCount").textContent =
-    collagePhotos.length + " photo(s) selected. Layout: " + collageLayout + " photos.";
 }
 
-document.querySelectorAll(".layout-button").forEach(button => {
-  button.addEventListener("click", () => {
-    collageLayout = Number(button.dataset.layout);
-    document.querySelectorAll(".layout-button").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    updateCollageCount();
-    renderCollage();
-  });
+$("photoInput").addEventListener("change",async event=>{
+  const file=event.target.files[0];
+  if (!file) return;
+  try {
+    editorImage=await loadImage(file);
+    renderEditor();
+  } catch(error) {
+    alert("This photo could not be opened. Please try another image.");
+  }
+  event.target.value="";
 });
 
-document.getElementById("collageIntensity").addEventListener("input", event => {
-  collageIntensity = Number(event.target.value);
-  document.getElementById("collageIntensityValue").textContent = collageIntensity + "%";
-  renderCollage();
+$("intensity").addEventListener("input",event=>{
+  editorIntensity=Number(event.target.value);
+  $("intensityValue").textContent=editorIntensity+"%";
+  renderEditor();
 });
+
+function showSection(which) {
+  const editor=which==="editor";
+  $("editorSection").classList.toggle("hidden",!editor);
+  $("collageSection").classList.toggle("hidden",editor);
+  $("editorTab").classList.toggle("active",editor);
+  $("collageTab").classList.toggle("active",!editor);
+}
+$("editorTab").addEventListener("click",()=>showSection("editor"));
+$("collageTab").addEventListener("click",()=>showSection("collage"));
 
 function renderCollage() {
-  if (collagePhotos.length === 0) return;
+  if (!collagePhotos.length) return;
+  const count=collagePhotos.length;
+  const gap=14;
+  const margin=20;
+  const size=1200;
+  collageCtx.fillStyle="#eee5d2";
+  collageCtx.fillRect(0,0,size,size);
 
-  collageCanvas.width = 1200;
-  collageCanvas.height = 1200;
-
-  collageCtx.fillStyle = "#493629";
-  collageCtx.fillRect(0, 0, 1200, 1200);
-
-  const count = Math.min(collageLayout, collagePhotos.length);
-  const gap = 14;
-  const margin = 14;
-  let cells = [];
-
-  if (count === 2) {
-    cells = [
-      [margin, margin, 579, 1172],
-      [607, margin, 579, 1172]
+  let boxes=[];
+  if (count===2) {
+    const w=(size-2*margin-gap)/2;
+    boxes=[{x:margin,y:margin,w,h:size-2*margin},{x:margin+w+gap,y:margin,w,h:size-2*margin}];
+  } else if (count===3) {
+    const w=(size-2*margin-gap)/2;
+    const h=(size-2*margin-gap)/2;
+    boxes=[
+      {x:margin,y:margin,w,h},
+      {x:margin+w+gap,y:margin,w,h},
+      {x:margin,y:margin+h+gap,w:size-2*margin,h}
     ];
-  } else if (count === 3) {
-    cells = [
-      [margin, margin, 579, 1172],
-      [607, margin, 579, 579],
-      [607, 607, 579, 579]
-    ];
-  } else if (count === 4) {
-    cells = [
-      [margin, margin, 579, 579],
-      [607, margin, 579, 579],
-      [margin, 607, 579, 579],
-      [607, 607, 579, 579]
-    ];
+  } else if (count===4) {
+    const w=(size-2*margin-gap)/2;
+    const h=(size-2*margin-gap)/2;
+    for(let i=0;i<4;i++) boxes.push({
+      x:margin+(i%2)*(w+gap),
+      y:margin+Math.floor(i/2)*(h+gap),w,h
+    });
   } else {
-    const size = 379;
-    for (let row = 0; row < 2; row++) {
-      for (let col = 0; col < 3; col++) {
-        cells.push([margin + col * 393, margin + row * 593, size, 565]);
-      }
-    }
+    const cols=3, rows=2;
+    const w=(size-2*margin-gap*(cols-1))/cols;
+    const h=(size-2*margin-gap*(rows-1))/rows;
+    for(let i=0;i<6;i++) boxes.push({
+      x:margin+(i%cols)*(w+gap),
+      y:margin+Math.floor(i/cols)*(h+gap),w,h
+    });
   }
 
-  for (let i = 0; i < count; i++) {
-    const cell = cells[i];
-    drawImageCover(
-      collageCtx, collagePhotos[i],
-      cell[0], cell[1], cell[2], cell[3],
-      collageFilter, collageIntensity
-    );
-  }
+  collagePhotos.forEach((photo,index)=>{
+    const box=boxes[index];
+    if(box) drawCover(collageCtx,photo.image,box.x,box.y,box.w,box.h,
+      filterLooks[photo.filter],photo.intensity);
+  });
 
   collageCanvas.classList.remove("hidden");
-  document.getElementById("collagePlaceholder").classList.add("hidden");
+  $("collageEmpty").classList.add("hidden");
 }
 
-document.getElementById("photoTab").addEventListener("click", () => {
-  document.getElementById("photoSection").classList.remove("hidden");
-  document.getElementById("collageSection").classList.add("hidden");
-  document.getElementById("photoTab").classList.add("active");
-  document.getElementById("collageTab").classList.remove("active");
+function buildCollageCards() {
+  const holder=$("collageCards");
+  holder.innerHTML="";
+  collagePhotos.forEach((photo,index)=>{
+    const card=document.createElement("div");
+    card.className="photo-card";
+
+    const img=document.createElement("img");
+    img.src=photo.image.src;
+    img.alt="Collage photo "+(index+1);
+    card.appendChild(img);
+
+    const label=document.createElement("label");
+    label.textContent="Photo "+(index+1)+" Filter";
+    card.appendChild(label);
+
+    const select=document.createElement("select");
+    filterLooks.forEach((look,i)=>{
+      const option=document.createElement("option");
+      option.value=i;
+      option.textContent=look.name;
+      select.appendChild(option);
+    });
+    select.value=photo.filter;
+    select.addEventListener("change",()=>{
+      photo.filter=Number(select.value);
+      renderCollage();
+    });
+    card.appendChild(select);
+
+    const rangeLabel=document.createElement("label");
+    rangeLabel.textContent="Intensity: "+photo.intensity+"%";
+    card.appendChild(rangeLabel);
+
+    const range=document.createElement("input");
+    range.type="range";
+    range.min="0";
+    range.max="100";
+    range.value=photo.intensity;
+    range.addEventListener("input",()=>{
+      photo.intensity=Number(range.value);
+      rangeLabel.textContent="Intensity: "+photo.intensity+"%";
+      renderCollage();
+    });
+    card.appendChild(range);
+    holder.appendChild(card);
+  });
+}
+
+$("collageInput").addEventListener("change",async event=>{
+  const files=Array.from(event.target.files).slice(0,6);
+  if (!files.length) return;
+  try {
+    const images=await Promise.all(files.map(loadImage));
+    const wanted=Number($("collageCount").value);
+    collagePhotos=images.slice(0,wanted).map(image=>({
+      image,filter:0,intensity:100
+    }));
+    buildCollageCards();
+    renderCollage();
+    if (images.length>wanted) {
+      alert("Only the first "+wanted+" photos were added for this layout.");
+    }
+  } catch(error) {
+    alert("One or more photos could not be opened. Please try again.");
+  }
+  event.target.value="";
 });
 
-document.getElementById("collageTab").addEventListener("click", () => {
-  document.getElementById("collageSection").classList.remove("hidden");
-  document.getElementById("photoSection").classList.add("hidden");
-  document.getElementById("collageTab").classList.add("active");
-  document.getElementById("photoTab").classList.remove("active");
+$("collageCount").addEventListener("change",()=>{
+  collagePhotos=[];
+  $("collageCards").innerHTML="";
+  collageCanvas.classList.add("hidden");
+  $("collageEmpty").classList.remove("hidden");
+  $("collageInput").value="";
 });
 
-async function saveCanvas(canvas, filename) {
-  if (!canvas.width || !canvas.height) {
+async function saveCanvas(canvas) {
+  try {
+    const data=canvas.toDataURL("image/jpeg",.94);
+    const link=document.createElement("a");
+    link.href=data;
+    link.download="DLR-masterpiece.jpg";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch(error) {
+    alert("Please try sharing the image and choose Save Image.");
+  }
+}
+
+async function shareCanvas(canvas) {
+  try {
+    const data=canvas.toDataURL("image/jpeg",.94);
+    const response=await fetch(data);
+    const blob=await response.blob();
+    const file=new File([blob],"DLR-masterpiece.jpg",{type:"image/jpeg"});
+    if (navigator.share && navigator.canShare &&
+        navigator.canShare({files:[file]})) {
+      await navigator.share({files:[file],title:"My DLR Masterpiece"});
+    } else {
+      const url=URL.createObjectURL(blob);
+      const link=document.createElement("a");
+      link.href=url;
+      link.download="DLR-masterpiece.jpg";
+      link.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1500);
+    }
+  } catch(error) {
+    if (error.name!=="AbortError") {
+      alert("Sharing is not available here. Please use Save Your Masterpiece.");
+    }
+  }
+}
+
+$("savePhoto").addEventListener("click",()=>{
+  if (!editorImage) {
     alert("Please choose a photo first.");
     return;
   }
-
-  canvas.toBlob(async blob => {
-    if (!blob) {
-      alert("Could not create your image. Please try again.");
-      return;
-    }
-
-    const file = new File([blob], filename, {type: "image/png"});
-
-    if (navigator.share && navigator.canShare && navigator.canShare({files:[file]})) {
-      try {
-        await navigator.share({files:[file], title:"DLR"});
-      } catch (error) {
-        if (error.name !== "AbortError") downloadImage(blob, filename);
-      }
-    } else {
-      downloadImage(blob, filename);
-    }
-  }, "image/png");
-}
-
-function downloadImage(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
-}
-
-document.getElementById("savePhoto").addEventListener("click", () => {
-  saveCanvas(photoCanvas, "DLR-photo.png");
+  saveCanvas(editorCanvas);
 });
-
-document.getElementById("saveCollage").addEventListener("click", () => {
-  if (collagePhotos.length < collageLayout) {
-    alert("Please choose at least " + collageLayout + " photos for this layout.");
+$("sharePhoto").addEventListener("click",()=>{
+  if (!editorImage) {
+    alert("Please choose a photo first.");
     return;
   }
-  saveCanvas(collageCanvas, "DLR-collage.png");
+  shareCanvas(editorCanvas);
 });
-</script>
+$("saveCollage").addEventListener("click",()=>{
+  if (!collagePhotos.length) {
+    alert("Please choose your collage photos first.");
+    return;
+  }
+  saveCanvas(collageCanvas);
+});
+$("shareCollage").addEventListener("click",()=>{
+  if (!collagePhotos.length) {
+    alert("Please choose your collage photos first.");
+    return;
+  }
+  shareCanvas(collageCanvas);
+});
 
+buildFilterButtons();
+</script>
 </body>
 </html>
