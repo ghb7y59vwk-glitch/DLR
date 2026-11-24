@@ -1,408 +1,627 @@
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#fff6f7">
-<title>DLR Photo Editor</title>
+<meta name="theme-color" content="#687653">
+<title>DLR — The Edit Room</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  padding:24px 16px 40px;
-  background:#fff7f7;
-  color:#634d53;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+:root {
+  --butter: #F3D66B;
+  --olive: #687653;
+  --brown: #493629;
+  --cream: #F6EEDC;
+  --light-olive: #87916F;
 }
 
-.app{max-width:520px;margin:auto}
+* { box-sizing: border-box; }
 
-header{text-align:center;margin:10px 0 25px}
-
-.logo{
-  color:#d58c9d;
-  font-family:Georgia,serif;
-  font-size:50px;
-  letter-spacing:8px;
-  margin:0;
+body {
+  margin: 0;
+  background: var(--olive);
+  color: var(--cream);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
 }
 
-.subtitle{
-  color:#b78b95;
-  font-size:10px;
-  letter-spacing:4px;
-  margin-top:5px;
+header {
+  text-align: center;
+  padding: 32px 16px 20px;
 }
 
-.intro{
-  text-align:center;
-  font-size:13px;
-  color:#a78b92;
-  margin-bottom:20px;
+.logo {
+  color: var(--butter);
+  font-family: "Bodoni 72", Didot, "Times New Roman", serif;
+  font-size: 64px;
+  font-weight: normal;
+  letter-spacing: 9px;
+  line-height: 1;
+  margin: 0;
+  text-shadow: 1px 2px 0 rgba(73,54,41,.2);
 }
 
-.upload{
-  display:block;
-  position:relative;
-  overflow:hidden;
-  width:100%;
-  padding:16px;
-  text-align:center;
-  background:#e8b6c2;
-  color:white;
-  border-radius:15px;
-  font-size:14px;
-  font-weight:600;
-  cursor:pointer;
+.slogan {
+  color: var(--butter);
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-top: 13px;
+  text-transform: uppercase;
 }
 
-.upload input{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  opacity:0;
-  cursor:pointer;
+.sparkle {
+  color: var(--butter);
+  font-size: 13px;
+  letter-spacing: 9px;
+  margin-top: 13px;
 }
 
-.stage{
-  position:relative;
-  width:100%;
-  height:350px;
-  margin:18px 0;
-  overflow:hidden;
-  border-radius:18px;
-  background:#f3e7e9;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 0 17px 40px;
 }
 
-.stage img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:none;
+.tabs {
+  display: flex;
+  gap: 9px;
+  margin: 10px 0 24px;
 }
 
-#filtered{opacity:0}
-
-#grain{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:0;
-  display:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  mix-blend-mode:soft-light;
+.tab {
+  flex: 1;
+  border: 1px solid rgba(243,214,107,.5);
+  background: transparent;
+  color: var(--butter);
+  border-radius: 3px;
+  padding: 13px 6px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-.placeholder{
-  color:#b99ba2;
-  font-size:13px;
-  text-align:center;
-  padding:20px;
+.tab.active {
+  background: var(--brown);
+  border-color: var(--brown);
 }
 
-.section-title{
-  font-size:12px;
-  font-weight:700;
-  color:#a17a85;
-  letter-spacing:1.5px;
-  margin:22px 0 12px;
+h2 {
+  font-family: "Bodoni 72", Didot, Georgia, serif;
+  font-size: 29px;
+  font-weight: normal;
+  color: var(--butter);
+  text-align: center;
+  margin: 10px 0 7px;
 }
 
-.filters{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
+.subtitle {
+  text-align: center;
+  color: var(--cream);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-style: italic;
+  margin: 0 0 20px;
 }
 
-.filter{
-  border:1px solid #efd9de;
-  background:#fffdfd;
-  color:#99727d;
-  border-radius:12px;
-  padding:14px 7px;
-  font-size:12px;
-  min-height:48px;
-  cursor:pointer;
+.preview {
+  background: var(--brown);
+  border: 1px solid rgba(243,214,107,.35);
+  border-radius: 5px;
+  padding: 9px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.filter.active{
-  background:#d991a3;
-  color:white;
-  border-color:#d991a3;
+canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 540px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
-.range-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  font-size:12px;
-  color:#99727d;
-  margin:20px 0 8px;
+.placeholder {
+  text-align: center;
+  color: var(--butter);
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.8;
+  padding: 35px 10px;
 }
 
-input[type=range]{
-  width:100%;
-  accent-color:#d58c9d;
+.section-title {
+  color: var(--butter);
+  font-family: Georgia, serif;
+  font-size: 17px;
+  margin: 24px 0 12px;
+  letter-spacing: .5px;
 }
 
-.save{
-  display:block;
-  width:100%;
-  margin-top:25px;
-  padding:16px;
-  border:0;
-  border-radius:15px;
-  background:#d58c9d;
-  color:white;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
+.action-button {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 3px;
+  background: var(--brown);
+  color: var(--butter);
+  padding: 15px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  font-family: Georgia, serif;
+  margin-top: 13px;
 }
 
-.save:disabled{opacity:.45}
+.action-button.secondary {
+  background: transparent;
+  border: 1px solid var(--butter);
+  color: var(--butter);
+}
 
-.note{
-  text-align:center;
-  color:#b49da3;
-  font-size:11px;
-  line-height:1.6;
-  margin-top:14px;
+input[type="file"] { display: none; }
+
+.file-label {
+  display: block;
+  text-align: center;
+  padding: 15px;
+  background: var(--brown);
+  color: var(--butter);
+  border-radius: 3px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.filter {
+  border: 1px solid rgba(243,214,107,.45);
+  background: transparent;
+  color: var(--cream);
+  padding: 12px 5px;
+  border-radius: 3px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+}
+
+.filter.active {
+  background: var(--brown);
+  border-color: var(--butter);
+  color: var(--butter);
+}
+
+.range-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--cream);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--butter);
+}
+
+.layouts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.layout-button {
+  background: transparent;
+  border: 1px solid rgba(243,214,107,.5);
+  color: var(--butter);
+  padding: 12px 3px;
+  border-radius: 3px;
+  font-family: Georgia, serif;
+}
+
+.layout-button.active {
+  background: var(--brown);
+  border-color: var(--butter);
+}
+
+.note {
+  color: var(--cream);
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.6;
+  opacity: .85;
+  margin-top: 10px;
+}
+
+.hidden { display: none !important; }
+
+footer {
+  text-align: center;
+  color: var(--butter);
+  font-family: Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 15px 0 30px;
 }
 </style>
 </head>
 
 <body>
-<div class="app">
 
 <header>
-  <h1 class="logo">DLR</h1>
-  <div class="subtitle">PHOTO EDITOR</div>
+  <div class="logo">DLR</div>
+  <div class="slogan">Every Frame Tells a Story.</div>
+  <div class="sparkle">✦ &nbsp; ✧ &nbsp; ✦</div>
 </header>
 
-<div class="intro">Fotoğraflarına kendi tarzını kat. ♡</div>
-
-<label class="upload">
-  Fotoğrafını seç
-  <input type="file" id="photoInput" accept="image/*">
-</label>
-
-<div class="stage">
-  <div class="placeholder" id="placeholder">
-    Fotoğrafın burada görünecek ♡
+<main>
+  <div class="tabs">
+    <button class="tab active" id="photoTab">The Edit Room</button>
+    <button class="tab" id="collageTab">The Collage Atelier</button>
   </div>
-  <img id="original" alt="Fotoğrafın">
-  <img id="filtered" alt="Filtreli fotoğraf">
-  <div id="grain"></div>
-</div>
 
-<div class="section-title">DLR FİLTRELERİ ♡</div>
-<div class="filters" id="filters"></div>
+  <section id="photoSection">
+    <h2>A Touch of Nostalgia</h2>
+    <p class="subtitle">Give your memories a timeless feeling.</p>
 
-<div class="range-row">
-  <span>Filtre yoğunluğu</span>
-  <strong id="intensityValue">100%</strong>
-</div>
+    <label class="file-label" for="photoInput">Choose a Photo</label>
+    <input id="photoInput" type="file" accept="image/*">
 
-<input type="range" id="intensity" min="0" max="100" value="100">
+    <div class="preview" style="margin-top:15px">
+      <div class="placeholder" id="photoPlaceholder">
+        Your photograph will appear here.<br>
+        <span style="font-size:25px">✧</span>
+      </div>
+      <canvas id="photoCanvas" class="hidden"></canvas>
+    </div>
 
-<button class="save" id="saveButton" disabled>
-  Fotoğrafı kaydet ♡
-</button>
+    <div class="section-title">Signature Filters</div>
+    <div class="filters" id="photoFilters"></div>
 
-<div class="note">
-  DLR ile anılarını kendi tarzında düzenle.
-</div>
+    <div class="section-title">Filter Intensity</div>
+    <div class="range-row">
+      <span>Soft</span>
+      <span id="photoIntensityValue">100%</span>
+      <span>Strong</span>
+    </div>
+    <input type="range" id="photoIntensity" min="0" max="100" value="100">
 
-</div>
+    <button class="action-button" id="savePhoto">Save Your Masterpiece</button>
+  </section>
+
+  <section id="collageSection" class="hidden">
+    <h2>The Collage Atelier</h2>
+    <p class="subtitle">A little nostalgia in every frame.</p>
+
+    <label class="file-label" for="collageInput">Choose Multiple Photos</label>
+    <input id="collageInput" type="file" accept="image/*" multiple>
+
+    <p class="note" id="collageCount">Choose up to 6 photographs.</p>
+
+    <div class="section-title">Choose Your Layout</div>
+    <div class="layouts">
+      <button class="layout-button active" data-layout="2">2 Photos</button>
+      <button class="layout-button" data-layout="3">3 Photos</button>
+      <button class="layout-button" data-layout="4">4 Photos</button>
+      <button class="layout-button" data-layout="6">6 Photos</button>
+    </div>
+
+    <div class="preview" style="margin-top:15px">
+      <div class="placeholder" id="collagePlaceholder">
+        Your collage will appear here.<br>
+        <span style="font-size:25px">✧</span>
+      </div>
+      <canvas id="collageCanvas" class="hidden"></canvas>
+    </div>
+
+    <div class="section-title">Collage Filters</div>
+    <div class="filters" id="collageFilters"></div>
+
+    <div class="section-title">Filter Intensity</div>
+    <div class="range-row">
+      <span>Soft</span>
+      <span id="collageIntensityValue">100%</span>
+      <span>Strong</span>
+    </div>
+    <input type="range" id="collageIntensity" min="0" max="100" value="100">
+
+    <button class="action-button" id="saveCollage">Save Your Collage</button>
+  </section>
+</main>
+
+<footer>DLR · THE ART OF REMEMBERING</footer>
 
 <script>
-const filterList = [
-  {name:"Original", css:"none", grain:0},
-  {name:"Digital Camera", css:"brightness(1.12) contrast(1.32) saturate(1.38) sepia(0.08)", grain:0.30},
-  {name:"Vintage", css:"sepia(0.38) saturate(0.92) contrast(1.14) brightness(1.04)", grain:0.28},
-  {name:"Retro Flash", css:"brightness(1.20) contrast(1.38) saturate(1.22)", grain:0.20},
-  {name:"Classic B&W", css:"grayscale(1) contrast(1.48) brightness(1.03)", grain:0.25},
-  {name:"Soft Mono", css:"grayscale(1) contrast(1.10) brightness(1.10)", grain:0.14},
-  {name:"Cool CCD", css:"saturate(1.25) contrast(1.24) hue-rotate(12deg) brightness(1.04)", grain:0.16},
-  {name:"Warm 2000s", css:"sepia(0.22) saturate(1.48) contrast(1.18) brightness(1.05)", grain:0.23},
-  {name:"Fade Film", css:"contrast(0.84) brightness(1.13) saturate(0.82) sepia(0.17)", grain:0.24},
-  {name:"Night Flash", css:"brightness(1.15) contrast(1.48) saturate(1.18)", grain:0.22}
+const filters = [
+  {name:"Original", css:"none", tint:null},
+  {name:"CCD Digital", css:"contrast(1.12) saturate(1.25)", tint:null},
+  {name:"CPM Warm", css:"sepia(.25) saturate(1.2) contrast(1.05)", tint:"rgba(221,151,75,.10)"},
+  {name:"Soft Pink", css:"sepia(.12) saturate(1.2) brightness(1.08)", tint:"rgba(220,150,160,.12)"},
+  {name:"2000s Flash", css:"brightness(1.16) contrast(1.18) saturate(1.1)", tint:null},
+  {name:"Dreamy Glow", css:"brightness(1.12) saturate(1.15)", tint:"rgba(255,225,170,.12)"},
+  {name:"Faded Film", css:"sepia(.2) contrast(.85) brightness(1.08) saturate(.75)", tint:"rgba(220,190,140,.12)"},
+  {name:"Golden Hour", css:"sepia(.35) saturate(1.3) brightness(1.05)", tint:"rgba(245,174,70,.12)"},
+  {name:"Classic B&W", css:"grayscale(1) contrast(1.15)", tint:null},
+  {name:"Soft B&W", css:"grayscale(1) contrast(.85) brightness(1.08)", tint:null},
+  {name:"Noir B&W", css:"grayscale(1) contrast(1.55) brightness(.9)", tint:null},
+  {name:"Vintage Mono", css:"grayscale(1) sepia(.22) contrast(.9)", tint:"rgba(150,120,85,.10)"},
+  {name:"Cool CCD", css:"saturate(1.1) contrast(1.12) hue-rotate(9deg)", tint:"rgba(130,170,190,.08)"},
+  {name:"Night Flash", css:"contrast(1.3) saturate(1.15) brightness(.92)", tint:null}
 ];
 
-const photoInput = document.getElementById("photoInput");
-const original = document.getElementById("original");
-const filtered = document.getElementById("filtered");
-const placeholder = document.getElementById("placeholder");
-const grainLayer = document.getElementById("grain");
-const intensity = document.getElementById("intensity");
-const intensityValue = document.getElementById("intensityValue");
-const filters = document.getElementById("filters");
-const saveButton = document.getElementById("saveButton");
+let selectedPhoto = null;
+let collagePhotos = [];
+let collageLayout = 2;
+let photoFilter = 0;
+let collageFilter = 0;
+let photoIntensity = 100;
+let collageIntensity = 100;
 
-let selectedFilter = 0;
-let photoReady = false;
+const photoCanvas = document.getElementById("photoCanvas");
+const collageCanvas = document.getElementById("collageCanvas");
+const photoCtx = photoCanvas.getContext("2d");
+const collageCtx = collageCanvas.getContext("2d");
 
-filterList.forEach((filter,index)=>{
-  const button = document.createElement("button");
-  button.className = "filter" + (index === 0 ? " active" : "");
-  button.textContent = filter.name;
-  button.type = "button";
-
-  button.addEventListener("click",()=>{
-    selectedFilter = index;
-
-    document.querySelectorAll(".filter").forEach(item=>{
-      item.classList.remove("active");
+function makeFilterButtons(containerId, type) {
+  const container = document.getElementById(containerId);
+  filters.forEach((filter, index) => {
+    const button = document.createElement("button");
+    button.className = "filter" + (index === 0 ? " active" : "");
+    button.textContent = filter.name;
+    button.addEventListener("click", () => {
+      if (type === "photo") {
+        photoFilter = index;
+        container.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        renderPhoto();
+      } else {
+        collageFilter = index;
+        container.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        renderCollage();
+      }
     });
-
-    button.classList.add("active");
-    updatePreview();
+    container.appendChild(button);
   });
-
-  filters.appendChild(button);
-});
-
-photoInput.addEventListener("change",event=>{
-  const file = event.target.files && event.target.files[0];
-
-  if(!file) return;
-
-  if(!file.type.startsWith("image/")){
-    alert("Lütfen bir fotoğraf seç.");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = event=>{
-    original.onload = ()=>{
-      filtered.src = original.src;
-
-      photoReady = true;
-      original.style.display = "block";
-      filtered.style.display = "block";
-      placeholder.style.display = "none";
-
-      saveButton.disabled = false;
-      updatePreview();
-    };
-
-    original.src = event.target.result;
-  };
-
-  reader.readAsDataURL(file);
-});
-
-function updatePreview(){
-  if(!photoReady) return;
-
-  const filter = filterList[selectedFilter];
-  const amount = Number(intensity.value) / 100;
-
-  filtered.style.filter = filter.css;
-  filtered.style.opacity = amount;
-
-  grainLayer.style.display = filter.grain > 0 ? "block" : "none";
-  grainLayer.style.opacity = String(filter.grain * amount);
-
-  intensityValue.textContent = intensity.value + "%";
 }
 
-intensity.addEventListener("input",updatePreview);
+makeFilterButtons("photoFilters", "photo");
+makeFilterButtons("collageFilters", "collage");
 
-function addGrain(ctx,width,height,amount){
-  if(amount <= 0) return;
+function blendFilter(index, intensity) {
+  const filter = filters[index];
+  if (index === 0 || intensity === 0) return "none";
+  if (intensity === 100) return filter.css;
 
-  const tile = document.createElement("canvas");
-  tile.width = 160;
-  tile.height = 160;
-
-  const tileCtx = tile.getContext("2d");
-  const pixels = tileCtx.createImageData(160,160);
-
-  for(let i=0;i<pixels.data.length;i+=4){
-    const value = Math.floor(Math.random()*255);
-    pixels.data[i] = value;
-    pixels.data[i+1] = value;
-    pixels.data[i+2] = value;
-    pixels.data[i+3] = 65;
+  // Blend the selected effect gently with the original image.
+  const amount = intensity / 100;
+  if (filter.css.includes("grayscale(1)")) {
+    return `grayscale(${amount}) ${filter.css.replace("grayscale(1)", "")}`;
   }
+  return filter.css;
+}
 
-  tileCtx.putImageData(pixels,0,0);
-
-  const pattern = ctx.createPattern(tile,"repeat");
+function drawImageCover(ctx, image, x, y, width, height, filterIndex, intensity) {
+  const scale = Math.max(width / image.width, height / image.height);
+  const sw = width / scale;
+  const sh = height / scale;
+  const sx = (image.width - sw) / 2;
+  const sy = (image.height - sh) / 2;
 
   ctx.save();
-  ctx.globalAlpha = amount;
-  ctx.globalCompositeOperation = "soft-light";
-  ctx.fillStyle = pattern;
-  ctx.fillRect(0,0,width,height);
+  ctx.filter = blendFilter(filterIndex, intensity);
+  ctx.drawImage(image, sx, sy, sw, sh, x, y, width, height);
+  ctx.filter = "none";
+
+  const tint = filters[filterIndex].tint;
+  if (tint && intensity > 0) {
+    ctx.globalAlpha = intensity / 100;
+    ctx.fillStyle = tint;
+    ctx.fillRect(x, y, width, height);
+  }
   ctx.restore();
 }
 
-saveButton.addEventListener("click",()=>{
-  if(!photoReady) return;
+function renderPhoto() {
+  if (!selectedPhoto) return;
 
-  saveButton.disabled = true;
-  saveButton.textContent = "Hazırlanıyor...";
+  photoCanvas.width = 1080;
+  photoCanvas.height = Math.round(1080 * selectedPhoto.height / selectedPhoto.width);
 
-  try{
-    const maxSide = 2400;
-    const scale = Math.min(
-      1,
-      maxSide / Math.max(original.naturalWidth,original.naturalHeight)
-    );
+  drawImageCover(
+    photoCtx, selectedPhoto, 0, 0,
+    photoCanvas.width, photoCanvas.height,
+    photoFilter, photoIntensity
+  );
 
-    const width = Math.round(original.naturalWidth*scale);
-    const height = Math.round(original.naturalHeight*scale);
+  photoCanvas.classList.remove("hidden");
+  document.getElementById("photoPlaceholder").classList.add("hidden");
+}
 
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
+document.getElementById("photoInput").addEventListener("change", event => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const ctx = canvas.getContext("2d");
+  const image = new Image();
+  image.onload = () => {
+    selectedPhoto = image;
+    photoFilter = 0;
+    document.querySelectorAll("#photoFilters .filter").forEach((b, i) => {
+      b.classList.toggle("active", i === 0);
+    });
+    renderPhoto();
+  };
+  image.src = URL.createObjectURL(file);
+});
 
-    ctx.drawImage(original,0,0,width,height);
+document.getElementById("photoIntensity").addEventListener("input", event => {
+  photoIntensity = Number(event.target.value);
+  document.getElementById("photoIntensityValue").textContent = photoIntensity + "%";
+  renderPhoto();
+});
 
-    const amount = Number(intensity.value)/100;
-    const filter = filterList[selectedFilter];
+document.getElementById("collageInput").addEventListener("change", event => {
+  const files = Array.from(event.target.files).slice(0, 6);
+  collagePhotos = [];
 
-    if(filter.css !== "none" && amount > 0){
-      ctx.save();
-      ctx.globalAlpha = amount;
-      ctx.filter = filter.css;
-      ctx.drawImage(original,0,0,width,height);
-      ctx.restore();
+  files.forEach(file => {
+    const image = new Image();
+    image.onload = () => {
+      collagePhotos.push(image);
+      updateCollageCount();
+      renderCollage();
+    };
+    image.src = URL.createObjectURL(file);
+  });
+});
+
+function updateCollageCount() {
+  document.getElementById("collageCount").textContent =
+    collagePhotos.length + " photo(s) selected. Layout: " + collageLayout + " photos.";
+}
+
+document.querySelectorAll(".layout-button").forEach(button => {
+  button.addEventListener("click", () => {
+    collageLayout = Number(button.dataset.layout);
+    document.querySelectorAll(".layout-button").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    updateCollageCount();
+    renderCollage();
+  });
+});
+
+document.getElementById("collageIntensity").addEventListener("input", event => {
+  collageIntensity = Number(event.target.value);
+  document.getElementById("collageIntensityValue").textContent = collageIntensity + "%";
+  renderCollage();
+});
+
+function renderCollage() {
+  if (collagePhotos.length === 0) return;
+
+  collageCanvas.width = 1200;
+  collageCanvas.height = 1200;
+
+  collageCtx.fillStyle = "#493629";
+  collageCtx.fillRect(0, 0, 1200, 1200);
+
+  const count = Math.min(collageLayout, collagePhotos.length);
+  const gap = 14;
+  const margin = 14;
+  let cells = [];
+
+  if (count === 2) {
+    cells = [
+      [margin, margin, 579, 1172],
+      [607, margin, 579, 1172]
+    ];
+  } else if (count === 3) {
+    cells = [
+      [margin, margin, 579, 1172],
+      [607, margin, 579, 579],
+      [607, 607, 579, 579]
+    ];
+  } else if (count === 4) {
+    cells = [
+      [margin, margin, 579, 579],
+      [607, margin, 579, 579],
+      [margin, 607, 579, 579],
+      [607, 607, 579, 579]
+    ];
+  } else {
+    const size = 379;
+    for (let row = 0; row < 2; row++) {
+      for (let col = 0; col < 3; col++) {
+        cells.push([margin + col * 393, margin + row * 593, size, 565]);
+      }
     }
-
-    addGrain(ctx,width,height,filter.grain*amount);
-
-    const imageUrl = canvas.toDataURL("image/jpeg",0.94);
-    const link = document.createElement("a");
-
-    link.href = imageUrl;
-    link.download = "DLR-photo.jpg";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-  }catch(error){
-    alert("Fotoğraf kaydedilemedi. Lütfen tekrar dene.");
   }
 
-  saveButton.textContent = "Fotoğrafı kaydet ♡";
-  saveButton.disabled = false;
+  for (let i = 0; i < count; i++) {
+    const cell = cells[i];
+    drawImageCover(
+      collageCtx, collagePhotos[i],
+      cell[0], cell[1], cell[2], cell[3],
+      collageFilter, collageIntensity
+    );
+  }
+
+  collageCanvas.classList.remove("hidden");
+  document.getElementById("collagePlaceholder").classList.add("hidden");
+}
+
+document.getElementById("photoTab").addEventListener("click", () => {
+  document.getElementById("photoSection").classList.remove("hidden");
+  document.getElementById("collageSection").classList.add("hidden");
+  document.getElementById("photoTab").classList.add("active");
+  document.getElementById("collageTab").classList.remove("active");
+});
+
+document.getElementById("collageTab").addEventListener("click", () => {
+  document.getElementById("collageSection").classList.remove("hidden");
+  document.getElementById("photoSection").classList.add("hidden");
+  document.getElementById("collageTab").classList.add("active");
+  document.getElementById("photoTab").classList.remove("active");
+});
+
+async function saveCanvas(canvas, filename) {
+  if (!canvas.width || !canvas.height) {
+    alert("Please choose a photo first.");
+    return;
+  }
+
+  canvas.toBlob(async blob => {
+    if (!blob) {
+      alert("Could not create your image. Please try again.");
+      return;
+    }
+
+    const file = new File([blob], filename, {type: "image/png"});
+
+    if (navigator.share && navigator.canShare && navigator.canShare({files:[file]})) {
+      try {
+        await navigator.share({files:[file], title:"DLR"});
+      } catch (error) {
+        if (error.name !== "AbortError") downloadImage(blob, filename);
+      }
+    } else {
+      downloadImage(blob, filename);
+    }
+  }, "image/png");
+}
+
+function downloadImage(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+document.getElementById("savePhoto").addEventListener("click", () => {
+  saveCanvas(photoCanvas, "DLR-photo.png");
+});
+
+document.getElementById("saveCollage").addEventListener("click", () => {
+  if (collagePhotos.length < collageLayout) {
+    alert("Please choose at least " + collageLayout + " photos for this layout.");
+    return;
+  }
+  saveCanvas(collageCanvas, "DLR-collage.png");
 });
 </script>
+
 </body>
 </html>
