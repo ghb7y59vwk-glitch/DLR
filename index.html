@@ -1,62 +1,353 @@
+
 <!DOCTYPE html>
-
 <html lang="tr">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>DLR Photo Editor</title>
+<meta name="theme-color" content="#fceef2">
+<title>DLR | Photo Editor</title>
 
 <style>
-
-*{box-sizing:border-box}
-
-body{margin:0;background:#f8f5f2;color:#292522;font-family:Arial,sans-serif;text-align:center;padding:28px 18px}
-
-.logo{font-size:38px;letter-spacing:9px;font-weight:300;margin-top:25px}
-
-.sub{font-size:11px;letter-spacing:4px;color:#9b8b80;margin:8px}
-
-h2{font-weight:400;margin-top:42px}
-
-.upload{display:block;background:#292522;color:white;padding:16px;border-radius:30px;margin:25px auto;max-width:280px}
-
-input[type=file]{
-position:absolute;
-width:1px;
-height:1px;
-opacity:0;
-overflow:hidden;
+* {
+  box-sizing: border-box;
 }
 
-.preview{width:100%;max-width:340px;border-radius:16px;margin:15px auto}
+body {
+  margin: 0;
+  padding: 25px 18px 45px;
+  background: #fff8f8;
+  color: #66505a;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-.filters{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:360px;margin:25px auto}
+header {
+  padding: 30px 0 20px;
+}
 
-button{border:1px solid #d9cec5;background:white;border-radius:25px;padding:14px;color:#292522}
+.logo {
+  font-family: Georgia, serif;
+  font-size: 58px;
+  letter-spacing: 12px;
+  color: #d99aaa;
+  font-weight: normal;
+  padding-left: 12px;
+}
 
-button.active{background:#292522;color:white}
+.subtitle {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: #b98c99;
+  margin-top: 8px;
+}
 
-input[type=range]{width:85%;accent-color:#292522}
+.intro {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: normal;
+  color: #98717e;
+  margin: 35px 0 8px;
+}
 
-.save{background:#292522;color:white;width:85%;margin:25px auto}
+.description {
+  color: #b69aa2;
+  font-size: 12px;
+  margin-bottom: 28px;
+}
 
+.upload {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: #e9b9c5;
+  color: white;
+  padding: 16px;
+  border-radius: 30px;
+  max-width: 270px;
+  margin: 0 auto 24px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.upload input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.preview {
+  display: none;
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 22px #e8cbd2;
+}
+
+.preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.preview .filtered {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+}
+
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  font-weight: normal;
+  color: #a77d8b;
+  margin: 34px 0 18px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.filters button {
+  border: 1px solid #efd5dc;
+  background: #fff;
+  color: #987783;
+  border-radius: 25px;
+  padding: 14px 8px;
+  font-size: 13px;
+}
+
+.filters button.active {
+  background: #e5b2c0;
+  border-color: #e5b2c0;
+  color: white;
+}
+
+.intensity {
+  margin: 28px auto;
+  max-width: 360px;
+  padding: 18px;
+  background: #fff0f3;
+  border-radius: 18px;
+}
+
+.intensity label {
+  font-size: 13px;
+  color: #a77d8b;
+}
+
+.intensity input {
+  width: 100%;
+  margin-top: 16px;
+  accent-color: #d99aaa;
+}
+
+.save {
+  border: none;
+  background: #d99aaa;
+  color: white;
+  width: 100%;
+  max-width: 270px;
+  padding: 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+
+footer {
+  margin-top: 45px;
+  color: #c4a3ad;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
 </style>
-
 </head>
 
 <body>
 
-<div class="logo">DLR</div>
+<header>
+  <div class="logo">DLR</div>
+  <div class="subtitle">PHOTO EDITOR</div>
+</header>
 
-<div class="sub">PHOTO EDITOR</div>
+<h2 class="intro">Your photos, your mood.</h2>
+<p class="description">Make every moment beautiful.</p>
 
-<h2>Your photos, your mood.</h2>
+<label class="upload">
+  Fotoğrafını seç ♡
+  <input type="file" id="fileInput" accept="image/*">
+</label>
 
-<button class="upload" type="button" onclick="document.getElementById('file').click()">
-Fotoğrafını seç
-</button>
-<input type="file" id="file" accept="image/*">
+<div class="preview" id="preview">
+  <img id="original" alt="Seçilen fotoğraf">
+  <img id="filtered" class="filtered" alt="">
+</div>
+
+<h3 class="section-title">Choose your mood ♡</h3>
+
+<div class="filters">
+  <button class="active" data-filter="none">Original</button>
+  <button data-filter="sepia(.3) saturate(1.15)">Warm</button>
+  <button data-filter="brightness(1.1) saturate(1.2)">Glow</button>
+  <button data-filter="sepia(.2) brightness(1.08) saturate(.85)">Cream</button>
+  <button data-filter="grayscale(1)">Mono</button>
+  <button data-filter="saturate(1.6)">Vivid</button>
+  <button data-filter="brightness(1.1) contrast(.9)">Soft</button>
+  <button data-filter="sepia(.65)">Vintage</button>
+  <button data-filter="contrast(1.3)">Drama</button>
+  <button data-filter="brightness(1.15) saturate(.8)">Airy</button>
+</div>
+
+<div class="intensity">
+  <label for="intensity">Filter intensity · <span id="amount">100</span>%</label>
+  <input type="range" id="intensity" min="0" max="100" value="100">
+</div>
+
+<button class="save" id="saveButton">Save my photo ♡</button>
+
+<footer>MADE WITH LOVE · DLR</footer>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const original = document.getElementById("original");
+const filtered = document.getElementById("filtered");
+const intensity = document.getElementById("intensity");
+const amount = document.getElementById("amount");
+const buttons = document.querySelectorAll(".filters button");
+
+let selectedFilter = "none";
+let photoReady = false;
+
+fileInput.addEventListener("change", function() {
+  const file = this.files && this.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Lütfen bir fotoğraf seç.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    original.onload = function() {
+      photoReady = true;
+      filtered.src = original.src;
+      preview.style.display = "block";
+      updateFilter();
+    };
+
+    original.onerror = function() {
+      photoReady = false;
+      alert("Fotoğraf açılamadı. Başka bir fotoğraf deneyebilir misin?");
+    };
+
+    original.src = event.target.result;
+  };
+
+  reader.onerror = function() {
+    alert("Fotoğraf okunamadı. Tekrar deneyebilirsin.");
+  };
+
+  reader.readAsDataURL(file);
+});
+
+buttons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    selectedFilter = this.dataset.filter;
+
+    buttons.forEach(function(item) {
+      item.classList.remove("active");
+    });
+
+    this.classList.add("active");
+    updateFilter();
+  });
+});
+
+intensity.addEventListener("input", updateFilter);
+
+function updateFilter() {
+  const value = Number(intensity.value);
+
+  amount.textContent = value;
+
+  filtered.style.filter = selectedFilter;
+  filtered.style.opacity = selectedFilter === "none"
+    ? 0
+    : value / 100;
+}
+
+document.getElementById("saveButton").addEventListener("click", async function() {
+  if (!photoReady) {
+    alert("Önce bir fotoğraf seçmelisin ♡");
+    return;
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = original.naturalWidth;
+  canvas.height = original.naturalHeight;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.drawImage(original, 0, 0);
+
+  if (selectedFilter !== "none") {
+    ctx.save();
+    ctx.globalAlpha = Number(intensity.value) / 100;
+    ctx.filter = selectedFilter;
+    ctx.drawImage(original, 0, 0);
+    ctx.restore();
+  }
+
+  canvas.toBlob(async function(blob) {
+    if (!blob) {
+      alert("Fotoğraf kaydedilemedi. Tekrar deneyelim.");
+      return;
+    }
+
+    const file = new File([blob], "DLR-photo.jpg", {
+      type: "image/jpeg"
+    });
+
+    try {
+      if (navigator.canShare && navigator.canShare({files: [file]})) {
+        await navigator.share({
+          files: [file],
+          title: "DLR Photo"
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "DLR-photo.jpg";
+        link.click();
+
+        setTimeout(function() {
+          URL.revokeObjectURL(url);
+        }, 3000);
+      }
+    } catch(error) {
+      if (error.name !== "AbortError") {
+        alert("Kaydetme sırasında sorun oluştu. Tekrar deneyelim.");
+      }
+    }
+  }, "image/jpeg", 0.95);
+});
+</script>
+
+</body>
+</html>
