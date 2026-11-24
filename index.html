@@ -24,7 +24,13 @@ h2{font-weight:400;margin-top:42px}
 
 .upload{display:block;background:#292522;color:white;padding:16px;border-radius:30px;margin:25px auto;max-width:280px}
 
-input[type=file]{display:none}
+input[type=file]{
+position:absolute;
+width:1px;
+height:1px;
+opacity:0;
+overflow:hidden;
+}
 
 .preview{width:100%;max-width:340px;border-radius:16px;margin:15px auto}
 
@@ -50,4 +56,7 @@ input[type=range]{width:85%;accent-color:#292522}
 
 <h2>Your photos, your mood.</h2>
 
-<label class="upload">Fotoğrafını seç
+<button class="upload" type="button" onclick="document.getElementById('file').click()">
+Fotoğrafını seç
+</button>
+<input type="file" id="file" accept="image/*">
