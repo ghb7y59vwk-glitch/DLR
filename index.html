@@ -6,712 +6,478 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#687653">
 <title>DLR — Every Frame Tells a Story</title>
-
 <style>
-:root {
-  --olive:#687653;
-  --olive-dark:#4d5b3e;
-  --yellow:#f3d66b;
-  --brown:#493629;
-  --cream:#f6eedc;
-  --paper:#eee5d2;
-  --white:#fffdf7;
+:root{
+ --olive:#687653;--brown:#493629;--cream:#F6EEDC;
+ --gold:#D8BD8C;--yellow:#F3D66B;--wine:#713D45;
 }
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:var(--olive);
-  color:var(--cream);
-  font-family:Georgia,"Times New Roman",serif;
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--olive);color:var(--cream);
+ font-family:Georgia,'Times New Roman',serif;
 }
-button,select,input { font:inherit; }
-.page {
-  width:min(100%,760px);
-  margin:auto;
-  padding:24px 18px 50px;
+button,input,select{font:inherit}
+button{
+ border:1px solid var(--gold);background:var(--brown);
+ color:var(--cream);padding:12px 17px;cursor:pointer;
+ letter-spacing:1px;font-size:12px;
 }
-header {
-  text-align:center;
-  padding:24px 0 28px;
-  position:relative;
+button:active{transform:scale(.98)}
+header{
+ min-height:570px;position:relative;overflow:hidden;
+ display:flex;flex-direction:column;justify-content:center;
+ align-items:center;text-align:center;padding:35px 20px;
+ background:
+ linear-gradient(180deg,rgba(34,24,20,.20),rgba(34,24,20,.78)),
+ url('cover.jpg') center/cover no-repeat,
+ linear-gradient(135deg,#493629,#713D45,#687653);
+ border-bottom:1px solid var(--gold);
 }
-.logo-wrap {
-  display:inline-block;
-  position:relative;
+header:after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse at 80% 18%,rgba(255,224,164,.28),transparent 27%),
+ radial-gradient(ellipse at 15% 65%,rgba(176,78,63,.16),transparent 30%);
+ mix-blend-mode:screen;
 }
-.logo {
-  color:var(--yellow);
-  font-family:"Bodoni 72",Didot,"Times New Roman",serif;
-  font-size:clamp(65px,17vw,104px);
-  letter-spacing:7px;
-  line-height:1;
-  font-weight:normal;
-  margin:0;
+.cover-copy{position:relative;z-index:1;text-shadow:0 3px 18px #241711}
+.brand{
+ font-size:clamp(76px,22vw,125px);font-weight:400;
+ letter-spacing:-8px;color:var(--yellow);
+ line-height:1;text-shadow:0 0 18px rgba(243,214,107,.35);
 }
-.logo-wrap:after {
-  content:"✦";
-  position:absolute;
-  color:#fffdf7;
-  font-size:13px;
-  top:1px;
-  right:-9px;
-  text-shadow:0 0 7px #fff,0 0 14px #f3d66b;
+.eyebrow{font-size:10px;letter-spacing:5px;margin-bottom:16px}
+.cover-title{font-size:clamp(23px,6vw,34px);font-style:italic;margin:22px 0 10px}
+.cover-sub{font-size:10px;letter-spacing:2px;line-height:2;max-width:290px;margin:auto}
+.cover-bottom{font-size:9px;letter-spacing:4px;margin-top:36px;color:var(--gold)}
+main{max-width:850px;margin:auto;padding:28px 16px 55px}
+.section-title{text-align:center;margin:10px 0 24px}
+.section-title small{font-size:9px;letter-spacing:4px;color:var(--gold)}
+.section-title h2{font-size:27px;font-weight:400;margin:8px 0;font-style:italic}
+.panel{
+ background:rgba(73,54,41,.48);border:1px solid rgba(216,189,140,.5);
+ padding:18px;margin:16px 0;
 }
-.tagline {
-  font-size:10px;
-  letter-spacing:3px;
-  margin-top:13px;
-  color:var(--cream);
-  text-transform:uppercase;
+label{display:block;font-size:10px;letter-spacing:2px;color:var(--gold);margin:15px 0 8px}
+input[type=file]{width:100%;font-size:12px;color:var(--cream)}
+input[type=range]{width:100%;accent-color:var(--yellow)}
+select{
+ width:100%;padding:12px;background:var(--brown);color:var(--cream);
+ border:1px solid var(--gold);font-size:13px;
 }
-.intro {
-  font-size:14px;
-  color:#e6dec9;
-  font-style:italic;
-  margin-top:8px;
+.preview-wrap{
+ width:100%;min-height:220px;background:#332820;
+ display:flex;justify-content:center;align-items:center;overflow:hidden;
+ border:1px solid rgba(216,189,140,.4);position:relative;
 }
-.tabs {
-  display:flex;
-  gap:10px;
-  margin:12px 0 24px;
+canvas{display:block;max-width:100%;height:auto}
+#photoCanvas{width:100%;max-height:600px;object-fit:contain}
+.empty{padding:45px 15px;text-align:center;color:#c9b99c;font-style:italic;font-size:14px}
+.control-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px}
+.control-grid label{margin-top:13px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}
+.actions button{flex:1;min-width:125px}
+.primary{background:var(--wine);border-color:var(--yellow)}
+.secondary{background:transparent}
+.filter-grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
 }
-.tab {
-  flex:1;
-  border:1px solid rgba(246,238,220,.45);
-  background:transparent;
-  color:var(--cream);
-  padding:13px 8px;
-  border-radius:3px;
-  letter-spacing:1px;
-  font-size:12px;
-  text-transform:uppercase;
+.filter-card{
+ text-align:left;padding:12px 10px;background:#493629;
+ border:1px solid rgba(216,189,140,.35);color:var(--cream);
 }
-.tab.active {
-  background:var(--yellow);
-  border-color:var(--yellow);
-  color:var(--brown);
-}
-.section-title {
-  text-align:center;
-  color:var(--yellow);
-  font-size:25px;
-  font-weight:normal;
-  margin:8px 0 7px;
-}
-.subtext {
-  text-align:center;
-  font-size:12px;
-  color:#e4dcc9;
-  margin:0 0 20px;
-  line-height:1.6;
-}
-.panel {
-  background:var(--paper);
-  color:var(--brown);
-  padding:16px;
-  border-radius:4px;
-  box-shadow:0 8px 24px rgba(36,30,20,.13);
-}
-.upload-label {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:9px;
-  background:var(--brown);
-  color:var(--cream);
-  padding:15px;
-  text-align:center;
-  border-radius:3px;
-  letter-spacing:1px;
-  font-size:12px;
-  text-transform:uppercase;
-  cursor:pointer;
-}
-input[type=file] { display:none; }
-.canvas-wrap {
-  margin-top:15px;
-  background:#ddd3c0;
-  min-height:180px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  border-radius:2px;
-}
-canvas {
-  display:block;
-  width:100%;
-  height:auto;
-  max-height:70vh;
-  object-fit:contain;
-}
-.empty {
-  padding:50px 15px;
-  text-align:center;
-  color:#857b68;
-  font-style:italic;
-  font-size:14px;
-}
-.control-title {
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  margin:22px 0 11px;
-  color:var(--brown);
-}
-.filter-list {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px;
-}
-.filter-btn {
-  border:1px solid #c8bda8;
-  background:#f8f3e8;
-  color:var(--brown);
-  border-radius:3px;
-  padding:11px 5px;
-  font-size:11px;
-  min-height:42px;
-}
-.filter-btn.active {
-  background:var(--olive);
-  color:white;
-  border-color:var(--olive);
-}
-.range-row {
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  margin:10px 0 5px;
-}
-input[type=range] {
-  width:100%;
-  accent-color:var(--olive);
-}
-.action {
-  display:block;
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:3px;
-  background:var(--brown);
-  color:var(--cream);
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  font-size:12px;
-  margin-top:17px;
-}
-.action.secondary {
-  background:transparent;
-  border:1px solid var(--brown);
-  color:var(--brown);
-}
-select {
-  width:100%;
-  padding:12px;
-  border:1px solid #c8bda8;
-  background:#f8f3e8;
-  color:var(--brown);
-  border-radius:3px;
-}
-.collage-grid {
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-  margin-top:14px;
-}
-.photo-card {
-  background:#f8f3e8;
-  border:1px solid #d4c9b5;
-  padding:8px;
-  min-width:0;
-}
-.photo-card img {
-  display:block;
-  width:100%;
-  aspect-ratio:1;
-  object-fit:cover;
-}
-.photo-card label {
-  display:block;
-  font-size:10px;
-  letter-spacing:1px;
-  margin:10px 0 6px;
-  text-transform:uppercase;
-}
-.photo-card select {
-  font-size:11px;
-  padding:8px 4px;
-}
-.photo-card input[type=range] {
-  margin:5px 0 0;
-}
-.hidden { display:none !important; }
-footer {
-  text-align:center;
-  margin-top:35px;
-  color:#e6dec9;
-  font-size:10px;
-  letter-spacing:2px;
-}
-@media(min-width:600px) {
-  .filter-list { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.filter-card.active{border:1px solid var(--yellow);background:#60443a}
+.filter-card strong{display:block;font-size:12px;font-weight:400}
+.filter-card span{display:block;font-size:9px;color:#d3c2a5;margin-top:5px;letter-spacing:.5px}
+.filter-dot{height:5px;margin-bottom:9px;background:linear-gradient(90deg,#b17a50,#d8bd8c,#713d45)}
+#collageCanvas{width:100%;background:#332820}
+.note{font-size:10px;line-height:1.8;color:#ddcfb5;margin-top:12px}
+footer{text-align:center;padding:22px;color:var(--gold);font-size:9px;letter-spacing:3px}
+@media(min-width:650px){
+ .filter-grid{grid-template-columns:repeat(3,1fr)}
+ .control-grid{grid-template-columns:repeat(3,1fr)}
+ header{min-height:680px}
 }
 </style>
 </head>
-
 <body>
-<div class="page">
 
 <header>
-  <div class="logo-wrap"><h1 class="logo">DLR</h1></div>
-  <div class="tagline">Every Frame Tells a Story.</div>
-  <div class="intro">A little nostalgia in every frame.</div>
+ <div class="cover-copy">
+  <div class="eyebrow">A LITTLE LIGHT · A LITTLE NOSTALGIA</div>
+  <div class="brand">DLR</div>
+  <div class="cover-title">A Touch of Nostalgia</div>
+  <div class="cover-sub">THE ART OF REMEMBERING<br>CAPTURE THE MOMENT. KEEP THE FEELING.</div>
+  <div class="cover-bottom">EVERY FRAME TELLS A STORY · EST. 2026</div>
+ </div>
 </header>
 
-<nav class="tabs">
-  <button class="tab active" id="editorTab" type="button">The Edit Room</button>
-  <button class="tab" id="collageTab" type="button">The Collage Atelier</button>
-</nav>
+<main>
+ <div class="section-title">
+  <small>YOUR PERSONAL FILM JOURNAL</small>
+  <h2>The Edit Room</h2>
+ </div>
 
-<section id="editorSection">
-  <h2 class="section-title">A Touch of Nostalgia</h2>
-  <p class="subtext">Find your look. Make it timeless.</p>
-
-  <div class="panel">
-    <label class="upload-label" for="photoInput">＋ Choose Your Photo</label>
-    <input id="photoInput" type="file" accept="image/*">
-
-    <div class="canvas-wrap">
-      <div class="empty" id="editorEmpty">Your next favorite photograph starts here.</div>
-      <canvas id="editorCanvas" class="hidden" width="1200" height="1200"></canvas>
-    </div>
-
-    <div class="control-title">Choose Your Look</div>
-    <div class="filter-list" id="filterButtons"></div>
-
-    <div class="range-row">
-      <span>Filter Intensity</span>
-      <strong id="intensityValue">100%</strong>
-    </div>
-    <input id="intensity" type="range" min="0" max="100" value="100">
-
-    <button class="action" id="savePhoto" type="button">Save Your Masterpiece</button>
-    <button class="action secondary" id="sharePhoto" type="button">Share Your Photo</button>
+ <section class="panel">
+  <label>CHOOSE YOUR PHOTOGRAPH</label>
+  <input type="file" id="photoInput" accept="image/*">
+  <div class="preview-wrap" style="margin-top:15px">
+   <div class="empty" id="emptyMessage">Your next favourite memory belongs here.</div>
+   <canvas id="photoCanvas" hidden></canvas>
   </div>
-</section>
+  <div class="actions">
+   <button class="primary" id="savePhoto">Save Your Masterpiece</button>
+   <button class="secondary" id="resetPhoto">Reset Photo</button>
+  </div>
+  <p class="note">On iPhone, choose “Save Image” from the share menu to add your edited photo to Photos.</p>
+ </section>
 
-<section id="collageSection" class="hidden">
-  <h2 class="section-title">The Collage Atelier</h2>
-  <p class="subtext">Collect your moments in one frame.</p>
+ <section class="panel">
+  <div class="section-title">
+   <small>CURATED FILM COLLECTION</small>
+   <h2>A Touch of Nostalgia</h2>
+  </div>
+  <div class="filter-grid" id="filterGrid"></div>
+  <label>FILTER INTENSITY</label>
+  <input type="range" id="intensity" min="0" max="100" value="75">
+  <div class="note">Choose a film mood and adjust its strength.</div>
+ </section>
 
-  <div class="panel">
-    <div class="control-title">Choose Your Layout</div>
-    <select id="collageCount">
-      <option value="2">Two Photos</option>
-      <option value="3">Three Photos</option>
-      <option value="4">Four Photos</option>
-      <option value="6">Six Photos</option>
+ <section class="panel">
+  <div class="section-title">
+   <small>MAKE IT YOUR OWN</small>
+   <h2>Analog Details</h2>
+  </div>
+  <div class="control-grid">
+   <div><label>FILM GRAIN</label><input type="range" id="grain" min="0" max="100" value="12"></div>
+   <div><label>LIGHT LEAK</label><input type="range" id="leak" min="0" max="100" value="0"></div>
+   <div><label>SOFT GLOW</label><input type="range" id="glow" min="0" max="100" value="0"></div>
+   <div><label>VIGNETTE</label><input type="range" id="vignette" min="0" max="100" value="15"></div>
+   <div><label>FADE</label><input type="range" id="fade" min="0" max="100" value="10"></div>
+   <div><label>DATE STAMP</label>
+    <select id="dateStamp">
+     <option value="off">Off</option>
+     <option value="on">On · 09 26</option>
     </select>
-
-    <div style="height:12px"></div>
-    <label class="upload-label" for="collageInput">＋ Choose Multiple Photos</label>
-    <input id="collageInput" type="file" accept="image/*" multiple>
-
-    <div class="collage-grid" id="collageCards"></div>
-
-    <div class="canvas-wrap">
-      <div class="empty" id="collageEmpty">Your memories, beautifully arranged.</div>
-      <canvas id="collageCanvas" class="hidden" width="1200" height="1200"></canvas>
-    </div>
-
-    <button class="action" id="saveCollage" type="button">Save Your Masterpiece</button>
-    <button class="action secondary" id="shareCollage" type="button">Share Your Collage</button>
+   </div>
   </div>
-</section>
+  <p class="note">The yellow DLR signature appears only with the Disposable 90s filter. The date stamp can be switched on separately.</p>
+ </section>
 
-<footer>DLR ✧ MADE WITH LOVE & NOSTALGIA</footer>
-</div>
+ <section class="panel">
+  <div class="section-title">
+   <small>MEMORIES, TOGETHER</small>
+   <h2>The Collage Atelier</h2>
+  </div>
+  <label>CHOOSE MULTIPLE PHOTOS</label>
+  <input type="file" id="collageInput" accept="image/*" multiple>
+  <label>COLLAGE LAYOUT</label>
+  <select id="layout">
+   <option value="2">Two photographs</option>
+   <option value="3">Three photographs</option>
+   <option value="4">Four photographs</option>
+   <option value="6">Six photographs</option>
+  </select>
+  <label>COLLAGE FILM FILTER</label>
+  <select id="collageFilter"></select>
+  <div class="preview-wrap" style="margin-top:15px">
+   <div class="empty" id="collageEmpty">Choose your photographs to create a little story.</div>
+   <canvas id="collageCanvas" hidden></canvas>
+  </div>
+  <div class="actions">
+   <button class="primary" id="makeCollage">Create Collage</button>
+   <button id="saveCollage">Save Collage</button>
+  </div>
+  <p class="note">Choose 2, 3, 4 or 6 photographs. The selected film mood will be applied to the collage.</p>
+ </section>
+</main>
+
+<footer>DLR · EVERY FRAME TELLS A STORY</footer>
 
 <script>
-"use strict";
-
-const filterLooks = [
-  {name:"Original"},
-  {name:"VSCO A6",contrast:1.10,saturation:.92,brightness:1.04,warm:3,grain:3},
-  {name:"Portra 400",contrast:.98,saturation:1.12,brightness:1.04,warm:10,grain:7,fade:.025},
-  {name:"Kodak Gold",contrast:1.10,saturation:1.3,brightness:1.06,warm:19,grain:8},
-  {name:"CCD Pop",contrast:1.25,saturation:1.55,brightness:1.04,grain:3},
-  {name:"2000s Flash",contrast:1.35,saturation:1.25,brightness:1.17,grain:4},
-  {name:"Soft Bloom",contrast:.88,saturation:1.12,brightness:1.13,warm:5,grain:3,fade:.025},
-  {name:"Faded Film",contrast:.78,saturation:.76,brightness:1.12,fade:.10,warm:7,grain:12},
-  {name:"Warm Matte",contrast:.85,saturation:.95,brightness:1.10,fade:.07,warm:12,grain:9},
-  {name:"Cool Breeze",contrast:1.12,saturation:1.15,cool:13,grain:3},
-  {name:"Olive Mood",contrast:1.10,saturation:.92,olive:13,warm:2,grain:8},
-  {name:"Noir",mono:1,contrast:1.8,brightness:.94,grain:13},
-  {name:"Silver",mono:1,contrast:1.18,brightness:1.10,grain:8,cool:3},
-  {name:"Soft Mono",mono:1,contrast:.82,brightness:1.10,grain:7,fade:.035},
-  {name:"Grainy B&W",mono:1,contrast:1.35,brightness:1.02,grain:25},
-  {name:"Flash Mono",mono:1,contrast:1.5,brightness:1.20,grain:12},
-  {name:"Sepia Archive",sepia:.85,contrast:1.12,brightness:1.05,grain:15},
-  {name:"Night City",contrast:1.35,saturation:1.35,brightness:.88,cool:9,grain:7}
+const filters=[
+ {name:"Original",desc:"True to the moment",type:"original"},
+ {name:"Portra Romance",desc:"Soft pink and creamy tones",type:"portra"},
+ {name:"Kodak Golden",desc:"Golden afternoon light",type:"gold"},
+ {name:"Cinema Nights",desc:"Moody cinematic shadows",type:"cinema"},
+ {name:"Olive Vintage",desc:"Muted olive film",type:"olive"},
+ {name:"Silver Memories",desc:"Classic silver monochrome",type:"bw"},
+ {name:"Disposable 90s",desc:"Flash, grain and date stamp",type:"disposable"},
+ {name:"VSCO A6",desc:"Clean and understated",type:"a6"},
+ {name:"Faded Film",desc:"Soft, faded memories",type:"faded"},
+ {name:"Warm Matte",desc:"Warm matte finish",type:"warm"},
+ {name:"Cool Breeze",desc:"Cool blue undertones",type:"cool"},
+ {name:"Olive Mood",desc:"Earthy muted greens",type:"mood"},
+ {name:"Noir",desc:"Deep dramatic black & white",type:"noir"},
+ {name:"Soft Mono",desc:"Gentle monochrome",type:"softmono"},
+ {name:"Grainy B&W",desc:"Textured black & white",type:"grainbw"},
+ {name:"Flash Mono",desc:"Vintage flash monochrome",type:"flashmono"},
+ {name:"Sepia Archive",desc:"An old photograph",type:"sepia"},
+ {name:"Dreamy Glow",desc:"Soft glowing highlights",type:"dreamy"},
+ {name:"Burgundy Film",desc:"Romantic wine-coloured shadows",type:"burgundy"}
 ];
+let selectedFilter="original";
+let sourceImage=null;
+let collageImages=[];
 
-const $ = id => document.getElementById(id);
-const editorCanvas = $("editorCanvas");
-const editorCtx = editorCanvas.getContext("2d");
-const collageCanvas = $("collageCanvas");
-const collageCtx = collageCanvas.getContext("2d");
+const photoInput=document.getElementById("photoInput");
+const canvas=document.getElementById("photoCanvas");
+const ctx=canvas.getContext("2d",{willReadFrequently:true});
+const filterGrid=document.getElementById("filterGrid");
+const collageCanvas=document.getElementById("collageCanvas");
+const cctx=collageCanvas.getContext("2d");
 
-let editorImage = null;
-let editorFilter = 0;
-let editorIntensity = 100;
-let collagePhotos = [];
-
-function clamp(v) {
-  return Math.max(0, Math.min(255, v));
-}
-
-function loadImage(file) {
-  return new Promise((resolve,reject) => {
-    if (!file || !file.type.startsWith("image/")) {
-      reject(new Error("Please choose an image."));
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = reader.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-function drawCover(ctx,img,x,y,w,h,look,intensity=100) {
-  const scale = Math.max(w/img.width,h/img.height);
-  const sw = w/scale;
-  const sh = h/scale;
-  const sx = (img.width-sw)/2;
-  const sy = (img.height-sh)/2;
-
-  const temp = document.createElement("canvas");
-  temp.width = Math.max(1,Math.round(w));
-  temp.height = Math.max(1,Math.round(h));
-  const tctx = temp.getContext("2d",{willReadFrequently:true});
-
-  tctx.drawImage(img,sx,sy,sw,sh,0,0,temp.width,temp.height);
-
-  if (look && look.name !== "Original" && intensity > 0) {
-    const pixels = tctx.getImageData(0,0,temp.width,temp.height);
-    const d = pixels.data;
-    const amount = intensity/100;
-
-    for (let i=0;i<d.length;i+=4) {
-      const or=d[i], og=d[i+1], ob=d[i+2];
-      let r=or, g=og, b=ob;
-
-      if (look.mono) {
-        const gray=.299*r+.587*g+.114*b;
-        r=gray; g=gray; b=gray;
-      }
-
-      if (look.sepia) {
-        const sr=r*.393+g*.769+b*.189;
-        const sg=r*.349+g*.686+b*.168;
-        const sb=r*.272+g*.534+b*.131;
-        r+=(sr-r)*look.sepia;
-        g+=(sg-g)*look.sepia;
-        b+=(sb-b)*look.sepia;
-      }
-
-      const lum=.299*r+.587*g+.114*b;
-      const sat=look.saturation ?? 1;
-      r=lum+(r-lum)*sat;
-      g=lum+(g-lum)*sat;
-      b=lum+(b-lum)*sat;
-
-      const warm=look.warm || 0;
-      const cool=look.cool || 0;
-      const olive=look.olive || 0;
-      r+=warm-cool*.65+olive*.2;
-      g+=warm*.25+olive;
-      b-=warm*.65-cool-olive*.35;
-
-      const contrast=look.contrast ?? 1;
-      const brightness=look.brightness ?? 1;
-      r=((r-128)*contrast+128)*brightness;
-      g=((g-128)*contrast+128)*brightness;
-      b=((b-128)*contrast+128)*brightness;
-
-      if (look.fade) {
-        r=r*(1-look.fade)+225*look.fade;
-        g=g*(1-look.fade)+220*look.fade;
-        b=b*(1-look.fade)+210*look.fade;
-      }
-
-      const noise=(Math.random()-.5)*(look.grain || 0);
-      r+=noise; g+=noise; b+=noise;
-
-      d[i]=clamp(or+(clamp(r)-or)*amount);
-      d[i+1]=clamp(og+(clamp(g)-og)*amount);
-      d[i+2]=clamp(ob+(clamp(b)-ob)*amount);
-    }
-    tctx.putImageData(pixels,0,0);
-  }
-  ctx.drawImage(temp,x,y,w,h);
-}
-
-function renderEditor() {
-  if (!editorImage) return;
-  editorCanvas.classList.remove("hidden");
-  $("editorEmpty").classList.add("hidden");
-  editorCtx.clearRect(0,0,1200,1200);
-  drawCover(editorCtx,editorImage,0,0,1200,1200,
-    filterLooks[editorFilter],editorIntensity);
-}
-
-function buildFilterButtons() {
-  const holder=$("filterButtons");
-  holder.innerHTML="";
-  filterLooks.forEach((look,index) => {
-    const btn=document.createElement("button");
-    btn.type="button";
-    btn.className="filter-btn"+(index===editorFilter?" active":"");
-    btn.textContent=look.name;
-    btn.addEventListener("click",() => {
-      editorFilter=index;
-      holder.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
-      renderEditor();
-    });
-    holder.appendChild(btn);
-  });
-}
-
-$("photoInput").addEventListener("change",async event=>{
-  const file=event.target.files[0];
-  if (!file) return;
-  try {
-    editorImage=await loadImage(file);
-    renderEditor();
-  } catch(error) {
-    alert("This photo could not be opened. Please try another image.");
-  }
-  event.target.value="";
+filters.forEach(f=>{
+ const b=document.createElement("button");
+ b.className="filter-card"+(f.type==="original"?" active":"");
+ b.innerHTML='<div class="filter-dot"></div><strong>'+f.name+'</strong><span>'+f.desc+'</span>';
+ b.addEventListener("click",()=>{
+  selectedFilter=f.type;
+  document.querySelectorAll(".filter-card").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  renderPhoto();
+ });
+ filterGrid.appendChild(b);
+});
+const collageFilter=document.getElementById("collageFilter");
+filters.forEach(f=>{
+ const o=document.createElement("option");
+ o.value=f.type;o.textContent=f.name;collageFilter.appendChild(o);
 });
 
-$("intensity").addEventListener("input",event=>{
-  editorIntensity=Number(event.target.value);
-  $("intensityValue").textContent=editorIntensity+"%";
-  renderEditor();
-});
-
-function showSection(which) {
-  const editor=which==="editor";
-  $("editorSection").classList.toggle("hidden",!editor);
-  $("collageSection").classList.toggle("hidden",editor);
-  $("editorTab").classList.toggle("active",editor);
-  $("collageTab").classList.toggle("active",!editor);
+function loadImage(file){
+ return new Promise((resolve,reject)=>{
+  const url=URL.createObjectURL(file);
+  const img=new Image();
+  img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};
+  img.onerror=reject;img.src=url;
+ });
 }
-$("editorTab").addEventListener("click",()=>showSection("editor"));
-$("collageTab").addEventListener("click",()=>showSection("collage"));
+photoInput.addEventListener("change",async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{
+  sourceImage=await loadImage(file);
+  document.getElementById("emptyMessage").hidden=true;
+  canvas.hidden=false;
+  renderPhoto();
+ }catch(err){alert("This photo could not be opened. Please try another one.");}
+});
 
-function renderCollage() {
-  if (!collagePhotos.length) return;
-  const count=collagePhotos.length;
-  const gap=14;
-  const margin=20;
-  const size=1200;
-  collageCtx.fillStyle="#eee5d2";
-  collageCtx.fillRect(0,0,size,size);
-
-  let boxes=[];
-  if (count===2) {
-    const w=(size-2*margin-gap)/2;
-    boxes=[{x:margin,y:margin,w,h:size-2*margin},{x:margin+w+gap,y:margin,w,h:size-2*margin}];
-  } else if (count===3) {
-    const w=(size-2*margin-gap)/2;
-    const h=(size-2*margin-gap)/2;
-    boxes=[
-      {x:margin,y:margin,w,h},
-      {x:margin+w+gap,y:margin,w,h},
-      {x:margin,y:margin+h+gap,w:size-2*margin,h}
-    ];
-  } else if (count===4) {
-    const w=(size-2*margin-gap)/2;
-    const h=(size-2*margin-gap)/2;
-    for(let i=0;i<4;i++) boxes.push({
-      x:margin+(i%2)*(w+gap),
-      y:margin+Math.floor(i/2)*(h+gap),w,h
-    });
-  } else {
-    const cols=3, rows=2;
-    const w=(size-2*margin-gap*(cols-1))/cols;
-    const h=(size-2*margin-gap*(rows-1))/rows;
-    for(let i=0;i<6;i++) boxes.push({
-      x:margin+(i%cols)*(w+gap),
-      y:margin+Math.floor(i/cols)*(h+gap),w,h
-    });
-  }
-
-  collagePhotos.forEach((photo,index)=>{
-    const box=boxes[index];
-    if(box) drawCover(collageCtx,photo.image,box.x,box.y,box.w,box.h,
-      filterLooks[photo.filter],photo.intensity);
-  });
-
-  collageCanvas.classList.remove("hidden");
-  $("collageEmpty").classList.add("hidden");
+function settings(){
+ return {
+  intensity:+document.getElementById("intensity").value/100,
+  grain:+document.getElementById("grain").value/100,
+  leak:+document.getElementById("leak").value/100,
+  glow:+document.getElementById("glow").value/100,
+  vignette:+document.getElementById("vignette").value/100,
+  fade:+document.getElementById("fade").value/100
+ };
 }
-
-function buildCollageCards() {
-  const holder=$("collageCards");
-  holder.innerHTML="";
-  collagePhotos.forEach((photo,index)=>{
-    const card=document.createElement("div");
-    card.className="photo-card";
-
-    const img=document.createElement("img");
-    img.src=photo.image.src;
-    img.alt="Collage photo "+(index+1);
-    card.appendChild(img);
-
-    const label=document.createElement("label");
-    label.textContent="Photo "+(index+1)+" Filter";
-    card.appendChild(label);
-
-    const select=document.createElement("select");
-    filterLooks.forEach((look,i)=>{
-      const option=document.createElement("option");
-      option.value=i;
-      option.textContent=look.name;
-      select.appendChild(option);
-    });
-    select.value=photo.filter;
-    select.addEventListener("change",()=>{
-      photo.filter=Number(select.value);
-      renderCollage();
-    });
-    card.appendChild(select);
-
-    const rangeLabel=document.createElement("label");
-    rangeLabel.textContent="Intensity: "+photo.intensity+"%";
-    card.appendChild(rangeLabel);
-
-    const range=document.createElement("input");
-    range.type="range";
-    range.min="0";
-    range.max="100";
-    range.value=photo.intensity;
-    range.addEventListener("input",()=>{
-      photo.intensity=Number(range.value);
-      rangeLabel.textContent="Intensity: "+photo.intensity+"%";
-      renderCollage();
-    });
-    card.appendChild(range);
-    holder.appendChild(card);
-  });
+function fitSize(img,max=1600){
+ const ratio=Math.min(1,max/Math.max(img.width,img.height));
+ return [Math.round(img.width*ratio),Math.round(img.height*ratio)];
 }
-
-$("collageInput").addEventListener("change",async event=>{
-  const files=Array.from(event.target.files).slice(0,6);
-  if (!files.length) return;
-  try {
-    const images=await Promise.all(files.map(loadImage));
-    const wanted=Number($("collageCount").value);
-    collagePhotos=images.slice(0,wanted).map(image=>({
-      image,filter:0,intensity:100
-    }));
-    buildCollageCards();
-    renderCollage();
-    if (images.length>wanted) {
-      alert("Only the first "+wanted+" photos were added for this layout.");
-    }
-  } catch(error) {
-    alert("One or more photos could not be opened. Please try again.");
-  }
-  event.target.value="";
-});
-
-$("collageCount").addEventListener("change",()=>{
-  collagePhotos=[];
-  $("collageCards").innerHTML="";
-  collageCanvas.classList.add("hidden");
-  $("collageEmpty").classList.remove("hidden");
-  $("collageInput").value="";
-});
-
-async function saveCanvas(canvas) {
-  try {
-    const data=canvas.toDataURL("image/jpeg",.94);
-    const link=document.createElement("a");
-    link.href=data;
-    link.download="DLR-masterpiece.jpg";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch(error) {
-    alert("Please try sharing the image and choose Save Image.");
-  }
+function renderPhoto(){
+ if(!sourceImage)return;
+ const [w,h]=fitSize(sourceImage);
+ canvas.width=w;canvas.height=h;
+ ctx.clearRect(0,0,w,h);
+ ctx.drawImage(sourceImage,0,0,w,h);
+ applyEffects(ctx,w,h,selectedFilter,settings(),true);
 }
-
-async function shareCanvas(canvas) {
-  try {
-    const data=canvas.toDataURL("image/jpeg",.94);
-    const response=await fetch(data);
-    const blob=await response.blob();
-    const file=new File([blob],"DLR-masterpiece.jpg",{type:"image/jpeg"});
-    if (navigator.share && navigator.canShare &&
-        navigator.canShare({files:[file]})) {
-      await navigator.share({files:[file],title:"My DLR Masterpiece"});
-    } else {
-      const url=URL.createObjectURL(blob);
-      const link=document.createElement("a");
-      link.href=url;
-      link.download="DLR-masterpiece.jpg";
-      link.click();
-      setTimeout(()=>URL.revokeObjectURL(url),1500);
-    }
-  } catch(error) {
-    if (error.name!=="AbortError") {
-      alert("Sharing is not available here. Please use Save Your Masterpiece.");
-    }
+function applyEffects(context,w,h,type,s,stamp){
+ const imageData=context.getImageData(0,0,w,h);
+ const d=imageData.data;
+ const amount=s.intensity;
+ const rand=()=>Math.random()-.5;
+ for(let i=0;i<d.length;i+=4){
+  let r=d[i],g=d[i+1],b=d[i+2];
+  const lum=.299*r+.587*g+.114*b;
+  let nr=r,ng=g,nb=b;
+  switch(type){
+   case"portra":
+    nr=r*1.07+10;ng=g*1.015+5;nb=b*.94+8;break;
+   case"gold":
+    nr=r*1.12+13;ng=g*1.04+5;nb=b*.82;break;
+   case"cinema":
+    nr=r*.88;ng=g*.93;nb=b*1.08+8;break;
+   case"olive":
+   case"mood":
+    nr=r*.96+5;ng=g*1.04+7;nb=b*.83;break;
+   case"bw":
+   case"grainbw":
+    nr=ng=nb=lum;break;
+   case"softmono":
+    nr=ng=nb=lum*.88+25;break;
+   case"flashmono":
+    nr=ng=nb=Math.min(255,lum*1.13+13);break;
+   case"noir":
+    nr=ng=nb=Math.max(0,(lum-128)*1.45+128);break;
+   case"disposable":
+    nr=r*1.12+13;ng=g*1.02+4;nb=b*.88;break;
+   case"a6":
+    nr=r*1.02+3;ng=g*1.01+2;nb=b*.98+2;break;
+   case"faded":
+    nr=r*.88+31;ng=g*.88+29;nb=b*.86+30;break;
+   case"warm":
+    nr=r*1.08+8;ng=g*1.01+2;nb=b*.91;break;
+   case"cool":
+    nr=r*.94;ng=g*1.01+3;nb=b*1.1+8;break;
+   case"sepia":
+    nr=lum*.393+lum*.769+lum*.189;
+    ng=lum*.349+lum*.686+lum*.168;
+    nb=lum*.272+lum*.534+lum*.131;break;
+   case"dreamy":
+    nr=r*1.06+10;ng=g*1.04+8;nb=b*1.02+7;break;
+   case"burgundy":
+    nr=r*1.08+5;ng=g*.91;nb=b*.96+7;break;
   }
+  d[i]=r+(nr-r)*amount;
+  d[i+1]=g+(ng-g)*amount;
+  d[i+2]=b+(nb-b)*amount;
+  if(type==="grainbw"||type==="disposable") {
+   const n=rand()*s.grain*65;
+   d[i]+=n;d[i+1]+=n;d[i+2]+=n;
+  }
+ }
+ context.putImageData(imageData,0,0);
+
+ if(s.fade>0){
+  context.save();context.globalAlpha=s.fade*.22;
+  context.fillStyle="#f0dfbd";context.fillRect(0,0,w,h);context.restore();
+ }
+ if(s.grain>0){
+  const count=Math.floor(w*h*s.grain*.035);
+  context.save();
+  for(let i=0;i<count;i++){
+   const x=Math.random()*w,y=Math.random()*h;
+   context.globalAlpha=Math.random()*.22*s.grain;
+   context.fillStyle=Math.random()>.5?"#fff0cf":"#241913";
+   context.fillRect(x,y,1.4,1.4);
+  }
+  context.restore();
+ }
+ if(s.glow>0){
+  context.save();context.globalCompositeOperation="screen";
+  const grad=context.createRadialGradient(w*.78,h*.15,0,w*.78,h*.15,w*.55);
+  grad.addColorStop(0,"rgba(255,218,151,"+(s.glow*.35)+")");
+  grad.addColorStop(1,"rgba(255,218,151,0)");
+  context.fillStyle=grad;context.fillRect(0,0,w,h);context.restore();
+ }
+ if(s.leak>0){
+  context.save();context.globalCompositeOperation="screen";
+  const grad=context.createLinearGradient(0,h*.15,w*.6,h*.9);
+  grad.addColorStop(0,"rgba(255,135,78,"+(s.leak*.5)+")");
+  grad.addColorStop(.35,"rgba(255,192,115,"+(s.leak*.18)+")");
+  grad.addColorStop(1,"rgba(255,170,100,0)");
+  context.fillStyle=grad;context.fillRect(0,0,w,h);context.restore();
+ }
+ if(s.vignette>0){
+  context.save();
+  const rad=context.createRadialGradient(w/2,h/2,Math.min(w,h)*.2,w/2,h/2,Math.max(w,h)*.72);
+  rad.addColorStop(0,"rgba(0,0,0,0)");
+  rad.addColorStop(1,"rgba(25,12,8,"+(s.vignette*.65)+")");
+  context.fillStyle=rad;context.fillRect(0,0,w,h);context.restore();
+ }
+ if(stamp){
+  context.save();
+  const size=Math.max(13,Math.round(w*.027));
+  context.font="bold "+size+"px Arial";
+  context.textAlign="right";
+  context.shadowColor="#4b2416";context.shadowBlur=4;
+  if(document.getElementById("dateStamp").value==="on"||type==="disposable"){
+   context.fillStyle="#ffc45e";
+   context.fillText("09 26",w-size,h-size);
+  }
+  if(type==="disposable"){
+   context.font="bold "+Math.max(10,size*.7)+"px Arial";
+   context.fillStyle="#f3d66b";
+   context.fillText("DLR",w-size,h-size*2.1);
+  }
+  context.restore();
+ }
 }
-
-$("savePhoto").addEventListener("click",()=>{
-  if (!editorImage) {
-    alert("Please choose a photo first.");
-    return;
-  }
-  saveCanvas(editorCanvas);
+["intensity","grain","leak","glow","vignette","fade","dateStamp"].forEach(id=>{
+ document.getElementById(id).addEventListener("input",renderPhoto);
+ document.getElementById(id).addEventListener("change",renderPhoto);
 });
-$("sharePhoto").addEventListener("click",()=>{
-  if (!editorImage) {
-    alert("Please choose a photo first.");
-    return;
-  }
-  shareCanvas(editorCanvas);
-});
-$("saveCollage").addEventListener("click",()=>{
-  if (!collagePhotos.length) {
-    alert("Please choose your collage photos first.");
-    return;
-  }
-  saveCanvas(collageCanvas);
-});
-$("shareCollage").addEventListener("click",()=>{
-  if (!collagePhotos.length) {
-    alert("Please choose your collage photos first.");
-    return;
-  }
-  shareCanvas(collageCanvas);
+document.getElementById("resetPhoto").addEventListener("click",()=>{
+ if(!sourceImage)return;
+ selectedFilter="original";
+ document.querySelectorAll(".filter-card").forEach((b,i)=>b.classList.toggle("active",i===0));
+ ["intensity","grain","leak","glow","vignette","fade"].forEach((id,i)=>{
+  document.getElementById(id).value=[75,12,0,0,15,10][i];
+ });
+ document.getElementById("dateStamp").value="off";
+ renderPhoto();
 });
 
-buildFilterButtons();
+async function saveCanvas(target,name){
+ if(!target||!target.width){alert("Please choose a photo first.");return}
+ target.toBlob(async blob=>{
+  if(!blob){alert("Could not prepare the image.");return}
+  const file=new File([blob],name,{type:"image/jpeg"});
+  try{
+   if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){
+    await navigator.share({files:[file],title:"My DLR Masterpiece"});
+   }else{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download=name;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    alert("Your image is ready. Open the downloaded file to save it to Photos.");
+   }
+  }catch(err){
+   if(err.name!=="AbortError"){
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download=name;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+   }
+  }
+ },"image/jpeg",.94);
+}
+document.getElementById("savePhoto").addEventListener("click",()=>saveCanvas(canvas,"DLR-photo.jpg"));
+
+document.getElementById("collageInput").addEventListener("change",async e=>{
+ const files=Array.from(e.target.files).slice(0,6);
+ collageImages=[];
+ for(const file of files){
+  try{collageImages.push(await loadImage(file))}catch(err){}
+ }
+ document.getElementById("collageEmpty").hidden=collageImages.length>0;
+ collageCanvas.hidden=collageImages.length===0;
+});
+function drawCoverImage(image,x,y,w,h,type){
+ const iw=image.width,ih=image.height;
+ const scale=Math.max(w/iw,h/ih);
+ const sw=w/scale,sh=h/scale;
+ const sx=(iw-sw)/2,sy=(ih-sh)/2;
+ cctx.save();
+ cctx.beginPath();cctx.rect(x,y,w,h);cctx.clip();
+ cctx.drawImage(image,sx,sy,sw,sh,x,y,w,h);
+ applyEffects(cctx,w,h,type,{intensity:.82,grain:.12,leak:.08,glow:.03,vignette:.18,fade:.08},false);
+ cctx.restore();
+}
+function createCollage(){
+ if(!collageImages.length){alert("Please choose your photographs first.");return}
+ const layout=+document.getElementById("layout").value;
+ const chosen=collageImages.slice(0,layout);
+ if(chosen.length<layout){alert("Please select "+layout+" photographs for this layout.");return}
+ const W=1200,H=1500,gap=16,pad=24;
+ collageCanvas.width=W;collageCanvas.height=H;
+ cctx.fillStyle="#493629";cctx.fillRect(0,0,W,H);
+ const cells={
+  2:[[pad,pad,W-2*pad,(H-3*pad)/2],[pad,(H+pad)/2,W-2*pad,(H-3*pad)/2]],
+  3:[[pad,pad,W-2*pad,(H-3*pad)/2],[pad,(H+pad)/2,(W-3*pad)/2,(H-3*pad)/2],[(W+pad)/2,(H+pad)/2,(W-3*pad)/2,(H-3*pad)/2]],
+  4:[[pad,pad,(W-3*pad)/2,(H-3*pad)/2],[(W+pad)/2,pad,(W-3*pad)/2,(H-3*pad)/2],[pad,(H+pad)/2,(W-3*pad)/2,(H-3*pad)/2],[(W+pad)/2,(H+pad)/2,(W-3*pad)/2,(H-3*pad)/2]],
+  6:Array.from({length:6},(_,i)=>[pad+(i%2)*(W/2),pad+Math.floor(i/2)*(H/3),W/2-1.5*pad,H/3-pad])
+ };
+ const type=collageFilter.value;
+ chosen.forEach((img,i)=>{
+  const [x,y,w,h]=cells[layout][i];
+  drawCoverImage(img,x,y,w,h,type);
+ });
+}
+document.getElementById("makeCollage").addEventListener("click",createCollage);
+document.getElementById("saveCollage").addEventListener("click",()=>saveCanvas(collageCanvas,"DLR-collage.jpg"));
 </script>
 </body>
 </html>
