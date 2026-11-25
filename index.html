@@ -65,65 +65,43 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--pink);color:var(--pink2);padding:11px 15px;border-radius:30px;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent}
 input[type=file]{display:none}
 
-/* DLR EDITORIAL FILM COLLECTION */
+/* ORIGINAL SIMPLE FILTER CARDS */
 .filters{
- display:flex;flex-wrap:nowrap;gap:12px;overflow-x:auto;overflow-y:hidden;
- padding:8px 3px 16px;scroll-snap-type:x mandatory;
+ display:flex;flex-wrap:nowrap;gap:11px;overflow-x:auto;overflow-y:hidden;
+ padding:5px 2px 13px;scroll-snap-type:x mandatory;
  -webkit-overflow-scrolling:touch;scrollbar-width:thin;
- scrollbar-color:var(--champagne) transparent
+ scrollbar-color:var(--pink) transparent
 }
 .filter{
- flex:0 0 124px;min-width:124px;padding:5px;
- border:1px solid rgba(216,189,145,.42);
- border-radius:4px;overflow:hidden;
- background:linear-gradient(145deg,#39242b,#21191d);
+ flex:0 0 112px;min-width:112px;padding:0;
+ border:1px solid rgba(244,234,223,.2);
+ border-radius:12px;overflow:hidden;background:#281c20;
  color:var(--cream);text-align:left;scroll-snap-align:start;
- transition:border-color .3s,transform .3s,box-shadow .3s;
- box-shadow:0 5px 15px rgba(0,0,0,.15);
- position:relative
-}
-.filter:before{
- content:"";position:absolute;inset:2px;
- border:1px solid rgba(244,234,223,.09);
- pointer-events:none;z-index:4
+ transition:border-color .25s,transform .25s,box-shadow .25s
 }
 .filter .thumb{
- height:104px;display:block;position:relative;overflow:hidden;
- background:#39252d;border:1px solid rgba(244,234,223,.13)
+ height:91px;display:block;position:relative;overflow:hidden;
+ background:#39252d
 }
 .filter .thumb img{
  width:100%;height:100%;display:block;object-fit:cover;
- transition:transform .65s cubic-bezier(.2,.7,.2,1),filter .4s
+ transition:transform .45s ease
 }
-.filter:hover .thumb img{transform:scale(1.08)}
-.filter .thumb:before{
- content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
- background:linear-gradient(180deg,rgba(28,15,20,.12),transparent 35%,rgba(27,14,18,.28)),
- linear-gradient(115deg,transparent 35%,rgba(255,238,211,.16) 48%,transparent 62%);
- mix-blend-mode:screen
-}
+.filter:active .thumb img{transform:scale(1.06)}
 .filter .thumb:after{
- content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
- opacity:.2;
- background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.55'/%3E%3C/svg%3E")
-}
-.filter .film-meta{
- display:flex;align-items:center;justify-content:space-between;
- padding:7px 3px 2px;color:var(--champagne);
- font:7px Georgia,serif;letter-spacing:1.1px;text-transform:uppercase;
- opacity:.85
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,transparent 48%,rgba(30,17,22,.25));
+ pointer-events:none
 }
 .filter span:last-child{
- display:block;padding:5px 2px 7px;font:11px Georgia,serif;
- letter-spacing:.2px;text-align:center;white-space:nowrap;
- color:#f5e8dc
+ display:block;padding:9px 5px 10px;font-size:9px;
+ letter-spacing:.9px;text-align:center;white-space:nowrap
 }
 .filter.selected{
  border-color:var(--pink);
- box-shadow:0 0 0 1px var(--pink),0 7px 22px #e7a2b744;
- transform:translateY(-3px)
+ box-shadow:0 0 0 1px var(--pink),0 5px 18px #e7a2b733;
+ transform:translateY(-2px)
 }
-.filter.selected .thumb{border-color:rgba(242,197,210,.65)}
 .sliders{display:grid;gap:13px;margin-top:18px}
 .slider-row{display:grid;grid-template-columns:100px 1fr 34px;align-items:center;gap:8px;font-size:11px;color:#eadbd2}
 input[type=range]{width:100%;accent-color:var(--pink)}
@@ -273,7 +251,7 @@ document.addEventListener('click',e=>{
  else if(go){e.preventDefault();showPage(go.dataset.go)}
 });
 
-/* DLR EDITORIAL PHOTO ARCHIVE */
+/* DLR PHOTO COLLECTION */
 const photos={
  portrait:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=650&fit=crop',
  warm:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=500&h=650&fit=crop',
@@ -298,66 +276,61 @@ const photos={
 };
 
 const filters=[
- {id:'original',name:'Original',css:'none',photo:'portrait',code:'DLR 001',type:'THE PORTRAIT'},
- {id:'kodak',name:'Kodak Gold',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)',photo:'warm',code:'KODAK 200',type:'GOLDEN FILM'},
- {id:'portra',name:'Portra 400',css:'sepia(.13) saturate(1.12) contrast(.94) brightness(1.08)',photo:'vintage',code:'PORTRA 400',type:'SOFT NEGATIVE'},
- {id:'portra800',name:'Portra 800',css:'sepia(.2) saturate(1.3) contrast(1.18) brightness(1.02)',photo:'satin',code:'PORTRA 800',type:'LOW LIGHT'},
- {id:'golden',name:'Golden Hour',css:'sepia(.35) saturate(1.3) contrast(1.1) brightness(1.1)',photo:'golden',code:'DLR 005',type:'LAST SUNLIGHT'},
- {id:'softpink',name:'Rose Veil',css:'sepia(.12) saturate(1.1) hue-rotate(325deg) brightness(1.1) contrast(.92)',photo:'rose',code:'ROSE Nº 06',type:'PETAL TONES'},
- {id:'dreamy',name:'Dreamy Glow',css:'sepia(.12) saturate(1.12) brightness(1.12) contrast(.88)',photo:'flowers',code:'DLR 007',type:'SOFT FOCUS'},
- {id:'cream',name:'Vanilla Cream',css:'sepia(.2) saturate(.85) brightness(1.13) contrast(.92)',photo:'cream',code:'CREAM 008',type:'MILK LIGHT'},
- {id:'faded',name:'Faded 90s',css:'sepia(.25) saturate(.78) brightness(1.12) contrast(.82)',photo:'cafe',code:'ARCHIVE 90',type:'OLD MEMORIES'},
- {id:'olive',name:'Olive Vintage',css:'sepia(.18) saturate(.82) hue-rotate(12deg) contrast(1.06)',photo:'olive',code:'OLIVE 010',type:'EARTH TONES'},
- {id:'cool',name:'Cool Breeze',css:'saturate(.9) hue-rotate(12deg) contrast(1.06) brightness(1.04)',photo:'sea',code:'DLR 011',type:'COOL NEGATIVE'},
- {id:'noir',name:'Noir',css:'grayscale(1) contrast(1.42) brightness(.92)',photo:'architecture',code:'NOIR 012',type:'MONOCHROME'},
- {id:'softmono',name:'Soft Mono',css:'grayscale(1) contrast(.85) brightness(1.12)',photo:'portrait',code:'SILVER 013',type:'SOFT SILVER'},
- {id:'grainmono',name:'Grainy B&W',css:'grayscale(1) contrast(1.28) brightness(.96)',photo:'street',code:'GRAIN 014',type:'35 MM FILM'},
- {id:'darkroom',name:'Darkroom',css:'brightness(.68) contrast(1.48) saturate(.68) sepia(.16)',photo:'night',code:'DARKROOM',type:'DEEP SHADOW'},
- {id:'midnight',name:'Midnight',css:'brightness(.56) contrast(1.55) saturate(.72) hue-rotate(195deg)',photo:'dusk',code:'MIDNIGHT',type:'BLUE HOUR'},
- {id:'afterhours',name:'After Hours',css:'brightness(.62) contrast(1.6) saturate(.85) sepia(.22)',photo:'city',code:'AFTER 017',type:'CITY LIGHTS'},
- {id:'velvet',name:'Velvet Night',css:'brightness(.72) contrast(1.38) saturate(.65) sepia(.3) hue-rotate(315deg)',photo:'perfume',code:'VELVET 018',type:'WINE SHADOW'},
- {id:'flashnoir',name:'Flash Noir',css:'grayscale(.82) contrast(1.75) brightness(.9)',photo:'stilllife',code:'FLASH 019',type:'NIGHT FLASH'},
- {id:'moody',name:'Moody Film',css:'brightness(.76) contrast(1.42) saturate(.78) sepia(.2) hue-rotate(350deg)',photo:'forest',code:'MOODY 020',type:'FADED MEMORY'}
+ {id:'original',name:'Original',css:'none',photo:'portrait'},
+ {id:'kodak',name:'Kodak Gold',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)',photo:'warm'},
+ {id:'portra',name:'Portra 400',css:'sepia(.13) saturate(1.12) contrast(.94) brightness(1.08)',photo:'vintage'},
+ {id:'portra800',name:'Portra 800',css:'sepia(.2) saturate(1.3) contrast(1.18) brightness(1.02)',photo:'satin'},
+ {id:'golden',name:'Golden Hour',css:'sepia(.35) saturate(1.3) contrast(1.1) brightness(1.1)',photo:'golden'},
+ {id:'softpink',name:'Rose Veil',css:'sepia(.12) saturate(1.1) hue-rotate(325deg) brightness(1.1) contrast(.92)',photo:'rose'},
+ {id:'dreamy',name:'Dreamy Glow',css:'sepia(.12) saturate(1.12) brightness(1.12) contrast(.88)',photo:'flowers'},
+ {id:'cream',name:'Vanilla Cream',css:'sepia(.2) saturate(.85) brightness(1.13) contrast(.92)',photo:'cream'},
+ {id:'faded',name:'Faded 90s',css:'sepia(.25) saturate(.78) brightness(1.12) contrast(.82)',photo:'cafe'},
+ {id:'olive',name:'Olive Vintage',css:'sepia(.18) saturate(.82) hue-rotate(12deg) contrast(1.06)',photo:'olive'},
+ {id:'cool',name:'Cool Breeze',css:'saturate(.9) hue-rotate(12deg) contrast(1.06) brightness(1.04)',photo:'sea'},
+ {id:'noir',name:'Noir',css:'grayscale(1) contrast(1.42) brightness(.92)',photo:'architecture'},
+ {id:'softmono',name:'Soft Mono',css:'grayscale(1) contrast(.85) brightness(1.12)',photo:'portrait'},
+ {id:'grainmono',name:'Grainy B&W',css:'grayscale(1) contrast(1.28) brightness(.96)',photo:'street'},
+ {id:'darkroom',name:'Darkroom',css:'brightness(.68) contrast(1.48) saturate(.68) sepia(.16)',photo:'night'},
+ {id:'midnight',name:'Midnight',css:'brightness(.56) contrast(1.55) saturate(.72) hue-rotate(195deg)',photo:'dusk'},
+ {id:'afterhours',name:'After Hours',css:'brightness(.62) contrast(1.6) saturate(.85) sepia(.22)',photo:'city'},
+ {id:'velvet',name:'Velvet Night',css:'brightness(.72) contrast(1.38) saturate(.65) sepia(.3) hue-rotate(315deg)',photo:'perfume'},
+ {id:'flashnoir',name:'Flash Noir',css:'grayscale(.82) contrast(1.75) brightness(.9)',photo:'stilllife'},
+ {id:'moody',name:'Moody Film',css:'brightness(.76) contrast(1.42) saturate(.78) sepia(.2) hue-rotate(350deg)',photo:'forest'}
 ];
 
 let sourceImage=null,sourceUrl=null,selectedFilter='original';
 const controlIds=['intensity','brightness','contrast','saturation','warmth','grain'];
 
 function buildFilters(){
- const list=$('#filterList');list.innerHTML='';
+ const list=$('#filterList');
+ list.innerHTML='';
  filters.forEach(f=>{
   const b=document.createElement('button');
-  b.type='button';b.className='filter'+(f.id===selectedFilter?' selected':'');
+  b.type='button';
+  b.className='filter'+(f.id===selectedFilter?' selected':'');
   b.dataset.filter=f.id;
-
-  const thumb=document.createElement('span');
-  thumb.className='thumb';
 
   const img=document.createElement('img');
   img.src=photos[f.photo];
   img.alt=f.name+' film mood';
   img.loading='lazy';
   img.style.filter=f.css;
-  img.onerror=()=>{thumb.style.background='linear-gradient(145deg,#68734d,#4b1c2b,#21191d)'};
-  thumb.appendChild(img);
 
-  const meta=document.createElement('span');
-  meta.className='film-meta';
-  const code=document.createElement('span');
-  code.textContent=f.code;
-  const type=document.createElement('span');
-  type.textContent='35 MM';
-  meta.append(code,type);
+  const thumb=document.createElement('span');
+  thumb.className='thumb';
+  thumb.appendChild(img);
 
   const label=document.createElement('span');
   label.textContent=f.name;
 
-  b.append(thumb,meta,label);
+  b.append(thumb,label);
+
   b.addEventListener('click',()=>{
    selectedFilter=f.id;
    $$('.filter').forEach(x=>x.classList.toggle('selected',x===b));
    updatePreview();
   });
+
   list.appendChild(b);
  });
 }
@@ -540,7 +513,7 @@ $('#saveCollage').addEventListener('click',async()=>{
  const c=document.createElement('canvas');c.width=W;c.height=H;
  const ctx=c.getContext('2d');
  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
- const gap=6,margin=12;
+ const gap=9,margin=18;
  let cols=2,rows=2;
  if(collageCount===1){cols=1;rows=1}
  if(collageCount===2){cols=2;rows=1}
