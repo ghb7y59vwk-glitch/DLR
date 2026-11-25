@@ -64,12 +64,43 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--pink);color:var(--pink2);padding:11px 15px;border-radius:30px;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent}
 input[type=file]{display:none}
 
-/* HORIZONTAL FILTER COLLECTION */
-.filters{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;padding:5px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--pink) transparent}
-.filter{flex:0 0 105px;min-width:105px;padding:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#281c20;color:var(--cream);text-align:left;scroll-snap-align:start}
-.filter .thumb{height:75px;background:linear-gradient(135deg,#9a6a54,#58664c 55%,#c88d9f);display:block}
-.filter span:last-child{display:block;padding:8px 5px;font-size:9px;letter-spacing:1px;text-align:center}
-.filter.selected{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink)}
+/* FILTER PHOTO CARDS */
+.filters{
+ display:flex;flex-wrap:nowrap;gap:11px;overflow-x:auto;overflow-y:hidden;
+ padding:5px 2px 13px;scroll-snap-type:x mandatory;
+ -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+ scrollbar-color:var(--pink) transparent
+}
+.filter{
+ flex:0 0 112px;min-width:112px;padding:0;
+ border:1px solid rgba(244,234,223,.2);
+ border-radius:12px;overflow:hidden;background:#281c20;
+ color:var(--cream);text-align:left;scroll-snap-align:start;
+ transition:border-color .25s,transform .25s,box-shadow .25s
+}
+.filter .thumb{
+ height:91px;display:block;position:relative;overflow:hidden;
+ background:#39252d
+}
+.filter .thumb img{
+ width:100%;height:100%;display:block;object-fit:cover;
+ transition:transform .45s ease
+}
+.filter:active .thumb img{transform:scale(1.06)}
+.filter .thumb:after{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,transparent 48%,rgba(30,17,22,.25));
+ pointer-events:none
+}
+.filter span:last-child{
+ display:block;padding:9px 5px 10px;font-size:9px;
+ letter-spacing:.9px;text-align:center;white-space:nowrap
+}
+.filter.selected{
+ border-color:var(--pink);
+ box-shadow:0 0 0 1px var(--pink),0 5px 18px #e7a2b733;
+ transform:translateY(-2px)
+}
 .sliders{display:grid;gap:13px;margin-top:18px}
 .slider-row{display:grid;grid-template-columns:100px 1fr 34px;align-items:center;gap:8px;font-size:11px;color:#eadbd2}
 input[type=range]{width:100%;accent-color:var(--pink)}
@@ -80,10 +111,21 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 .layout-options{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}
 .layout-choice{width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:#34222a;color:var(--cream);font:18px Georgia,serif}
 .layout-choice.selected{background:var(--pink);color:#48202e;border-color:var(--pink)}
-.collage-grid{display:grid;gap:8px;width:min(100%,430px);aspect-ratio:9/16;margin:20px auto;background:#21181c;padding:9px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.collage-cell{position:relative;min-height:0;background:linear-gradient(145deg,#69754e,#492333);overflow:hidden;border:1px solid #f4eadf33}
+
+/* STORY COLLAGE — DELICATE WHITE FILM DIVIDERS */
+.collage-grid{
+ display:grid;gap:3px;width:min(100%,430px);aspect-ratio:9/16;
+ margin:20px auto;background:#fff;padding:3px;
+ border:1px solid rgba(255,255,255,.9);
+ border-radius:3px;overflow:hidden;
+ box-shadow:0 12px 35px rgba(15,8,12,.2)
+}
+.collage-cell{
+ position:relative;min-height:0;background:linear-gradient(145deg,#69754e,#492333);
+ overflow:hidden;border:0
+}
 .collage-cell img{width:100%;height:100%;object-fit:cover;display:block}
-.plus{position:absolute;inset:0;display:grid;place-items:center;color:var(--pink);font:42px Georgia,serif;text-shadow:0 2px 12px #000;pointer-events:none}
+.plus{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:42px Georgia,serif;text-shadow:0 2px 12px #000;pointer-events:none}
 .collage-grid[data-count="1"]{grid-template-columns:1fr;grid-template-rows:1fr}
 .collage-grid[data-count="2"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 .collage-grid[data-count="3"]{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr}
@@ -211,27 +253,47 @@ document.addEventListener('click',e=>{
  else if(go){e.preventDefault();showPage(go.dataset.go)}
 });
 
+/* EACH FILTER HAS ITS OWN PHOTO MOOD */
+const photos={
+ warm:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400&h=300&fit=crop',
+ flowers:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop',
+ portrait:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=300&fit=crop',
+ rose:'https://images.unsplash.com/photo-1494972308805-463bc619d34e?w=400&h=300&fit=crop',
+ cream:'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=300&fit=crop',
+ olive:'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&h=300&fit=crop',
+ sea:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop',
+ dusk:'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&h=300&fit=crop',
+ night:'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=300&fit=crop',
+ city:'https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=400&h=300&fit=crop',
+ forest:'https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&h=300&fit=crop',
+ architecture:'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=400&h=300&fit=crop',
+ cafe:'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=400&h=300&fit=crop',
+ field:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=300&fit=crop',
+ vintage:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=300&fit=crop',
+ flower2:'https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=400&h=300&fit=crop'
+};
+
 const filters=[
- {id:'original',name:'Original',css:'none'},
- {id:'kodak',name:'Kodak Gold',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)'},
- {id:'portra',name:'Portra 400',css:'sepia(.13) saturate(1.12) contrast(.94) brightness(1.08)'},
- {id:'portra800',name:'Portra 800',css:'sepia(.2) saturate(1.3) contrast(1.18) brightness(1.02)'},
- {id:'golden',name:'Golden Hour',css:'sepia(.35) saturate(1.3) contrast(1.1) brightness(1.1)'},
- {id:'softpink',name:'Rose Veil',css:'sepia(.12) saturate(1.1) hue-rotate(325deg) brightness(1.1) contrast(.92)'},
- {id:'dreamy',name:'Dreamy Glow',css:'sepia(.12) saturate(1.12) brightness(1.12) contrast(.88)'},
- {id:'cream',name:'Vanilla Cream',css:'sepia(.2) saturate(.85) brightness(1.13) contrast(.92)'},
- {id:'faded',name:'Faded 90s',css:'sepia(.25) saturate(.78) brightness(1.12) contrast(.82)'},
- {id:'olive',name:'Olive Vintage',css:'sepia(.18) saturate(.82) hue-rotate(12deg) contrast(1.06)'},
- {id:'cool',name:'Cool Breeze',css:'saturate(.9) hue-rotate(12deg) contrast(1.06) brightness(1.04)'},
- {id:'noir',name:'Noir',css:'grayscale(1) contrast(1.42) brightness(.92)'},
- {id:'softmono',name:'Soft Mono',css:'grayscale(1) contrast(.85) brightness(1.12)'},
- {id:'grainmono',name:'Grainy B&W',css:'grayscale(1) contrast(1.28) brightness(.96)'},
- {id:'darkroom',name:'Darkroom',css:'brightness(.68) contrast(1.48) saturate(.68) sepia(.16)'},
- {id:'midnight',name:'Midnight',css:'brightness(.56) contrast(1.55) saturate(.72) hue-rotate(195deg)'},
- {id:'afterhours',name:'After Hours',css:'brightness(.62) contrast(1.6) saturate(.85) sepia(.22)'},
- {id:'velvet',name:'Velvet Night',css:'brightness(.72) contrast(1.38) saturate(.65) sepia(.3) hue-rotate(315deg)'},
- {id:'flashnoir',name:'Flash Noir',css:'grayscale(.82) contrast(1.75) brightness(.9)'},
- {id:'moody',name:'Moody Film',css:'brightness(.76) contrast(1.42) saturate(.78) sepia(.2) hue-rotate(350deg)'}
+ {id:'original',name:'Original',css:'none',photo:'portrait'},
+ {id:'kodak',name:'Kodak Gold',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)',photo:'warm'},
+ {id:'portra',name:'Portra 400',css:'sepia(.13) saturate(1.12) contrast(.94) brightness(1.08)',photo:'portrait'},
+ {id:'portra800',name:'Portra 800',css:'sepia(.2) saturate(1.3) contrast(1.18) brightness(1.02)',photo:'vintage'},
+ {id:'golden',name:'Golden Hour',css:'sepia(.35) saturate(1.3) contrast(1.1) brightness(1.1)',photo:'field'},
+ {id:'softpink',name:'Rose Veil',css:'sepia(.12) saturate(1.1) hue-rotate(325deg) brightness(1.1) contrast(.92)',photo:'flowers'},
+ {id:'dreamy',name:'Dreamy Glow',css:'sepia(.12) saturate(1.12) brightness(1.12) contrast(.88)',photo:'flower2'},
+ {id:'cream',name:'Vanilla Cream',css:'sepia(.2) saturate(.85) brightness(1.13) contrast(.92)',photo:'cream'},
+ {id:'faded',name:'Faded 90s',css:'sepia(.25) saturate(.78) brightness(1.12) contrast(.82)',photo:'cafe'},
+ {id:'olive',name:'Olive Vintage',css:'sepia(.18) saturate(.82) hue-rotate(12deg) contrast(1.06)',photo:'olive'},
+ {id:'cool',name:'Cool Breeze',css:'saturate(.9) hue-rotate(12deg) contrast(1.06) brightness(1.04)',photo:'sea'},
+ {id:'noir',name:'Noir',css:'grayscale(1) contrast(1.42) brightness(.92)',photo:'architecture'},
+ {id:'softmono',name:'Soft Mono',css:'grayscale(1) contrast(.85) brightness(1.12)',photo:'portrait'},
+ {id:'grainmono',name:'Grainy B&W',css:'grayscale(1) contrast(1.28) brightness(.96)',photo:'city'},
+ {id:'darkroom',name:'Darkroom',css:'brightness(.68) contrast(1.48) saturate(.68) sepia(.16)',photo:'night'},
+ {id:'midnight',name:'Midnight',css:'brightness(.56) contrast(1.55) saturate(.72) hue-rotate(195deg)',photo:'dusk'},
+ {id:'afterhours',name:'After Hours',css:'brightness(.62) contrast(1.6) saturate(.85) sepia(.22)',photo:'city'},
+ {id:'velvet',name:'Velvet Night',css:'brightness(.72) contrast(1.38) saturate(.65) sepia(.3) hue-rotate(315deg)',photo:'rose'},
+ {id:'flashnoir',name:'Flash Noir',css:'grayscale(.82) contrast(1.75) brightness(.9)',photo:'architecture'},
+ {id:'moody',name:'Moody Film',css:'brightness(.76) contrast(1.42) saturate(.78) sepia(.2) hue-rotate(350deg)',photo:'forest'}
 ];
 
 let sourceImage=null,sourceUrl=null,selectedFilter='original';
@@ -243,7 +305,17 @@ function buildFilters(){
   const b=document.createElement('button');
   b.type='button';b.className='filter'+(f.id===selectedFilter?' selected':'');
   b.dataset.filter=f.id;
-  b.innerHTML=`<span class="thumb" style="filter:${f.css}"></span><span>${f.name}</span>`;
+  const img=document.createElement('img');
+  img.src=photos[f.photo];
+  img.alt=f.name+' film mood';
+  img.loading='lazy';
+  img.style.filter=f.css;
+  const thumb=document.createElement('span');
+  thumb.className='thumb';
+  thumb.appendChild(img);
+  const label=document.createElement('span');
+  label.textContent=f.name;
+  b.append(thumb,label);
   b.addEventListener('click',()=>{
    selectedFilter=f.id;
    $$('.filter').forEach(x=>x.classList.toggle('selected',x===b));
@@ -394,13 +466,11 @@ $('#collageUpload').addEventListener('change',e=>{
  if(files.length>remaining){
   alert(`This layout has ${collageCount} frames. Only ${remaining} more photo(s) can be added.`);
  }
- let index=0;
  for(const file of accepted){
   const emptyIndex=collageImages.findIndex(x=>!x);
   if(emptyIndex<0)break;
   const url=URL.createObjectURL(file);
   collageImages[emptyIndex]={url,file};
-  index++;
  }
  buildCollage();
  e.target.value='';
@@ -432,8 +502,8 @@ $('#saveCollage').addEventListener('click',async()=>{
  const W=1080,H=1920;
  const c=document.createElement('canvas');c.width=W;c.height=H;
  const ctx=c.getContext('2d');
- ctx.fillStyle='#4b1c2b';ctx.fillRect(0,0,W,H);
- const gap=14,margin=22;
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+ const gap=9,margin=18;
  let cols=2,rows=2;
  if(collageCount===1){cols=1;rows=1}
  if(collageCount===2){cols=2;rows=1}
@@ -453,7 +523,7 @@ $('#saveCollage').addEventListener('click',async()=>{
    drawCrop(ctx,im,x,y,cellW,cellH);ctx.restore();
   }else{
    ctx.fillStyle='#68734d';ctx.fillRect(x,y,cellW,cellH);
-   ctx.fillStyle='#e7a2b7';ctx.font='90px Georgia';ctx.textAlign='center';
+   ctx.fillStyle='#fff';ctx.font='90px Georgia';ctx.textAlign='center';
    ctx.fillText('+',x+cellW/2,y+cellH/2+30);
   }
  }
