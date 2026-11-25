@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#451b2a">
-<title>DLR — Every Frame, a Feeling</title>
+<title>DLR — Every Frame, a Romance</title>
 <style>
 :root{
   --wine:#4b1c2b;--wine2:#6a293d;--olive:#68734d;
@@ -18,40 +18,158 @@ body{margin:0;background:var(--wine);color:var(--cream);font-family:Arial,sans-s
 button,input{font:inherit}
 button{cursor:pointer}
 button:active{transform:scale(.98)}
-.app{min-height:100vh;background:
-radial-gradient(ellipse at 12% 8%,rgba(112,130,79,.58),transparent 42%),
-radial-gradient(ellipse at 90% 75%,rgba(111,35,58,.7),transparent 45%),
-linear-gradient(135deg,#3e1a29 0%,#536044 48%,#4b1c2b 100%);padding-bottom:36px}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:22px clamp(18px,5vw,58px);border-bottom:1px solid var(--line)}
-.brand{font-family:Georgia,serif;font-size:30px;letter-spacing:5px;color:var(--pink);font-weight:bold}
-.brand small{display:block;font:9px Arial,sans-serif;letter-spacing:3px;color:var(--cream);opacity:.75;margin-top:4px}
+
+.app{
+ min-height:100vh;
+ background:
+ radial-gradient(ellipse at 12% 8%,rgba(112,130,79,.58),transparent 42%),
+ radial-gradient(ellipse at 90% 75%,rgba(111,35,58,.7),transparent 45%),
+ linear-gradient(135deg,#3e1a29 0%,#536044 48%,#4b1c2b 100%);
+ padding-bottom:36px;
+}
+.app.home-mode{min-height:100svh;padding:0}
+.app.home-mode .topbar,.app.home-mode .footer{display:none}
+.app.home-mode main{width:100%;margin:0}
+.app.home-mode #home{display:block;padding:0}
+
+.topbar{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:22px clamp(18px,5vw,58px);
+ border-bottom:1px solid var(--line)
+}
+.brand{
+ font-family:Georgia,serif;font-size:30px;letter-spacing:5px;
+ color:var(--pink);font-weight:bold
+}
+.brand small{
+ display:block;font:9px Arial,sans-serif;letter-spacing:3px;
+ color:var(--cream);opacity:.75;margin-top:4px
+}
 .nav{display:flex;gap:9px;flex-wrap:wrap}
-.nav button{border:1px solid var(--line);background:rgba(25,15,18,.18);color:var(--cream);border-radius:30px;padding:10px 16px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}
-.nav button.active,.primary{background:var(--pink);color:#45202d;border-color:var(--pink)}
+.nav button{
+ border:1px solid var(--line);background:rgba(25,15,18,.18);
+ color:var(--cream);border-radius:30px;padding:10px 16px;
+ font-size:11px;letter-spacing:1.2px;text-transform:uppercase
+}
+.nav button.active,.primary{
+ background:var(--pink);color:#45202d;border-color:var(--pink)
+}
 main{width:min(1120px,92vw);margin:0 auto}
 .page{display:none;padding:32px 0 20px}
 .page.active{display:block}
 h1,h2,h3{font-family:Georgia,serif;font-weight:normal}
 h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:0 0 16px}
 h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
-.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin:0 0 12px}
+.eyebrow{
+ font-size:10px;letter-spacing:3px;text-transform:uppercase;
+ color:var(--pink);margin:0 0 12px
+}
 .sub{color:#eadbd2;opacity:.78;line-height:1.6;max-width:600px;font-size:14px}
-.cover{min-height:72vh;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:40px 0}
-.cover-copy{position:relative;z-index:1}
-.cover-logo{font:clamp(76px,15vw,170px)/.8 Georgia,serif;letter-spacing:-8px;color:var(--pink);text-shadow:0 5px 35px #e7a2b755;margin:18px 0}
-.tagline{font:italic 20px Georgia,serif;color:var(--pink2);letter-spacing:.4px}
-.cover-photo{height:min(68vh,650px);min-height:390px;position:relative;overflow:hidden;border-radius:48% 48% 8px 8px / 34% 34% 8px 8px;border:1px solid #f4eadf55;background:linear-gradient(135deg,#7a8761,#381b29)}
-.cover-photo:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#fff6 42%,transparent 56%),radial-gradient(ellipse at 55% 40%,#e8a8b566,transparent 40%);mix-blend-mode:screen;z-index:1;pointer-events:none}
-.cover-photo .photo-placeholder{height:100%;display:grid;place-items:center;text-align:center;padding:25px;color:#f6d9df;font:italic 23px Georgia,serif;background:linear-gradient(145deg,#7a8761,#5a2637 62%,#25171c)}
-.cover-photo .photo-placeholder span{font:10px Arial;letter-spacing:3px;display:block;margin-top:15px}
-.cover-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
-.primary,.secondary{border-radius:30px;padding:14px 22px;border:1px solid var(--pink);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
-.secondary{background:transparent;color:var(--cream);border-color:var(--line)}
-.note{font:italic 13px Georgia,serif;color:var(--pink2);margin-top:26px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;backdrop-filter:blur(12px)}
-.editor-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:22px;margin-top:24px}
-.preview-wrap{background:#1c1719;border:1px solid var(--line);border-radius:18px;min-height:380px;display:grid;place-items:center;overflow:hidden;position:relative}
-.preview-wrap img{display:none;max-width:100%;max-height:640px;object-fit:contain;position:relative;z-index:1}
+
+/* ROMANTIC DLR COVER */
+.cover{
+ min-height:100svh;
+ width:100%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ position:relative;
+ overflow:hidden;
+ padding:55px 22px 45px;
+ background-image:
+ linear-gradient(180deg,rgba(31,16,23,.12),rgba(35,17,25,.18) 45%,rgba(29,15,21,.35)),
+ url("C7C61C37-BFAE-4419-B265-68C09638D88F.png");
+ background-size:cover;
+ background-position:center center;
+ background-repeat:no-repeat;
+}
+.cover:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ background:
+ radial-gradient(ellipse at 50% 42%,transparent 20%,rgba(31,14,22,.18) 100%),
+ linear-gradient(90deg,rgba(63,24,39,.13),transparent 45%,rgba(63,24,39,.12));
+}
+.cover:after{
+ content:"";
+ position:absolute;
+ inset:12px;
+ border:1px solid rgba(248,226,215,.18);
+ pointer-events:none;
+}
+.cover-copy{
+ position:relative;z-index:2;width:min(100%,520px);
+ display:flex;flex-direction:column;align-items:center;
+ text-align:center;padding:25px 12px;
+}
+.cover-logo{
+ font:italic clamp(94px,19vw,156px)/.95 Georgia,serif;
+ font-weight:normal;letter-spacing:-7px;color:#f7dfe0;
+ text-shadow:0 2px 2px rgba(50,20,30,.35),0 8px 35px rgba(245,198,191,.35),0 0 55px rgba(255,235,218,.2);
+ margin:0 0 7px;
+}
+.tagline{
+ font:10px Arial,sans-serif;letter-spacing:2.3px;
+ color:#fff2e8;text-transform:uppercase;
+ text-shadow:0 2px 10px rgba(25,12,17,.65);margin:0;
+}
+.cover-eyebrow{
+ font:10px Arial,sans-serif;letter-spacing:2.1px;
+ text-transform:uppercase;color:#f8e8dc;
+ text-shadow:0 2px 12px rgba(25,12,17,.75);
+ margin:clamp(115px,24vh,220px) 0 20px;
+}
+.cover-actions{
+ display:flex;flex-direction:column;align-items:center;
+ justify-content:center;gap:10px;width:min(100%,260px);
+}
+.cover-actions button{
+ width:100%;min-height:43px;border-radius:30px;
+ padding:12px 22px;border:1px solid rgba(255,242,226,.85);
+ background:rgba(248,237,220,.78);color:#38232a;
+ font-family:Georgia,serif;font-size:14px;letter-spacing:.7px;
+ text-transform:none;box-shadow:0 4px 18px rgba(29,12,20,.16);
+ backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+ transition:background .25s,transform .25s,box-shadow .25s;
+}
+.cover-actions button:hover{
+ background:rgba(255,247,235,.94);
+ box-shadow:0 5px 22px rgba(29,12,20,.25);
+ transform:translateY(-2px);
+}
+.cover-actions .primary{
+ background:rgba(248,237,220,.86);color:#38232a;
+ border-color:rgba(255,242,226,.95);
+}
+.cover-actions .secondary{
+ background:rgba(65,36,43,.22);color:#fff1e8;
+ border-color:rgba(255,235,220,.8);
+}
+.note{
+ font:italic 12px Georgia,serif;color:#f6e2dc;
+ margin-top:22px;text-shadow:0 2px 10px rgba(25,12,17,.7);
+}
+
+/* EDITOR */
+.panel{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:18px;padding:18px;backdrop-filter:blur(12px)
+}
+.editor-layout{
+ display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);
+ gap:22px;margin-top:24px
+}
+.preview-wrap{
+ background:#1c1719;border:1px solid var(--line);
+ border-radius:18px;min-height:380px;display:grid;
+ place-items:center;overflow:hidden;position:relative
+}
+.preview-wrap img{
+ display:none;max-width:100%;max-height:640px;
+ object-fit:contain;position:relative;z-index:1
+}
 .preview-wrap:after{
  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
  opacity:var(--grain-opacity,0);
@@ -62,7 +180,12 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .preview-empty b{display:block;color:var(--pink);font:30px Georgia,serif;margin-bottom:8px}
 .control-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}
 .control-title h3{font-size:22px;margin:0}
-.upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--pink);color:var(--pink2);padding:11px 15px;border-radius:30px;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent}
+.upload-btn{
+ display:inline-flex;align-items:center;justify-content:center;gap:8px;
+ border:1px solid var(--pink);color:var(--pink2);
+ padding:11px 15px;border-radius:30px;font-size:10px;
+ letter-spacing:1px;text-transform:uppercase;background:transparent
+}
 input[type=file]{display:none}
 
 /* FILTER CARDS */
@@ -79,21 +202,13 @@ input[type=file]{display:none}
  color:var(--cream);text-align:left;scroll-snap-align:start;
  transition:border-color .25s,transform .25s,box-shadow .25s
 }
-.filter .thumb{
- height:91px;display:block;position:relative;overflow:hidden;
- background:linear-gradient(145deg,#68734d,#4b1c2b 60%,#25171c)
-}
-.filter .thumb img{
- width:100%;height:100%;display:block;object-fit:cover;
- transition:transform .45s ease
-}
+.filter .thumb{height:91px;display:block;position:relative;overflow:hidden;background:linear-gradient(145deg,#68734d,#4b1c2b 60%,#25171c)}
+.filter .thumb img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease}
 .filter .thumb-empty{
  width:100%;height:100%;display:grid;place-items:center;
  font:italic 27px Georgia,serif;letter-spacing:4px;
  color:rgba(244,234,223,.8);
- background:
- radial-gradient(ellipse at 70% 25%,rgba(231,162,183,.35),transparent 45%),
- linear-gradient(145deg,#68734d,#4b1c2b 65%,#25171c)
+ background:radial-gradient(ellipse at 70% 25%,rgba(231,162,183,.35),transparent 45%),linear-gradient(145deg,#68734d,#4b1c2b 65%,#25171c)
 }
 .filter:active .thumb img{transform:scale(1.06)}
 .filter .thumb:after{
@@ -101,15 +216,8 @@ input[type=file]{display:none}
  background:linear-gradient(180deg,transparent 48%,rgba(30,17,22,.25));
  pointer-events:none
 }
-.filter span:last-child{
- display:block;padding:9px 5px 10px;font-size:9px;
- letter-spacing:.9px;text-align:center;white-space:nowrap
-}
-.filter.selected{
- border-color:var(--pink);
- box-shadow:0 0 0 1px var(--pink),0 5px 18px #e7a2b733;
- transform:translateY(-2px)
-}
+.filter span:last-child{display:block;padding:9px 5px 10px;font-size:9px;letter-spacing:.9px;text-align:center;white-space:nowrap}
+.filter.selected{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink),0 5px 18px #e7a2b733;transform:translateY(-2px)}
 .sliders{display:grid;gap:13px;margin-top:18px}
 .slider-row{display:grid;grid-template-columns:100px 1fr 34px;align-items:center;gap:8px;font-size:11px;color:#eadbd2}
 input[type=range]{width:100%;accent-color:var(--pink)}
@@ -138,22 +246,23 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 .collage-grid[data-count="4"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
 .collage-grid[data-count="6"]{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
 .footer{text-align:center;color:#e6cbd1;font:italic 13px Georgia,serif;padding:24px 10px 10px;opacity:.8}
+
 @media(max-width:760px){
  .topbar{align-items:flex-start;gap:15px;flex-direction:column}
- .cover{grid-template-columns:1fr;gap:24px;padding:28px 0}
- .cover-photo{height:48vh;min-height:300px;grid-row:1}
+ .cover{min-height:100svh;padding:35px 20px}
+ .cover-logo{font-size:clamp(100px,25vw,132px)}
+ .cover-eyebrow{margin-top:clamp(125px,25vh,205px)}
  .editor-layout{display:flex;flex-direction:column}
  .editor-layout>div:first-child{order:0}
  .editor-layout>aside{order:1}
  .preview-wrap{min-height:300px;max-height:55vh}
  .preview-wrap img{max-height:52vh}
- .cover-logo{font-size:100px}
- .cover-copy{padding:0 4px}
 }
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app home-mode" id="app">
+
 <header class="topbar">
   <div class="brand">DLR<small>EVERY FRAME, A FEELING</small></div>
   <nav class="nav" aria-label="Main navigation">
@@ -161,22 +270,19 @@ input[type=range]{width:100%;accent-color:var(--pink)}
     <button data-page="collage" type="button">Grids</button>
   </nav>
 </header>
+
 <main>
 <section class="page active" id="home">
   <div class="cover">
     <div class="cover-copy">
-      <p class="eyebrow">A little vintage, a little you</p>
       <div class="cover-logo">DLR</div>
-      <div class="tagline">Make the ordinary unforgettable.</div>
-      <p class="sub">A personal little darkroom for the photographs you want to keep close. Find your film mood, shape the light, and make every frame feel like a memory.</p>
+      <div class="tagline">EVERY FRAME, A LITTLE ROMANCE</div>
+      <p class="cover-eyebrow">A LITTLE VINTAGE, A LITTLE YOU</p>
       <div class="cover-actions">
         <button class="primary" data-go="edit" type="button">Filters</button>
         <button class="secondary" data-go="collage" type="button">Grids</button>
       </div>
-      <div class="note">Captured in your own kind of nostalgia.</div>
-    </div>
-    <div class="cover-photo" id="coverPhoto">
-      <div class="photo-placeholder">Soft light.<br>Slow moments.<br>Forever yours.<span>DLR — FILM NOTES Nº 01</span></div>
+      <div class="note">Make the ordinary unforgettable.</div>
     </div>
   </div>
 </section>
@@ -240,6 +346,7 @@ input[type=range]{width:100%;accent-color:var(--pink)}
   </div>
 </section>
 </main>
+
 <div class="footer">DLR · Made for memories that deserve to stay.</div>
 </div>
 
@@ -250,6 +357,7 @@ const $$=s=>[...document.querySelectorAll(s)];
 function showPage(name){
  $$('.page').forEach(p=>p.classList.toggle('active',p.id===name));
  $$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ $('#app').classList.toggle('home-mode',name==='home');
  window.scrollTo({top:0,behavior:'smooth'});
 }
 document.addEventListener('click',e=>{
@@ -259,7 +367,7 @@ document.addEventListener('click',e=>{
  else if(go){e.preventDefault();showPage(go.dataset.go)}
 });
 
-/* DLR FILM COLLECTION — PREVIEWS USE YOUR OWN PHOTO */
+/* DLR FILM COLLECTION */
 const filters=[
  {id:'original',name:'Original',css:'none'},
  {id:'kodak',name:'Kodak Gold',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)'},
@@ -289,41 +397,30 @@ const controlIds=['intensity','brightness','contrast','saturation','warmth','gra
 function buildFilters(){
  const list=$('#filterList');
  list.innerHTML='';
-
  filters.forEach(f=>{
   const b=document.createElement('button');
   b.type='button';
   b.className='filter'+(f.id===selectedFilter?' selected':'');
   b.dataset.filter=f.id;
-
   const thumb=document.createElement('span');
   thumb.className='thumb';
-
   if(sourceUrl){
    const img=document.createElement('img');
-   img.src=sourceUrl;
-   img.alt=f.name+' preview';
-   img.loading='lazy';
-   img.style.filter=f.css;
-   thumb.appendChild(img);
+   img.src=sourceUrl;img.alt=f.name+' preview';img.loading='lazy';
+   img.style.filter=f.css;thumb.appendChild(img);
   }else{
    const placeholder=document.createElement('span');
-   placeholder.className='thumb-empty';
-   placeholder.textContent='DLR';
+   placeholder.className='thumb-empty';placeholder.textContent='DLR';
    thumb.appendChild(placeholder);
   }
-
   const label=document.createElement('span');
   label.textContent=f.name;
-
   b.append(thumb,label);
-
   b.addEventListener('click',()=>{
    selectedFilter=f.id;
    $$('.filter').forEach(x=>x.classList.toggle('selected',x===b));
    updatePreview();
   });
-
   list.appendChild(b);
  });
 }
@@ -340,41 +437,27 @@ function filterString(){
  const warmth=getVal('warmth');
  return `${base} brightness(${1+(amount-1)*strength}) contrast(${1+(contrast-1)*strength}) saturate(${1+(saturation-1)*strength}) ${warmth>=0?`sepia(${warmth/180}) hue-rotate(-${warmth/4}deg)`:`hue-rotate(${Math.abs(warmth)/4}deg)`}`;
 }
-
 function updatePreview(){
  if(!sourceImage)return;
  $('#editImage').style.filter=filterString();
  $('#editPreview').style.setProperty('--grain-opacity',getVal('grain')/160);
  controlIds.forEach(id=>$('#'+id+'Val').value=getVal(id));
 }
-
 $('#editUpload').addEventListener('change',e=>{
- const f=e.target.files[0];
- if(!f)return;
-
+ const f=e.target.files[0];if(!f)return;
  if(sourceUrl)URL.revokeObjectURL(sourceUrl);
  sourceUrl=URL.createObjectURL(f);
  sourceImage=new Image();
-
  sourceImage.onload=()=>{
   $('#editImage').src=sourceUrl;
   $('#editImage').style.display='block';
   $('#editEmpty').style.display='none';
-
-  /* Refresh all 20 thumbnails with the newly uploaded photo */
-  buildFilters();
-  updatePreview();
+  buildFilters();updatePreview();
  };
-
- sourceImage.onerror=()=>{
-  alert('This photo could not be opened. Please choose another image.');
- };
-
+ sourceImage.onerror=()=>alert('This photo could not be opened. Please choose another image.');
  sourceImage.src=sourceUrl;
 });
-
 controlIds.forEach(id=>$('#'+id).addEventListener('input',updatePreview));
-
 $('#resetEdit').addEventListener('click',()=>{
  selectedFilter='original';
  $$('.filter').forEach(b=>b.classList.toggle('selected',b.dataset.filter==='original'));
@@ -382,15 +465,11 @@ $('#resetEdit').addEventListener('click',()=>{
  Object.entries(defaults).forEach(([k,v])=>$('#'+k).value=v);
  updatePreview();
 });
-
 async function downloadBlob(blob,name){
  const file=new File([blob],name,{type:'image/jpeg'});
  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-  try{
-   await navigator.share({files:[file],title:'DLR'});
-  }catch(error){
-   if(error.name!=='AbortError')alert('The image could not be shared. Please try again.');
-  }
+  try{await navigator.share({files:[file],title:'DLR'})}
+  catch(error){if(error.name!=='AbortError')alert('The image could not be shared. Please try again.')}
  }else{
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=name;
@@ -398,12 +477,9 @@ async function downloadBlob(blob,name){
   setTimeout(()=>URL.revokeObjectURL(url),2000);
  }
 }
-
 function addGrain(ctx,w,h,amount){
  if(amount<=0)return;
- const image=ctx.getImageData(0,0,w,h);
- const d=image.data;
- const strength=amount*1.05;
+ const image=ctx.getImageData(0,0,w,h),d=image.data,strength=amount*1.05;
  for(let i=0;i<d.length;i+=4){
   const noise=(Math.random()-.5)*strength;
   d[i]=Math.max(0,Math.min(255,d[i]+noise));
@@ -412,17 +488,12 @@ function addGrain(ctx,w,h,amount){
  }
  ctx.putImageData(image,0,0);
 }
-
 function renderFilteredCanvas(img,w,h){
  const c=document.createElement('canvas');c.width=w;c.height=h;
- const ctx=c.getContext('2d');
- ctx.filter=filterString();
- ctx.drawImage(img,0,0,w,h);
- ctx.filter='none';
- addGrain(ctx,w,h,getVal('grain'));
- return c;
+ const ctx=c.getContext('2d');ctx.filter=filterString();
+ ctx.drawImage(img,0,0,w,h);ctx.filter='none';
+ addGrain(ctx,w,h,getVal('grain'));return c;
 }
-
 $('#saveEdit').addEventListener('click',()=>{
  if(!sourceImage){alert('Please add a photo first.');return}
  const scale=Math.min(1,2400/Math.max(sourceImage.naturalWidth,sourceImage.naturalHeight));
@@ -431,72 +502,51 @@ $('#saveEdit').addEventListener('click',()=>{
 });
 
 /* MULTI PHOTO COLLAGE */
-let collageCount=4;
-let collageImages=Array(4).fill(null);
-
+let collageCount=4,collageImages=Array(4).fill(null);
 function buildCollage(){
- const grid=$('#collageGrid');
- grid.dataset.count=collageCount;
- grid.innerHTML='';
+ const grid=$('#collageGrid');grid.dataset.count=collageCount;grid.innerHTML='';
  $('#layoutLabel').textContent=collageCount+' FRAME'+(collageCount===1?'':'S');
  collageImages=Array.from({length:collageCount},(_,i)=>collageImages[i]||null);
-
  for(let i=0;i<collageCount;i++){
-  const cell=document.createElement('div');
-  cell.className='collage-cell';
+  const cell=document.createElement('div');cell.className='collage-cell';
   if(collageImages[i]){
-   const img=document.createElement('img');
-   img.src=collageImages[i].url;img.alt='Collage photo';
-   cell.appendChild(img);
+   const img=document.createElement('img');img.src=collageImages[i].url;
+   img.alt='Collage photo';cell.appendChild(img);
   }
-  const plus=document.createElement('div');
-  plus.className='plus';plus.textContent=collageImages[i]?'':'+';
-  cell.appendChild(plus);
+  const plus=document.createElement('div');plus.className='plus';
+  plus.textContent=collageImages[i]?'':'+';cell.appendChild(plus);
   cell.addEventListener('click',()=>{
    if(collageImages.filter(Boolean).length>=collageCount){
-    alert('All frames are filled. Choose another layout or clear the grid.');
-    return;
+    alert('All frames are filled. Choose another layout or clear the grid.');return;
    }
    $('#collageUpload').click();
   });
   grid.appendChild(cell);
  }
 }
-
 $$('.layout-choice').forEach(b=>b.addEventListener('click',()=>{
  collageCount=Number(b.dataset.count);
  $$('.layout-choice').forEach(x=>x.classList.toggle('selected',x===b));
  collageImages.forEach(x=>{if(x?.url)URL.revokeObjectURL(x.url)});
  collageImages=Array(collageCount).fill(null);
- $('#collageUpload').value='';
- buildCollage();
+ $('#collageUpload').value='';buildCollage();
 }));
-
 $('#collageUpload').addEventListener('change',e=>{
- const files=[...e.target.files];
- if(!files.length)return;
+ const files=[...e.target.files];if(!files.length)return;
  const remaining=collageCount-collageImages.filter(Boolean).length;
  const accepted=files.slice(0,remaining);
- if(files.length>remaining){
-  alert(`This layout has ${collageCount} frames. Only ${remaining} more photo(s) can be added.`);
- }
+ if(files.length>remaining)alert(`This layout has ${collageCount} frames. Only ${remaining} more photo(s) can be added.`);
  for(const file of accepted){
-  const emptyIndex=collageImages.findIndex(x=>!x);
-  if(emptyIndex<0)break;
-  const url=URL.createObjectURL(file);
-  collageImages[emptyIndex]={url,file};
+  const emptyIndex=collageImages.findIndex(x=>!x);if(emptyIndex<0)break;
+  const url=URL.createObjectURL(file);collageImages[emptyIndex]={url,file};
  }
- buildCollage();
- e.target.value='';
+ buildCollage();e.target.value='';
 });
-
 $('#clearCollage').addEventListener('click',()=>{
  collageImages.forEach(x=>{if(x?.url)URL.revokeObjectURL(x.url)});
  collageImages=Array(collageCount).fill(null);
- $('#collageUpload').value='';
- buildCollage();
+ $('#collageUpload').value='';buildCollage();
 });
-
 function loadImage(url){
  return new Promise((resolve,reject)=>{
   const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=url;
@@ -508,15 +558,11 @@ function drawCrop(ctx,img,x,y,w,h){
  const sx=(img.width-sw)/2,sy=(img.height-sh)/2;
  ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
 }
-
 $('#saveCollage').addEventListener('click',async()=>{
- if(!collageImages.some(Boolean)){
-  alert('Add at least one photo to your grid first.');return;
- }
- const W=1080,H=1920;
- const c=document.createElement('canvas');c.width=W;c.height=H;
- const ctx=c.getContext('2d');
- ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
+ if(!collageImages.some(Boolean)){alert('Add at least one photo to your grid first.');return}
+ const W=1080,H=1920,c=document.createElement('canvas');
+ c.width=W;c.height=H;
+ const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
  const gap=9,margin=18;
  let cols=2,rows=2;
  if(collageCount===1){cols=1;rows=1}
@@ -528,8 +574,7 @@ $('#saveCollage').addEventListener('click',async()=>{
  const cellH=(H-margin*2-gap*(rows-1))/rows;
  for(let i=0;i<collageCount;i++){
   const col=i%cols,row=Math.floor(i/cols);
-  const x=margin+col*(cellW+gap);
-  const y=margin+row*(cellH+gap);
+  const x=margin+col*(cellW+gap),y=margin+row*(cellH+gap);
   const item=collageImages[i];
   if(item){
    const im=await loadImage(item.url);
@@ -543,7 +588,6 @@ $('#saveCollage').addEventListener('click',async()=>{
  }
  c.toBlob(b=>{if(b)downloadBlob(b,'DLR-Instagram-Story-1080x1920.jpg')},'image/jpeg',.95);
 });
-
 buildCollage();
 showPage('home');
 </script>
