@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,7 @@
 body{margin:0;background:var(--wine);color:var(--cream);font-family:Arial,sans-serif;min-height:100vh}
 button,input{font:inherit}
 button{cursor:pointer}
+button:active{transform:scale(.98)}
 .app{min-height:100vh;background:
  radial-gradient(ellipse at 12% 8%,rgba(112,130,79,.58),transparent 42%),
  radial-gradient(ellipse at 90% 75%,rgba(111,35,58,.7),transparent 45%),
@@ -26,11 +28,12 @@ button{cursor:pointer}
 .nav button,.pill{border:1px solid var(--line);background:rgba(25,15,18,.18);color:var(--cream);border-radius:30px;padding:10px 16px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}
 .nav button.active,.primary{background:var(--pink);color:#45202d;border-color:var(--pink)}
 main{width:min(1120px,92vw);margin:0 auto}
-.page{display:none;padding:32px 0 20px}.page.active{display:block}
+.page{display:none;padding:32px 0 20px}
+.page.active{display:block}
 h1,h2,h3{font-family:Georgia,serif;font-weight:normal}
-.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin:0 0 12px}
 h1{font-size:clamp(38px,7vw,76px);line-height:.98;margin:0 0 16px}
 h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
+.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin:0 0 12px}
 .sub{color:#eadbd2;opacity:.78;line-height:1.6;max-width:600px;font-size:14px}
 .cover{min-height:72vh;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:40px 0}
 .cover-copy{position:relative;z-index:1}
@@ -38,7 +41,6 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .tagline{font:italic 20px Georgia,serif;color:var(--pink2);letter-spacing:.4px}
 .cover-photo{height:min(68vh,650px);min-height:390px;position:relative;overflow:hidden;border-radius:48% 48% 8px 8px / 34% 34% 8px 8px;border:1px solid #f4eadf55;background:linear-gradient(135deg,#7a8761,#381b29)}
 .cover-photo:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#fff6 42%,transparent 56%),radial-gradient(ellipse at 55% 40%,#e8a8b566,transparent 40%);mix-blend-mode:screen;z-index:1;pointer-events:none}
-.cover-photo img{width:100%;height:100%;object-fit:cover;filter:sepia(.18) saturate(.8) contrast(1.13)}
 .cover-photo .photo-placeholder{height:100%;display:grid;place-items:center;text-align:center;padding:25px;color:#f6d9df;font:italic 23px Georgia,serif;background:linear-gradient(145deg,#7a8761,#5a2637 62%,#25171c)}
 .cover-photo .photo-placeholder span{font:10px Arial;letter-spacing:3px;display:block;margin-top:15px}
 .cover-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
@@ -55,16 +57,9 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .control-title h3{font-size:22px;margin:0}
 .upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--pink);color:var(--pink2);padding:11px 15px;border-radius:30px;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent}
 input[type=file]{display:none}
-.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.filter{padding:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#281c20;color:var(--cream);text-align:left}
+.filters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.filter{padding:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#281c20;color:var(--cream);text-align:left;min-width:0}
 .filter .thumb{height:58px;background:linear-gradient(135deg,#9a6a54,#58664c 55%,#c88d9f);display:block}
-.filter:nth-child(2) .thumb{filter:sepia(.5) contrast(1.25)}
-.filter:nth-child(3) .thumb{filter:saturate(1.7) contrast(1.2)}
-.filter:nth-child(4) .thumb{filter:grayscale(1) contrast(1.4)}
-.filter:nth-child(5) .thumb{filter:sepia(.35) brightness(1.2)}
-.filter:nth-child(6) .thumb{filter:hue-rotate(20deg) saturate(1.5)}
-.filter:nth-child(7) .thumb{filter:contrast(1.5) saturate(.7)}
-.filter:nth-child(8) .thumb{filter:sepia(.2) saturate(1.4) brightness(1.08)}
 .filter span:last-child{display:block;padding:8px 5px;font-size:9px;letter-spacing:1px;text-align:center}
 .filter.selected{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink)}
 .sliders{display:grid;gap:13px;margin-top:18px}
@@ -77,22 +72,25 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 .layout-options{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}
 .layout-choice{width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:#34222a;color:var(--cream);font:18px Georgia,serif}
 .layout-choice.selected{background:var(--pink);color:#48202e;border-color:var(--pink)}
-.collage-grid{display:grid;gap:8px;width:min(100%,680px);margin:20px auto;background:#21181c;padding:9px;border:1px solid var(--line);border-radius:14px}
-.collage-cell{position:relative;min-height:145px;aspect-ratio:1/1;background:linear-gradient(145deg,#69754e,#492333);overflow:hidden;border:1px solid #f4eadf33}
+.collage-grid{display:grid;gap:8px;width:min(100%,430px);aspect-ratio:9/16;margin:20px auto;background:#21181c;padding:9px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.collage-cell{position:relative;min-height:0;aspect-ratio:auto;background:linear-gradient(145deg,#69754e,#492333);overflow:hidden;border:1px solid #f4eadf33}
 .collage-cell img{width:100%;height:100%;object-fit:cover;display:block}
 .plus{position:absolute;inset:0;display:grid;place-items:center;color:var(--pink);font:42px Georgia,serif;text-shadow:0 2px 12px #000}
-.collage-grid[data-count="1"]{grid-template-columns:1fr}
-.collage-grid[data-count="2"]{grid-template-columns:repeat(2,1fr)}
-.collage-grid[data-count="3"]{grid-template-columns:repeat(2,1fr)}
-.collage-grid[data-count="3"] .collage-cell:first-child{grid-column:1/-1;aspect-ratio:2/1}
-.collage-grid[data-count="4"]{grid-template-columns:repeat(2,1fr)}
-.collage-grid[data-count="6"]{grid-template-columns:repeat(3,1fr)}
-.collage-grid[data-count="6"] .collage-cell{min-height:100px}
+.collage-grid[data-count="1"]{grid-template-columns:1fr;grid-template-rows:1fr}
+.collage-grid[data-count="2"]{grid-template-columns:1fr;grid-template-rows:repeat(2,1fr)}
+.collage-grid[data-count="3"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.collage-grid[data-count="3"] .collage-cell:first-child{grid-column:1/-1}
+.collage-grid[data-count="4"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.collage-grid[data-count="6"]{grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr)}
 .footer{text-align:center;color:#e6cbd1;font:italic 13px Georgia,serif;padding:24px 10px 10px;opacity:.8}
 @media(max-width:760px){
- .topbar{align-items:flex-start;gap:15px;flex-direction:column}.cover{grid-template-columns:1fr;gap:24px;padding:28px 0}.cover-photo{height:48vh;min-height:300px;grid-row:1}
- .editor-layout{grid-template-columns:1fr}.preview-wrap{min-height:330px}.filters{grid-template-columns:repeat(4,1fr)}
- .cover-logo{font-size:100px}.cover-copy{padding:0 4px}
+ .topbar{align-items:flex-start;gap:15px;flex-direction:column}
+ .cover{grid-template-columns:1fr;gap:24px;padding:28px 0}
+ .cover-photo{height:48vh;min-height:300px;grid-row:1}
+ .editor-layout{grid-template-columns:1fr}
+ .preview-wrap{min-height:330px}
+ .cover-logo{font-size:100px}
+ .cover-copy{padding:0 4px}
 }
 </style>
 </head>
@@ -101,9 +99,8 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 <header class="topbar">
   <div class="brand">DLR<small>EVERY FRAME, A FEELING</small></div>
   <nav class="nav" aria-label="Main navigation">
-    <button class="active" data-page="home">Home</button>
-    <button data-page="edit">Edit</button>
-    <button data-page="collage">Collage</button>
+    <button class="active" data-page="edit">Filters</button>
+    <button data-page="collage">Grids</button>
   </nav>
 </header>
 <main>
@@ -115,8 +112,8 @@ input[type=range]{width:100%;accent-color:var(--pink)}
       <div class="tagline">Make the ordinary unforgettable.</div>
       <p class="sub">A personal little darkroom for the photographs you want to keep close. Find your film mood, shape the light, and make every frame feel like a memory.</p>
       <div class="cover-actions">
-        <button class="primary" data-go="edit">Enter the Edit Room</button>
-        <button class="secondary" data-go="collage">Create a collage</button>
+        <button class="primary" data-go="edit">Filters</button>
+        <button class="secondary" data-go="collage">Grids</button>
       </div>
       <div class="note">Captured in your own kind of nostalgia.</div>
     </div>
@@ -127,7 +124,8 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 </section>
 
 <section class="page" id="edit">
-  <p class="eyebrow">The DLR darkroom</p><h2>The Edit Room</h2>
+  <p class="eyebrow">The DLR darkroom</p>
+  <h2>The Edit Room</h2>
   <p class="sub">Choose a photograph, find your film, then make the light yours.</p>
   <div class="editor-layout">
     <div>
@@ -143,17 +141,8 @@ input[type=range]{width:100%;accent-color:var(--pink)}
       </div>
     </div>
     <aside class="panel">
-      <div class="control-title"><h3>Film collection</h3><span class="eyebrow">08 MOODS</span></div>
-      <div class="filters">
-        <button class="filter selected" data-filter="original"><span class="thumb"></span><span>ORIGINAL</span></button>
-        <button class="filter" data-filter="kodak"><span class="thumb"></span><span>KODAK 200</span></button>
-        <button class="filter" data-filter="golden"><span class="thumb"></span><span>GOLDEN HOUR</span></button>
-        <button class="filter" data-filter="mono"><span class="thumb"></span><span>MONOCHROME</span></button>
-        <button class="filter" data-filter="portra"><span class="thumb"></span><span>PORTRA 400</span></button>
-        <button class="filter" data-filter="flash"><span class="thumb"></span><span>DIRECT FLASH</span></button>
-        <button class="filter" data-filter="faded"><span class="thumb"></span><span>FADED 90s</span></button>
-        <button class="filter" data-filter="dlr"><span class="thumb"></span><span>DLR DATE</span></button>
-      </div>
+      <div class="control-title"><h3>Film collection</h3><span class="eyebrow">15 MOODS</span></div>
+      <div class="filters" id="filterList"></div>
       <div class="section-gap">
         <div class="control-title"><h3>Fine tune</h3><span class="eyebrow">YOUR LIGHT</span></div>
         <div class="sliders">
@@ -170,7 +159,8 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 </section>
 
 <section class="page" id="collage">
-  <p class="eyebrow">A collection of moments</p><h2>The Collage Atelier</h2>
+  <p class="eyebrow">A collection of moments</p>
+  <h2>The Collage Atelier</h2>
   <p class="sub">Choose your layout first. Add a different photograph to each frame.</p>
   <div class="layout-options" id="layoutOptions">
     <button class="layout-choice" data-count="1">1</button>
@@ -184,9 +174,9 @@ input[type=range]{width:100%;accent-color:var(--pink)}
     <div class="collage-grid" id="collageGrid" data-count="4"></div>
     <div class="action-row" style="justify-content:center">
       <button class="secondary" id="clearCollage">Clear all</button>
-      <button class="primary" id="saveCollage">Save to Gallery</button>
+      <button class="primary" id="saveCollage">Save Story · 9:16</button>
     </div>
-    <p class="small-muted" style="text-align:center">Tap any + to add a photo to that frame. Your original photos stay on your device.</p>
+    <p class="small-muted" style="text-align:center">Tap any + to add a photo to that frame. Your original photos stay on your device. Export size: 1080 × 1920 px.</p>
   </div>
 </section>
 </main>
@@ -202,340 +192,247 @@ function showPage(name){
   $$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
   window.scrollTo({top:0,behavior:'smooth'});
 }
+document.addEventListener('click',e=>{
+  const nav=e.target.closest('[data-page]');
+  const go=e.target.closest('[data-go]');
+  if(nav){e.preventDefault();showPage(nav.dataset.page)}
+  else if(go){e.preventDefault();showPage(go.dataset.go)}
+});
 
-$$('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-$$('[data-go]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.go)));
+const filters=[
+ {id:'original',name:'Original',sub:'NATURAL',css:'none'},
+ {id:'kodak',name:'Kodak Gold',sub:'WARM FILM',css:'sepia(.22) saturate(1.42) contrast(1.16) brightness(1.04)'},
+ {id:'portra',name:'Portra 400',sub:'SOFT PORTRAIT',css:'sepia(.13) saturate(1.12) contrast(.94) brightness(1.08)'},
+ {id:'portra800',name:'Portra 800',sub:'GOLDEN GRAIN',css:'sepia(.2) saturate(1.3) contrast(1.18) brightness(1.02)'},
+ {id:'golden',name:'Golden Hour',sub:'HONEY LIGHT',css:'sepia(.35) saturate(1.3) contrast(1.1) brightness(1.1)'},
+ {id:'softpink',name:'Rose Veil',sub:'POWDER PINK',css:'sepia(.12) saturate(1.1) hue-rotate(325deg) brightness(1.1) contrast(.92)'},
+ {id:'dreamy',name:'Dreamy Glow',sub:'SOFT FOCUS',css:'sepia(.12) saturate(1.12) brightness(1.12) contrast(.88)'},
+ {id:'cream',name:'Vanilla Cream',sub:'CREAMY LIGHT',css:'sepia(.2) saturate(.85) brightness(1.13) contrast(.92)'},
+ {id:'faded',name:'Faded 90s',sub:'OLD MEMORIES',css:'sepia(.25) saturate(.78) brightness(1.12) contrast(.82)'},
+ {id:'olive',name:'Olive Vintage',sub:'EARTH TONES',css:'sepia(.18) saturate(.82) hue-rotate(12deg) contrast(1.06)'},
+ {id:'cool',name:'Cool Breeze',sub:'COOL FILM',css:'saturate(.9) hue-rotate(12deg) contrast(1.06) brightness(1.04)'},
+ {id:'noir',name:'Noir',sub:'DEEP B&W',css:'grayscale(1) contrast(1.42) brightness(.92)'},
+ {id:'softmono',name:'Soft Mono',sub:'GENTLE B&W',css:'grayscale(1) contrast(.85) brightness(1.12)'},
+ {id:'grainmono',name:'Grainy B&W',sub:'ANALOG MONO',css:'grayscale(1) contrast(1.28) brightness(.96)'},
+ {id:'darkroom',name:'Darkroom',sub:'DARK ENERGY',css:'brightness(.72) contrast(1.35) saturate(.72) sepia(.12)'}
+];
 
-let sourceImage=null;
-let sourceUrl=null;
-let selectedFilter='original';
-
-const presets={
- original:{sepia:0,sat:1,contrast:1,bright:1,hue:0},
- kodak:{sepia:.22,sat:1.42,contrast:1.22,bright:1.04,hue:-4},
- golden:{sepia:.38,sat:1.28,contrast:1.13,bright:1.12,hue:-8},
- mono:{sepia:0,sat:0,contrast:1.42,bright:1.04,hue:0},
- portra:{sepia:.16,sat:1.2,contrast:1.08,bright:1.09,hue:5},
- flash:{sepia:.06,sat:1.45,contrast:1.48,bright:1.18,hue:-3},
- faded:{sepia:.28,sat:.82,contrast:.82,bright:1.15,hue:4},
- dlr:{sepia:.2,sat:1.32,contrast:1.18,bright:1.08,hue:-6}
-};
-
+let sourceImage=null,sourceUrl=null,selectedFilter='original';
 const controlIds=['intensity','brightness','contrast','saturation','warmth','grain'];
 
-function getVal(id){
-  return Number($('#'+id).value);
-}
-
-function filterString(){
-  const p=presets[selectedFilter];
-  const strength=getVal('intensity')/100;
-  const blend=(a,b)=>1+(b-1)*strength;
-  const sepia=p.sepia*strength;
-  const sat=blend(1,p.sat)*(getVal('saturation')/100);
-  const contrast=blend(1,p.contrast)*(getVal('contrast')/100);
-  const bright=blend(1,p.bright)*(getVal('brightness')/100);
-  return `sepia(${sepia}) saturate(${sat}) contrast(${contrast}) brightness(${bright}) hue-rotate(${p.hue*strength}deg)`;
-}
-
-function updatePreview(){
-  const img=$('#editImage');
-  if(!sourceImage)return;
-  img.style.filter=filterString();
-  controlIds.forEach(id=>{
-    $('#'+id+'Val').value=getVal(id);
+function buildFilters(){
+ const list=$('#filterList');
+ list.innerHTML='';
+ filters.forEach(f=>{
+  const b=document.createElement('button');
+  b.className='filter'+(f.id===selectedFilter?' selected':'');
+  b.dataset.filter=f.id;
+  b.innerHTML=`<span class="thumb" style="filter:${f.css}"></span><span>${f.name}</span>`;
+  b.addEventListener('click',()=>{
+   selectedFilter=f.id;
+   $$('.filter').forEach(x=>x.classList.toggle('selected',x===b));
+   updatePreview();
   });
+  list.appendChild(b);
+ });
 }
+buildFilters();
 
+function getVal(id){return Number($('#'+id).value)}
+function filterString(){
+ const f=filters.find(x=>x.id===selectedFilter);
+ const strength=getVal('intensity')/100;
+ const base=f.css==='none'?'':f.css;
+ const amount=getVal('brightness')/100;
+ const contrast=getVal('contrast')/100;
+ const saturation=getVal('saturation')/100;
+ const warmth=getVal('warmth');
+ return `${base} brightness(${1+(amount-1)*strength}) contrast(${1+(contrast-1)*strength}) saturate(${1+(saturation-1)*strength}) ${warmth>=0?`sepia(${warmth/180}) hue-rotate(-${warmth/4}deg)`:`hue-rotate(${Math.abs(warmth)/4}deg)`}`;
+}
+function updatePreview(){
+ if(!sourceImage)return;
+ $('#editImage').style.filter=filterString();
+ controlIds.forEach(id=>$('#'+id+'Val').value=getVal(id));
+}
 $('#editUpload').addEventListener('change',e=>{
-  const f=e.target.files[0];
-  if(!f)return;
-
-  if(sourceUrl)URL.revokeObjectURL(sourceUrl);
-
-  sourceUrl=URL.createObjectURL(f);
-  sourceImage=new Image();
-
-  sourceImage.onload=()=>{
-    $('#editImage').src=sourceUrl;
-    $('#editImage').style.display='block';
-    $('#editEmpty').style.display='none';
-    updatePreview();
-  };
-
-  sourceImage.src=sourceUrl;
-});
-
-$$('.filter').forEach(b=>b.addEventListener('click',()=>{
-  selectedFilter=b.dataset.filter;
-  $$('.filter').forEach(x=>x.classList.toggle('selected',x===b));
+ const f=e.target.files[0];if(!f)return;
+ if(sourceUrl)URL.revokeObjectURL(sourceUrl);
+ sourceUrl=URL.createObjectURL(f);
+ sourceImage=new Image();
+ sourceImage.onload=()=>{
+  $('#editImage').src=sourceUrl;
+  $('#editImage').style.display='block';
+  $('#editEmpty').style.display='none';
   updatePreview();
-}));
-
-controlIds.forEach(id=>{
-  $('#'+id).addEventListener('input',updatePreview);
+ };
+ sourceImage.src=sourceUrl;
 });
+controlIds.forEach(id=>$('#'+id).addEventListener('input',updatePreview));
 
 $('#resetEdit').addEventListener('click',()=>{
-  selectedFilter='original';
-
-  $$('.filter').forEach(b=>{
-    b.classList.toggle('selected',b.dataset.filter==='original');
-  });
-
-  const defaults={
-    intensity:85,
-    brightness:100,
-    contrast:100,
-    saturation:100,
-    warmth:0,
-    grain:12
-  };
-
-  Object.entries(defaults).forEach(([k,v])=>{
-    $('#'+k).value=v;
-  });
-
-  updatePreview();
+ selectedFilter='original';
+ $$('.filter').forEach(b=>b.classList.toggle('selected',b.dataset.filter==='original'));
+ const defaults={intensity:85,brightness:100,contrast:100,saturation:100,warmth:0,grain:12};
+ Object.entries(defaults).forEach(([k,v])=>$('#'+k).value=v);
+ updatePreview();
 });
 
 function downloadBlob(blob,name){
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-
-  a.href=url;
-  a.download=name;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-
-  setTimeout(()=>URL.revokeObjectURL(url),1500);
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;a.download=name;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 
 function renderFilteredCanvas(img,w,h){
-  const c=document.createElement('canvas');
-  c.width=w;
-  c.height=h;
-
-  const ctx=c.getContext('2d');
-  const p=presets[selectedFilter];
-  const s=getVal('intensity')/100;
-  const mix=(a,b)=>1+(b-1)*s;
-
-  ctx.filter=`sepia(${p.sepia*s}) saturate(${mix(1,p.sat)*getVal('saturation')/100}) contrast(${mix(1,p.contrast)*getVal('contrast')/100}) brightness(${mix(1,p.bright)*getVal('brightness')/100}) hue-rotate(${p.hue*s}deg)`;
-
-  ctx.drawImage(img,0,0,w,h);
-  ctx.filter='none';
-
-  const warm=getVal('warmth');
-
-  if(warm!==0){
-    ctx.globalAlpha=Math.abs(warm)/220;
-    ctx.fillStyle=warm>0?'#ff9b45':'#7fa7d7';
-    ctx.fillRect(0,0,w,h);
-    ctx.globalAlpha=1;
+ const c=document.createElement('canvas');c.width=w;c.height=h;
+ const ctx=c.getContext('2d');
+ ctx.filter=filterString();
+ ctx.drawImage(img,0,0,w,h);
+ ctx.filter='none';
+ const grain=getVal('grain');
+ if(grain>0){
+  const data=ctx.getImageData(0,0,w,h),d=data.data;
+  const amount=grain*.48;
+  for(let i=0;i<d.length;i+=4){
+   const n=(Math.random()-.5)*amount;
+   d[i]+=n;d[i+1]+=n;d[i+2]+=n;
   }
-
-  const grain=getVal('grain');
-
-  if(grain>0){
-    const imageData=ctx.getImageData(0,0,w,h);
-    const d=imageData.data;
-    const amount=grain*.55;
-
-    for(let i=0;i<d.length;i+=4){
-      const n=(Math.random()-.5)*amount;
-      d[i]+=n;
-      d[i+1]+=n;
-      d[i+2]+=n;
-    }
-
-    ctx.putImageData(imageData,0,0);
-  }
-
-  if(selectedFilter==='dlr'){
-    const size=Math.max(18,Math.round(w*.027));
-
-    ctx.font=`${size}px Georgia`;
-    ctx.fillStyle='#ff9a45';
-    ctx.shadowColor='#3a171d';
-    ctx.shadowBlur=5;
-
-    const date=new Date();
-    const stamp=`DLR  ${date.getFullYear()}.${String(date.getMonth()+1).padStart(2,'0')}.${String(date.getDate()).padStart(2,'0')}`;
-
-    ctx.fillText(stamp,Math.round(w*.045),h-Math.round(h*.05));
-  }
-
-  return c;
+  ctx.putImageData(data,0,0);
+ }
+ if(selectedFilter==='dlr'){
+  const size=Math.max(18,Math.round(w*.027));
+  ctx.font=`${size}px Georgia`;
+  ctx.fillStyle='#ff9a45';ctx.shadowColor='#3a171d';ctx.shadowBlur=5;
+  const date=new Date();
+  const stamp=`DLR  ${date.getFullYear()}.${String(date.getMonth()+1).padStart(2,'0')}.${String(date.getDate()).padStart(2,'0')}`;
+  ctx.fillText(stamp,Math.round(w*.045),h-Math.round(h*.05));
+ }
+ return c;
 }
 
 $('#saveEdit').addEventListener('click',()=>{
-  if(!sourceImage){
-    alert('Please add a photo first.');
-    return;
-  }
-
-  const scale=Math.min(1,2400/Math.max(sourceImage.naturalWidth,sourceImage.naturalHeight));
-
-  const c=renderFilteredCanvas(
-    sourceImage,
-    Math.round(sourceImage.naturalWidth*scale),
-    Math.round(sourceImage.naturalHeight*scale)
-  );
-
-  c.toBlob(b=>{
-    if(b)downloadBlob(b,'DLR-edited-photo.jpg');
-  },'image/jpeg',.94);
+ if(!sourceImage){alert('Please add a photo first.');return}
+ const scale=Math.min(1,2400/Math.max(sourceImage.naturalWidth,sourceImage.naturalHeight));
+ const c=renderFilteredCanvas(sourceImage,Math.round(sourceImage.naturalWidth*scale),Math.round(sourceImage.naturalHeight*scale));
+ c.toBlob(b=>{if(b)downloadBlob(b,'DLR-edited-photo.jpg')},'image/jpeg',.95);
 });
 
-// COLLAGE ATELIER
-
+/* GRIDS · STORY CANVAS */
 let collageCount=4;
 let collageImages=Array(4).fill(null);
 
 function buildCollage(){
-  const grid=$('#collageGrid');
+ const grid=$('#collageGrid');
+ grid.dataset.count=collageCount;
+ grid.innerHTML='';
+ $('#layoutLabel').textContent=collageCount+' FRAME'+(collageCount===1?'':'S');
+ collageImages=Array.from({length:collageCount},(_,i)=>collageImages[i]||null);
 
-  grid.dataset.count=collageCount;
-  grid.innerHTML='';
-
-  $('#layoutLabel').textContent=collageCount+' FRAME'+(collageCount===1?'':'S');
-
-  collageImages=Array.from(
-    {length:collageCount},
-    (_,i)=>collageImages[i]||null
-  );
-
-  for(let i=0;i<collageCount;i++){
-    const cell=document.createElement('div');
-    cell.className='collage-cell';
-    cell.dataset.index=i;
-
-    if(collageImages[i]){
-      const img=document.createElement('img');
-      img.src=collageImages[i].url;
-      img.alt='Collage image';
-      cell.appendChild(img);
-    }
-
-    const plus=document.createElement('div');
-    plus.className='plus';
-    plus.textContent=collageImages[i]?'':' + ';
-    cell.appendChild(plus);
-
-    const input=document.createElement('input');
-    input.type='file';
-    input.accept='image/*';
-    input.hidden=true;
-
-    input.addEventListener('change',e=>{
-      const f=e.target.files[0];
-      if(!f)return;
-
-      const url=URL.createObjectURL(f);
-      collageImages[i]={url,file:f};
-
-      const im=document.createElement('img');
-      im.src=url;
-      im.alt='Selected collage photo';
-
-      cell.querySelector('img')?.remove();
-      cell.insertBefore(im,plus);
-      plus.textContent='';
-    });
-
-    cell.addEventListener('click',()=>{
-      input.click();
-    });
-
-    cell.appendChild(input);
-    grid.appendChild(cell);
+ for(let i=0;i<collageCount;i++){
+  const cell=document.createElement('div');
+  cell.className='collage-cell';
+  if(collageImages[i]){
+   const img=document.createElement('img');
+   img.src=collageImages[i].url;
+   img.alt='Collage photo';
+   cell.appendChild(img);
   }
+  const plus=document.createElement('div');
+  plus.className='plus';
+  plus.textContent=collageImages[i]?'':'+';
+  cell.appendChild(plus);
+
+  const input=document.createElement('input');
+  input.type='file';input.accept='image/*';input.hidden=true;
+  input.addEventListener('change',e=>{
+   const f=e.target.files[0];if(!f)return;
+   if(collageImages[i]?.url)URL.revokeObjectURL(collageImages[i].url);
+   const url=URL.createObjectURL(f);
+   collageImages[i]={url,file:f};
+   const im=document.createElement('img');im.src=url;im.alt='Selected collage photo';
+   cell.querySelector('img')?.remove();
+   cell.insertBefore(im,plus);
+   plus.textContent='';
+  });
+  cell.addEventListener('click',()=>input.click());
+  cell.appendChild(input);
+  grid.appendChild(cell);
+ }
 }
 
 $$('.layout-choice').forEach(b=>b.addEventListener('click',()=>{
-  collageCount=Number(b.dataset.count);
-
-  $$('.layout-choice').forEach(x=>{
-    x.classList.toggle('selected',x===b);
-  });
-
-  collageImages=Array(collageCount).fill(null);
-  buildCollage();
+ collageCount=Number(b.dataset.count);
+ $$('.layout-choice').forEach(x=>x.classList.toggle('selected',x===b));
+ collageImages=Array(collageCount).fill(null);
+ buildCollage();
 }));
 
 $('#clearCollage').addEventListener('click',()=>{
-  collageImages=Array(collageCount).fill(null);
-  buildCollage();
+ collageImages.forEach(x=>{if(x?.url)URL.revokeObjectURL(x.url)});
+ collageImages=Array(collageCount).fill(null);
+ buildCollage();
 });
 
 function loadImage(url){
-  return new Promise((resolve,reject)=>{
-    const im=new Image();
-    im.onload=()=>resolve(im);
-    im.onerror=reject;
-    im.src=url;
-  });
+ return new Promise((resolve,reject)=>{
+  const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=url;
+ });
+}
+function drawCrop(ctx,img,x,y,w,h){
+ const ratio=Math.max(w/img.width,h/img.height);
+ const sw=w/ratio,sh=h/ratio;
+ const sx=(img.width-sw)/2,sy=(img.height-sh)/2;
+ ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h);
 }
 
 $('#saveCollage').addEventListener('click',async()=>{
-  if(!collageImages.some(Boolean)){
-    alert('Add at least one photo to your collage.');
-    return;
+ if(!collageImages.some(Boolean)){
+  alert('Add at least one photo to your grid first.');
+  return;
+ }
+ const W=1080,H=1920;
+ const c=document.createElement('canvas');
+ c.width=W;c.height=H;
+ const ctx=c.getContext('2d');
+ ctx.fillStyle='#4b1c2b';ctx.fillRect(0,0,W,H);
+
+ const gap=14,margin=22;
+ let cols=2,rows=2;
+ if(collageCount===1){cols=1;rows=1}
+ if(collageCount===2){cols=1;rows=2}
+ if(collageCount===3){cols=2;rows=2}
+ if(collageCount===4){cols=2;rows=2}
+ if(collageCount===6){cols=2;rows=3}
+
+ const cellW=(W-margin*2-gap*(cols-1))/cols;
+ const cellH=(H-margin*2-gap*(rows-1))/rows;
+
+ for(let i=0;i<collageCount;i++){
+  const col=i%cols,row=Math.floor(i/cols);
+  const x=margin+col*(cellW+gap);
+  const y=margin+row*(cellH+gap);
+  const item=collageImages[i];
+  if(item){
+   const im=await loadImage(item.url);
+   ctx.save();
+   ctx.beginPath();ctx.rect(x,y,cellW,cellH);ctx.clip();
+   drawCrop(ctx,im,x,y,cellW,cellH);
+   ctx.restore();
+  }else{
+   ctx.fillStyle='#68734d';ctx.fillRect(x,y,cellW,cellH);
+   ctx.fillStyle='#e7a2b7';ctx.font='90px Georgia';ctx.textAlign='center';
+   ctx.fillText('+',x+cellW/2,y+cellH/2+30);
   }
-
-  const cols=
-    collageCount===1?1:
-    collageCount===2?2:
-    collageCount===3?2:
-    collageCount===4?2:3;
-
-  const rows=Math.ceil(collageCount/cols);
-  const size=900;
-  const gap=14;
-
-  const c=document.createElement('canvas');
-  c.width=cols*size+(cols+1)*gap;
-  c.height=rows*size+(rows+1)*gap;
-
-  const ctx=c.getContext('2d');
-
-  ctx.fillStyle='#4b1c2b';
-  ctx.fillRect(0,0,c.width,c.height);
-
-  for(let i=0;i<collageCount;i++){
-    const x=gap+(i%cols)*(size+gap);
-    const y=gap+Math.floor(i/cols)*(size+gap);
-    const item=collageImages[i];
-
-    if(item){
-      const im=await loadImage(item.url);
-
-      const ratio=Math.max(size/im.width,size/im.height);
-      const sw=size/ratio;
-      const sh=size/ratio;
-      const sx=(im.width-sw)/2;
-      const sy=(im.height-sh)/2;
-
-      ctx.drawImage(im,sx,sy,sw,sh,x,y,size,size);
-    }else{
-      ctx.fillStyle='#68734d';
-      ctx.fillRect(x,y,size,size);
-
-      ctx.fillStyle='#e7a2b7';
-      ctx.font='90px Georgia';
-      ctx.textAlign='center';
-      ctx.fillText('+',x+size/2,y+size/2+30);
-    }
-  }
-
-  c.toBlob(b=>{
-    if(b)downloadBlob(b,'DLR-collage.jpg');
-  },'image/jpeg',.94);
+ }
+ c.toBlob(b=>{
+  if(b)downloadBlob(b,'DLR-Instagram-Story-1080x1920.jpg');
+ },'image/jpeg',.95);
 });
 
 buildCollage();
+showPage('home');
 </script>
 </body>
 </html>
