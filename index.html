@@ -8,9 +8,9 @@
 <title>DLR — Every Frame, a Feeling</title>
 <style>
 :root{
-  --wine:#4b1c2b; --wine2:#6a293d; --olive:#68734d; --olive2:#87906a;
-  --pink:#e7a2b7; --pink2:#f2c5d2; --cream:#f4eadf; --ink:#281b1d;
-  --muted:#c9b7ae; --line:rgba(244,234,223,.18); --panel:rgba(255,255,255,.055);
+  --wine:#4b1c2b;--wine2:#6a293d;--olive:#68734d;
+  --pink:#e7a2b7;--pink2:#f2c5d2;--cream:#f4eadf;
+  --line:rgba(244,234,223,.18);--panel:rgba(255,255,255,.055);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--wine);color:var(--cream);font-family:Arial,sans-serif;min-height:100vh}
@@ -18,14 +18,14 @@ button,input{font:inherit}
 button{cursor:pointer}
 button:active{transform:scale(.98)}
 .app{min-height:100vh;background:
- radial-gradient(ellipse at 12% 8%,rgba(112,130,79,.58),transparent 42%),
- radial-gradient(ellipse at 90% 75%,rgba(111,35,58,.7),transparent 45%),
- linear-gradient(135deg,#3e1a29 0%,#536044 48%,#4b1c2b 100%);padding-bottom:36px}
+radial-gradient(ellipse at 12% 8%,rgba(112,130,79,.58),transparent 42%),
+radial-gradient(ellipse at 90% 75%,rgba(111,35,58,.7),transparent 45%),
+linear-gradient(135deg,#3e1a29 0%,#536044 48%,#4b1c2b 100%);padding-bottom:36px}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:22px clamp(18px,5vw,58px);border-bottom:1px solid var(--line)}
 .brand{font-family:Georgia,serif;font-size:30px;letter-spacing:5px;color:var(--pink);font-weight:bold}
 .brand small{display:block;font:9px Arial,sans-serif;letter-spacing:3px;color:var(--cream);opacity:.75;margin-top:4px}
 .nav{display:flex;gap:9px;flex-wrap:wrap}
-.nav button,.pill{border:1px solid var(--line);background:rgba(25,15,18,.18);color:var(--cream);border-radius:30px;padding:10px 16px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}
+.nav button{border:1px solid var(--line);background:rgba(25,15,18,.18);color:var(--cream);border-radius:30px;padding:10px 16px;font-size:11px;letter-spacing:1.2px;text-transform:uppercase}
 .nav button.active,.primary{background:var(--pink);color:#45202d;border-color:var(--pink)}
 main{width:min(1120px,92vw);margin:0 auto}
 .page{display:none;padding:32px 0 20px}
@@ -49,40 +49,24 @@ h2{font-size:clamp(28px,4vw,42px);margin:0 0 10px}
 .note{font:italic 13px Georgia,serif;color:var(--pink2);margin-top:26px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;backdrop-filter:blur(12px)}
 .editor-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:22px;margin-top:24px}
-.preview-wrap{background:#1c1719;border:1px solid var(--line);border-radius:18px;min-height:420px;display:grid;place-items:center;overflow:hidden;position:relative}
-.preview-wrap img{display:none;max-width:100%;max-height:640px;object-fit:contain}
-.preview-empty{text-align:center;color:#cbb9b1;padding:30px}
+.preview-wrap{background:#1c1719;border:1px solid var(--line);border-radius:18px;min-height:380px;display:grid;place-items:center;overflow:hidden;position:relative}
+.preview-wrap img{display:none;max-width:100%;max-height:640px;object-fit:contain;position:relative;z-index:1}
+.preview-wrap:after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+ opacity:var(--grain-opacity,0);
+ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E");
+ mix-blend-mode:overlay;
+}
+.preview-empty{text-align:center;color:#cbb9b1;padding:30px;position:relative;z-index:3}
 .preview-empty b{display:block;color:var(--pink);font:30px Georgia,serif;margin-bottom:8px}
 .control-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px}
 .control-title h3{font-size:22px;margin:0}
 .upload-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--pink);color:var(--pink2);padding:11px 15px;border-radius:30px;font-size:10px;letter-spacing:1px;text-transform:uppercase;background:transparent}
 input[type=file]{display:none}
 
-/* YATAY FİLTRELER */
-.filters{
- display:flex;
- flex-wrap:nowrap;
- gap:10px;
- overflow-x:auto;
- overflow-y:hidden;
- padding:5px 2px 12px;
- scroll-snap-type:x mandatory;
- -webkit-overflow-scrolling:touch;
- scrollbar-width:thin;
- scrollbar-color:var(--pink) transparent;
-}
-.filter{
- flex:0 0 105px;
- min-width:105px;
- padding:0;
- border:1px solid var(--line);
- border-radius:11px;
- overflow:hidden;
- background:#281c20;
- color:var(--cream);
- text-align:left;
- scroll-snap-align:start;
-}
+/* HORIZONTAL FILTER COLLECTION */
+.filters{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;padding:5px 2px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--pink) transparent}
+.filter{flex:0 0 105px;min-width:105px;padding:0;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#281c20;color:var(--cream);text-align:left;scroll-snap-align:start}
 .filter .thumb{height:75px;background:linear-gradient(135deg,#9a6a54,#58664c 55%,#c88d9f);display:block}
 .filter span:last-child{display:block;padding:8px 5px;font-size:9px;letter-spacing:1px;text-align:center}
 .filter.selected{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink)}
@@ -97,9 +81,9 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 .layout-choice{width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:#34222a;color:var(--cream);font:18px Georgia,serif}
 .layout-choice.selected{background:var(--pink);color:#48202e;border-color:var(--pink)}
 .collage-grid{display:grid;gap:8px;width:min(100%,430px);aspect-ratio:9/16;margin:20px auto;background:#21181c;padding:9px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
-.collage-cell{position:relative;min-height:0;aspect-ratio:auto;background:linear-gradient(145deg,#69754e,#492333);overflow:hidden;border:1px solid #f4eadf33}
+.collage-cell{position:relative;min-height:0;background:linear-gradient(145deg,#69754e,#492333);overflow:hidden;border:1px solid #f4eadf33}
 .collage-cell img{width:100%;height:100%;object-fit:cover;display:block}
-.plus{position:absolute;inset:0;display:grid;place-items:center;color:var(--pink);font:42px Georgia,serif;text-shadow:0 2px 12px #000}
+.plus{position:absolute;inset:0;display:grid;place-items:center;color:var(--pink);font:42px Georgia,serif;text-shadow:0 2px 12px #000;pointer-events:none}
 .collage-grid[data-count="1"]{grid-template-columns:1fr;grid-template-rows:1fr}
 .collage-grid[data-count="2"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
 .collage-grid[data-count="3"]{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr}
@@ -167,17 +151,17 @@ input[type=range]{width:100%;accent-color:var(--pink)}
       </div>
     </div>
     <aside class="panel">
-      <div class="control-title"><h3>Film collection</h3><span class="eyebrow">15 MOODS</span></div>
+      <div class="control-title"><h3>Film collection</h3><span class="eyebrow">20 MOODS</span></div>
       <div class="filters" id="filterList"></div>
       <div class="section-gap">
         <div class="control-title"><h3>Fine tune</h3><span class="eyebrow">YOUR LIGHT</span></div>
         <div class="sliders">
           <div class="slider-row"><label for="intensity">Filter strength</label><input id="intensity" type="range" min="0" max="100" value="85"><output id="intensityVal">85</output></div>
           <div class="slider-row"><label for="brightness">Brightness</label><input id="brightness" type="range" min="50" max="160" value="100"><output id="brightnessVal">100</output></div>
-          <div class="slider-row"><label for="contrast">Contrast</label><input id="contrast" type="range" min="50" max="180" value="100"><output id="contrastVal">100</output></div>
+          <div class="slider-row"><label for="contrast">Contrast</label><input id="contrast" type="range" min="50" max="200" value="100"><output id="contrastVal">100</output></div>
           <div class="slider-row"><label for="saturation">Saturation</label><input id="saturation" type="range" min="0" max="200" value="100"><output id="saturationVal">100</output></div>
-          <div class="slider-row"><label for="warmth">Warmth</label><input id="warmth" type="range" min="-50" max="50" value="0"><output id="warmthVal">0</output></div>
-          <div class="slider-row"><label for="grain">Film grain</label><input id="grain" type="range" min="0" max="60" value="12"><output id="grainVal">12</output></div>
+          <div class="slider-row"><label for="warmth">Warmth</label><input id="warmth" type="range" min="-70" max="70" value="0"><output id="warmthVal">0</output></div>
+          <div class="slider-row"><label for="grain">Film grain</label><input id="grain" type="range" min="0" max="100" value="25"><output id="grainVal">25</output></div>
         </div>
       </div>
     </aside>
@@ -197,12 +181,14 @@ input[type=range]{width:100%;accent-color:var(--pink)}
   </div>
   <div class="panel">
     <div class="control-title"><h3>Your composition</h3><span class="eyebrow" id="layoutLabel">4 FRAMES</span></div>
+    <label class="upload-btn" for="collageUpload">＋ Select photos</label>
+    <input id="collageUpload" type="file" accept="image/*" multiple>
     <div class="collage-grid" id="collageGrid" data-count="4"></div>
     <div class="action-row" style="justify-content:center">
       <button class="secondary" id="clearCollage" type="button">Clear all</button>
       <button class="primary" id="saveCollage" type="button">Save Story · 9:16</button>
     </div>
-    <p class="small-muted" style="text-align:center">Tap any + to add a photo to that frame. Export size: 1080 × 1920 px.</p>
+    <p class="small-muted" style="text-align:center">Select photos together from your gallery. The selected layout determines how many photos are used. Export size: 1080 × 1920 px.</p>
   </div>
 </section>
 </main>
@@ -210,19 +196,19 @@ input[type=range]{width:100%;accent-color:var(--pink)}
 </div>
 
 <script>
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
 
 function showPage(name){
-  $$('.page').forEach(p=>p.classList.toggle('active',p.id===name));
-  $$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  window.scrollTo({top:0,behavior:'smooth'});
+ $$('.page').forEach(p=>p.classList.toggle('active',p.id===name));
+ $$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 document.addEventListener('click',e=>{
-  const nav=e.target.closest('[data-page]');
-  const go=e.target.closest('[data-go]');
-  if(nav){e.preventDefault();showPage(nav.dataset.page)}
-  else if(go){e.preventDefault();showPage(go.dataset.go)}
+ const nav=e.target.closest('[data-page]');
+ const go=e.target.closest('[data-go]');
+ if(nav){e.preventDefault();showPage(nav.dataset.page)}
+ else if(go){e.preventDefault();showPage(go.dataset.go)}
 });
 
 const filters=[
@@ -240,20 +226,22 @@ const filters=[
  {id:'noir',name:'Noir',css:'grayscale(1) contrast(1.42) brightness(.92)'},
  {id:'softmono',name:'Soft Mono',css:'grayscale(1) contrast(.85) brightness(1.12)'},
  {id:'grainmono',name:'Grainy B&W',css:'grayscale(1) contrast(1.28) brightness(.96)'},
- {id:'darkroom',name:'Darkroom',css:'brightness(.72) contrast(1.35) saturate(.72) sepia(.12)'}
+ {id:'darkroom',name:'Darkroom',css:'brightness(.68) contrast(1.48) saturate(.68) sepia(.16)'},
+ {id:'midnight',name:'Midnight',css:'brightness(.56) contrast(1.55) saturate(.72) hue-rotate(195deg)'},
+ {id:'afterhours',name:'After Hours',css:'brightness(.62) contrast(1.6) saturate(.85) sepia(.22)'},
+ {id:'velvet',name:'Velvet Night',css:'brightness(.72) contrast(1.38) saturate(.65) sepia(.3) hue-rotate(315deg)'},
+ {id:'flashnoir',name:'Flash Noir',css:'grayscale(.82) contrast(1.75) brightness(.9)'},
+ {id:'moody',name:'Moody Film',css:'brightness(.76) contrast(1.42) saturate(.78) sepia(.2) hue-rotate(350deg)'}
 ];
 
 let sourceImage=null,sourceUrl=null,selectedFilter='original';
-
 const controlIds=['intensity','brightness','contrast','saturation','warmth','grain'];
 
 function buildFilters(){
- const list=$('#filterList');
- list.innerHTML='';
+ const list=$('#filterList');list.innerHTML='';
  filters.forEach(f=>{
   const b=document.createElement('button');
-  b.type='button';
-  b.className='filter'+(f.id===selectedFilter?' selected':'');
+  b.type='button';b.className='filter'+(f.id===selectedFilter?' selected':'');
   b.dataset.filter=f.id;
   b.innerHTML=`<span class="thumb" style="filter:${f.css}"></span><span>${f.name}</span>`;
   b.addEventListener('click',()=>{
@@ -277,11 +265,14 @@ function filterString(){
  const warmth=getVal('warmth');
  return `${base} brightness(${1+(amount-1)*strength}) contrast(${1+(contrast-1)*strength}) saturate(${1+(saturation-1)*strength}) ${warmth>=0?`sepia(${warmth/180}) hue-rotate(-${warmth/4}deg)`:`hue-rotate(${Math.abs(warmth)/4}deg)`}`;
 }
+
 function updatePreview(){
  if(!sourceImage)return;
  $('#editImage').style.filter=filterString();
+ $('#editPreview').style.setProperty('--grain-opacity',getVal('grain')/160);
  controlIds.forEach(id=>$('#'+id+'Val').value=getVal(id));
 }
+
 $('#editUpload').addEventListener('change',e=>{
  const f=e.target.files[0];if(!f)return;
  if(sourceUrl)URL.revokeObjectURL(sourceUrl);
@@ -295,42 +286,45 @@ $('#editUpload').addEventListener('change',e=>{
  };
  sourceImage.src=sourceUrl;
 });
+
 controlIds.forEach(id=>$('#'+id).addEventListener('input',updatePreview));
 
 $('#resetEdit').addEventListener('click',()=>{
  selectedFilter='original';
  $$('.filter').forEach(b=>b.classList.toggle('selected',b.dataset.filter==='original'));
- const defaults={intensity:85,brightness:100,contrast:100,saturation:100,warmth:0,grain:12};
+ const defaults={intensity:85,brightness:100,contrast:100,saturation:100,warmth:0,grain:25};
  Object.entries(defaults).forEach(([k,v])=>$('#'+k).value=v);
  updatePreview();
 });
 
-/* iPHONE PAYLASIM EKRANI */
 async function downloadBlob(blob,name){
  const file=new File([blob],name,{type:'image/jpeg'});
-
- if(navigator.share && navigator.canShare &&
-    navigator.canShare({files:[file]})){
-   try{
-     await navigator.share({
-       files:[file],
-       title:'DLR'
-     });
-   }catch(error){
-     if(error.name!=='AbortError'){
-       alert('The image could not be shared. Please try again.');
-     }
-   }
+ if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+  try{
+   await navigator.share({files:[file],title:'DLR'});
+  }catch(error){
+   if(error.name!=='AbortError')alert('The image could not be shared. Please try again.');
+  }
  }else{
-   const url=URL.createObjectURL(blob);
-   const a=document.createElement('a');
-   a.href=url;
-   a.download=name;
-   document.body.appendChild(a);
-   a.click();
-   a.remove();
-   setTimeout(()=>URL.revokeObjectURL(url),2000);
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=name;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
  }
+}
+
+function addGrain(ctx,w,h,amount){
+ if(amount<=0)return;
+ const image=ctx.getImageData(0,0,w,h);
+ const d=image.data;
+ const strength=amount*1.05;
+ for(let i=0;i<d.length;i+=4){
+  const noise=(Math.random()-.5)*strength;
+  d[i]=Math.max(0,Math.min(255,d[i]+noise));
+  d[i+1]=Math.max(0,Math.min(255,d[i+1]+noise));
+  d[i+2]=Math.max(0,Math.min(255,d[i+2]+noise));
+ }
+ ctx.putImageData(image,0,0);
 }
 
 function renderFilteredCanvas(img,w,h){
@@ -339,16 +333,7 @@ function renderFilteredCanvas(img,w,h){
  ctx.filter=filterString();
  ctx.drawImage(img,0,0,w,h);
  ctx.filter='none';
- const grain=getVal('grain');
- if(grain>0){
-  const data=ctx.getImageData(0,0,w,h),d=data.data;
-  const amount=grain*.48;
-  for(let i=0;i<d.length;i+=4){
-   const n=(Math.random()-.5)*amount;
-   d[i]+=n;d[i+1]+=n;d[i+2]+=n;
-  }
-  ctx.putImageData(data,0,0);
- }
+ addGrain(ctx,w,h,getVal('grain'));
  return c;
 }
 
@@ -359,7 +344,7 @@ $('#saveEdit').addEventListener('click',()=>{
  c.toBlob(b=>{if(b)downloadBlob(b,'DLR-edited-photo.jpg')},'image/jpeg',.95);
 });
 
-/* GRIDS - STORY CANVAS */
+/* MULTI PHOTO COLLAGE */
 let collageCount=4;
 let collageImages=Array(4).fill(null);
 
@@ -375,29 +360,19 @@ function buildCollage(){
   cell.className='collage-cell';
   if(collageImages[i]){
    const img=document.createElement('img');
-   img.src=collageImages[i].url;
-   img.alt='Collage photo';
+   img.src=collageImages[i].url;img.alt='Collage photo';
    cell.appendChild(img);
   }
   const plus=document.createElement('div');
-  plus.className='plus';
-  plus.textContent=collageImages[i]?'':'+';
+  plus.className='plus';plus.textContent=collageImages[i]?'':'+';
   cell.appendChild(plus);
-
-  const input=document.createElement('input');
-  input.type='file';input.accept='image/*';input.hidden=true;
-  input.addEventListener('change',e=>{
-   const f=e.target.files[0];if(!f)return;
-   if(collageImages[i]?.url)URL.revokeObjectURL(collageImages[i].url);
-   const url=URL.createObjectURL(f);
-   collageImages[i]={url,file:f};
-   const im=document.createElement('img');im.src=url;im.alt='Selected collage photo';
-   cell.querySelector('img')?.remove();
-   cell.insertBefore(im,plus);
-   plus.textContent='';
+  cell.addEventListener('click',()=>{
+   if(collageImages.filter(Boolean).length>=collageCount){
+    alert('All frames are filled. Choose another layout or clear the grid.');
+    return;
+   }
+   $('#collageUpload').click();
   });
-  cell.addEventListener('click',()=>input.click());
-  cell.appendChild(input);
   grid.appendChild(cell);
  }
 }
@@ -405,13 +380,36 @@ function buildCollage(){
 $$('.layout-choice').forEach(b=>b.addEventListener('click',()=>{
  collageCount=Number(b.dataset.count);
  $$('.layout-choice').forEach(x=>x.classList.toggle('selected',x===b));
+ collageImages.forEach(x=>{if(x?.url)URL.revokeObjectURL(x.url)});
  collageImages=Array(collageCount).fill(null);
+ $('#collageUpload').value='';
  buildCollage();
 }));
+
+$('#collageUpload').addEventListener('change',e=>{
+ const files=[...e.target.files];
+ if(!files.length)return;
+ const remaining=collageCount-collageImages.filter(Boolean).length;
+ const accepted=files.slice(0,remaining);
+ if(files.length>remaining){
+  alert(`This layout has ${collageCount} frames. Only ${remaining} more photo(s) can be added.`);
+ }
+ let index=0;
+ for(const file of accepted){
+  const emptyIndex=collageImages.findIndex(x=>!x);
+  if(emptyIndex<0)break;
+  const url=URL.createObjectURL(file);
+  collageImages[emptyIndex]={url,file};
+  index++;
+ }
+ buildCollage();
+ e.target.value='';
+});
 
 $('#clearCollage').addEventListener('click',()=>{
  collageImages.forEach(x=>{if(x?.url)URL.revokeObjectURL(x.url)});
  collageImages=Array(collageCount).fill(null);
+ $('#collageUpload').value='';
  buildCollage();
 });
 
@@ -429,15 +427,12 @@ function drawCrop(ctx,img,x,y,w,h){
 
 $('#saveCollage').addEventListener('click',async()=>{
  if(!collageImages.some(Boolean)){
-  alert('Add at least one photo to your grid first.');
-  return;
+  alert('Add at least one photo to your grid first.');return;
  }
  const W=1080,H=1920;
- const c=document.createElement('canvas');
- c.width=W;c.height=H;
+ const c=document.createElement('canvas');c.width=W;c.height=H;
  const ctx=c.getContext('2d');
  ctx.fillStyle='#4b1c2b';ctx.fillRect(0,0,W,H);
-
  const gap=14,margin=22;
  let cols=2,rows=2;
  if(collageCount===1){cols=1;rows=1}
@@ -445,10 +440,8 @@ $('#saveCollage').addEventListener('click',async()=>{
  if(collageCount===3){cols=3;rows=1}
  if(collageCount===4){cols=2;rows=2}
  if(collageCount===6){cols=2;rows=3}
-
  const cellW=(W-margin*2-gap*(cols-1))/cols;
  const cellH=(H-margin*2-gap*(rows-1))/rows;
-
  for(let i=0;i<collageCount;i++){
   const col=i%cols,row=Math.floor(i/cols);
   const x=margin+col*(cellW+gap);
@@ -456,19 +449,15 @@ $('#saveCollage').addEventListener('click',async()=>{
   const item=collageImages[i];
   if(item){
    const im=await loadImage(item.url);
-   ctx.save();
-   ctx.beginPath();ctx.rect(x,y,cellW,cellH);ctx.clip();
-   drawCrop(ctx,im,x,y,cellW,cellH);
-   ctx.restore();
+   ctx.save();ctx.beginPath();ctx.rect(x,y,cellW,cellH);ctx.clip();
+   drawCrop(ctx,im,x,y,cellW,cellH);ctx.restore();
   }else{
    ctx.fillStyle='#68734d';ctx.fillRect(x,y,cellW,cellH);
    ctx.fillStyle='#e7a2b7';ctx.font='90px Georgia';ctx.textAlign='center';
    ctx.fillText('+',x+cellW/2,y+cellH/2+30);
   }
  }
- c.toBlob(b=>{
-  if(b)downloadBlob(b,'DLR-Instagram-Story-1080x1920.jpg');
- },'image/jpeg',.95);
+ c.toBlob(b=>{if(b)downloadBlob(b,'DLR-Instagram-Story-1080x1920.jpg')},'image/jpeg',.95);
 });
 
 buildCollage();
